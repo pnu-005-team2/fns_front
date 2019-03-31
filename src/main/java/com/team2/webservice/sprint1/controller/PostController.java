@@ -22,7 +22,7 @@ public class PostController {
         long id = 1;
         List<Post> test = postRepository.findAll();
         System.out.println("TEST : " + test.get(0).getWriter());
-        return "test";
+        return "Post";
     }
 }
 
