@@ -9,11 +9,9 @@
 </head>
 <body>
 
-    <c:forEach var="item" items="${LikeList}">
-        ${item.lid} &nbsp;
-        ${item.pid} &nbsp;
-        ${item.uid} &nbsp;
-    </c:forEach>
-    되라!
+<c:forEach var="item" items="${testBoardList}">
+    ${item.bnd} &nbsp; &nbsp;
+</c:forEach>
+되라!
 </body>
 </html>
