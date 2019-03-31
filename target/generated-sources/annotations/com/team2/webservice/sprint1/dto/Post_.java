@@ -9,16 +9,16 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Post_ {
 
 	public static volatile SingularAttribute<Post, String> img;
-	public static volatile SingularAttribute<Post, String> hashtags;
 	public static volatile SingularAttribute<Post, Long> pid;
 	public static volatile SingularAttribute<Post, String> writer;
 	public static volatile SingularAttribute<Post, String> content;
+	public static volatile SingularAttribute<Post, String> hashtag;
 
 	public static final String IMG = "img";
-	public static final String HASHTAGS = "hashtags";
 	public static final String PID = "pid";
 	public static final String WRITER = "writer";
 	public static final String CONTENT = "content";
+	public static final String HASHTAG = "hashtag";
 
 }
 
