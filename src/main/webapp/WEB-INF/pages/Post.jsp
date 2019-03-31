@@ -24,7 +24,7 @@
         </ul>
     </div>
     <div class="card-body">
-        <form action="/Post" method="post">
+        <form action="/post_" method="post">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                     <div class="form-group">
