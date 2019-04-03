@@ -1,4 +1,4 @@
-package com.team2.webservice.sprint1.controller;
+/*package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.dto.testBoardVo;
 import com.team2.webservice.sprint1.jpa.testBoardMapper;
@@ -24,3 +24,4 @@ public class testBoardController {
         return "testBoardList";
     }
 }
+*/
