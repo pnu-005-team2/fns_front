@@ -6,9 +6,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(Member.class)
-public abstract class User_ {
+public abstract class Member_ {
 
-	public static volatile SingularAttribute<Member, Long> uid;
+	public static volatile SingularAttribute<Member, Integer> uid;
 	public static volatile SingularAttribute<Member, String> password;
 	public static volatile SingularAttribute<Member, String> gender;
 	public static volatile SingularAttribute<Member, String> id;

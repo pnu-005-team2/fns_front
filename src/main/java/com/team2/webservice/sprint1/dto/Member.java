@@ -1,15 +1,18 @@
 package com.team2.webservice.sprint1.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
 @Entity
-@Table(name="user")
-public class User {
+@Table(name="member")
+public class Member {
     @Id
-    private Long uid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int uid;
     private String id;
     private String password;
     private String gender;
