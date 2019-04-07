@@ -1,5 +1,5 @@
 package com.team2.webservice.sprint1.jpa;
-import com.team2.webservice.sprint1.dto.ProductLink;
+import com.team2.webservice.sprint1.vo.ProductLink;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductLinkRepository extends JpaRepository<ProductLink, Long> {

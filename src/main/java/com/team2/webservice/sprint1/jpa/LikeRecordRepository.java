@@ -1,6 +1,6 @@
 package com.team2.webservice.sprint1.jpa;
 
-import com.team2.webservice.sprint1.dto.LikeRecord;
+import com.team2.webservice.sprint1.vo.LikeRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LikeRecordRepository extends JpaRepository<LikeRecord, Long> {

@@ -1,11 +1,10 @@
-package com.team2.webservice.sprint1.dto;
+package com.team2.webservice.sprint1.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Blob;
 
 
 @NoArgsConstructor

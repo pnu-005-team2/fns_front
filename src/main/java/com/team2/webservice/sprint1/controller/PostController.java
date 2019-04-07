@@ -1,10 +1,8 @@
 package com.team2.webservice.sprint1.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import com.team2.webservice.sprint1.dto.Post;
+import com.team2.webservice.sprint1.vo.Post;
 import com.team2.webservice.sprint1.jpa.PostRepository;
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;

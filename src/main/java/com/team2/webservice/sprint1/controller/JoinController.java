@@ -1,40 +1,34 @@
 package com.team2.webservice.sprint1.controller;
 
-import com.team2.webservice.sprint1.dto.Member;
+import com.team2.webservice.sprint1.service.MemberServiceImpl;
+import com.team2.webservice.sprint1.vo.Member;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 
 
 @Controller
-@RequestMapping("/join")
+@RequestMapping("/user")
 public class JoinController {
-    @Autowired
-    MemberRepository memberRepository;
 
-    @RequestMapping(value = "")
-    public String create(Member member){
-//        memberRepository.save(member);
+    @Autowired
+    MemberServiceImpl memberService;
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String registerGet(){
         return "join";
     }
-    @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String register(HttpServletRequest request,Model model)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String registerPost(Member member, HttpServletRequest request)
     {
-        Member member = new Member();
-        member.setEmail(request.getParameter("userID"));
-        member.setPassword(request.getParameter("userPassword"));
-        member.setGender(request.getParameter("userGender"));
-        memberRepository.save(member);
-
-        System.out.println("Register Complete");
-
-        return "login";
+        System.out.println(member);
+        System.out.println("Post");
+        memberService.register(member);
+        return "redirect:/login";
     }
 }

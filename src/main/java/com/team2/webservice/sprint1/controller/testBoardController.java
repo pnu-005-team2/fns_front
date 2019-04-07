@@ -1,6 +1,6 @@
 /*package com.team2.webservice.sprint1.controller;
 
-import com.team2.webservice.sprint1.dto.testBoardVo;
+import com.team2.webservice.sprint1.vo.testBoardVo;
 import com.team2.webservice.sprint1.jpa.testBoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

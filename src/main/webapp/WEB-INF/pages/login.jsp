@@ -12,22 +12,18 @@
 <%--<jsp:include page="header.jsp"/>--%>
 <jsp:include page="body.jsp"/>
 
+
 <c:if test="${isOk == 'false'}">
-     <script>alert("비밀번호가 일치하지 않습니다.")</script>
+     <script>alert("일치하는 계정정보가 존재하지 않습니다.")</script>
 </c:if>
-
-<c:if test="${isOk == 'noEmail'}">
-<script>alert("계정이 존재하지 않습니다.")</script>
-</c:if>
-
 
 <div class="wrapper">
     <div class="container">
         <h1>Welcome
             <span style = "color:yellow">FNS</span></h1>
-        <form class="form" method="POST" action="/login/post">
-            <input id="email" type="email" name="username" placeholder="Email"/>
-            <input id="password" type="password" name="password" placeholder="Password"/>
+        <form class="form" method="POST" action="/login/">
+            <input id="email" type="email" name="memberEmail" placeholder="Email"/>
+            <input id="password" type="password" name="memberPw" placeholder="Password"/>
             <%--<input class="login-btn waves-effect waves-light btn" type="submit" value="로그인" />--%>
             <button type="submit" id="login-button">Login</button>
         </form>

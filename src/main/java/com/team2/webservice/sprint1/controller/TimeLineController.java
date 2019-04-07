@@ -1,17 +1,14 @@
 package com.team2.webservice.sprint1.controller;
 
-import com.team2.webservice.sprint1.dto.Post;
+import com.team2.webservice.sprint1.vo.Post;
 import com.team2.webservice.sprint1.jpa.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-import java.nio.ByteBuffer;
-import java.sql.Blob;
 import java.util.List;
 
 @Controller
