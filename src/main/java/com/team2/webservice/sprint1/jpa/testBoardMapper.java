@@ -1,8 +1,7 @@
 package com.team2.webservice.sprint1.jpa;
 
-import com.team2.webservice.sprint1.dto.testBoardVo;
+import com.team2.webservice.sprint1.vo.testBoardVo;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 
 public interface testBoardMapper extends JpaRepository<testBoardVo, Integer> {

@@ -1,6 +1,8 @@
 package com.team2.webservice.sprint1.controller;
 
-import com.team2.webservice.sprint1.dto.Member;
+import com.team2.webservice.sprint1.dto.LoginDTO;
+import com.team2.webservice.sprint1.service.MemberServiceImpl;
+import com.team2.webservice.sprint1.vo.Member;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class LoginController {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    MemberServiceImpl memberService;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String view(Model model)
     {
@@ -29,33 +34,21 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/post", method = RequestMethod.POST)
-    public String login(HttpServletRequest request, HttpSession session, Model model)
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public String login(LoginDTO loginDTO, HttpServletRequest request, HttpSession session, Model model)
     {
         String return_page = "login";
-        System.out.println("Post");
-        System.out.println(request.getParameter("username"));
-        System.out.println(request.getParameter("password"));
-        String email = request.getParameter("username");
-        String password = request.getParameter("password");
-        Optional<Member> member = memberRepository.findByEmail(email);
+        Optional<Member> member = memberService.login(loginDTO);
         if(member.isPresent()){ // 계정존재 확인
-            System.out.println("Password : "+ member.get().getPassword());
-            if(member.get().getPassword().equals(password)) { // 계정확인
                 model.addAttribute("isOk", "true");
-                model.addAttribute("email", email);
+                model.addAttribute("email", member.get().getEmail());
                 session.setAttribute("uid", member.get().getUid()); // 세션에 uid 전달
                 session.setAttribute("This is UID", "allow"); // 세션에 uid 전달
                 return_page = "home";
                 System.out.println("비밀번호 일치");
-            }
-            else{
-                model.addAttribute("isOk", "false");
-                System.out.println("req :" + password + " corr : " + member.get().getPassword() + ".");
-            }
         } else {
-            System.out.println("Email이 존재하지 않습니다.");
-            model.addAttribute("isOk", "noEmail");
+            System.out.println("일치하는 계정이 존재하지 않습니다.");
+            model.addAttribute("isOk", "false");
         }
 
         return return_page;

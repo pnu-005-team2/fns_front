@@ -2,19 +2,16 @@ package com.team2.webservice.sprint1.controller;
 
 
 
-import com.team2.webservice.sprint1.dto.Comment;
+import com.team2.webservice.sprint1.vo.Comment;
 import com.team2.webservice.sprint1.jpa.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigInteger;
 import java.util.List;
 
 

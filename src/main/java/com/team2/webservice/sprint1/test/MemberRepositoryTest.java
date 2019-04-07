@@ -1,6 +1,6 @@
 package com.team2.webservice.sprint1.test;
 
-import com.team2.webservice.sprint1.dto.Member;
+import com.team2.webservice.sprint1.vo.Member;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import lombok.extern.java.Log;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.team2.webservice.sprint1.dto;
+package com.team2.webservice.sprint1.vo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,5 +16,6 @@ public class Member {
     private String email;
     private String password;
     private String gender;
+    private String name;
 
 }

@@ -1,4 +1,4 @@
-package com.team2.webservice.sprint1.dto;
+package com.team2.webservice.sprint1.vo;
 
 import lombok.Data;
 
