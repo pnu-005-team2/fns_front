@@ -17,7 +17,7 @@ public class Post {
     private Long pid;
     private String content;
     private String writer;
-    private String img;
+    private byte[] img;
     private String hashtag;
 
 }
