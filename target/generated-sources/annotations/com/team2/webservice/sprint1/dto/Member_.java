@@ -11,12 +11,12 @@ public abstract class Member_ {
 	public static volatile SingularAttribute<Member, Integer> uid;
 	public static volatile SingularAttribute<Member, String> password;
 	public static volatile SingularAttribute<Member, String> gender;
-	public static volatile SingularAttribute<Member, String> id;
+	public static volatile SingularAttribute<Member, String> email;
 
 	public static final String UID = "uid";
 	public static final String PASSWORD = "password";
 	public static final String GENDER = "gender";
-	public static final String ID = "id";
+	public static final String EMAIL = "email";
 
 }
 

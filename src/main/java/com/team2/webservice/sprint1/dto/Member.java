@@ -13,7 +13,8 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uid;
-    private String id;
+    private String email;
     private String password;
     private String gender;
+
 }
