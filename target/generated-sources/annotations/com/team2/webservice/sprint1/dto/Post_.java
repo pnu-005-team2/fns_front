@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Post.class)
 public abstract class Post_ {
 
-	public static volatile SingularAttribute<Post, String> img;
+	public static volatile SingularAttribute<Post, byte[]> img;
 	public static volatile SingularAttribute<Post, Long> pid;
 	public static volatile SingularAttribute<Post, String> writer;
 	public static volatile SingularAttribute<Post, String> content;
