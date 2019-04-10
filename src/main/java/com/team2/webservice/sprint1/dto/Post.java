@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Blob;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class Post {
     private Long pid;
     private String content;
     private String writer;
-    private byte[] img;
+    private Blob img;
     private String hashtag;
 
 }
