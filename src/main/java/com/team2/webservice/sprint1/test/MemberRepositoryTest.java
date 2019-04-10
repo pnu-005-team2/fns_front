@@ -36,7 +36,7 @@ public class MemberRepositoryTest {
 //            member.setRoles(Arrays.asList(role));
 //            memberRepository.save(member);
             List<Member> t = memberRepository.findAll();
-            System.out.println(t.get(0).getId());
+            System.out.println(t.get(0).getEmail());
             System.out.println(t.get(0).toString());
 //        }
     }
