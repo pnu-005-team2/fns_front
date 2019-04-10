@@ -15,5 +15,5 @@ public class Comment {
     private Long pid;
     private String writer;
     private String content;
-    private Date postTime;
+    private String Date;
 }
