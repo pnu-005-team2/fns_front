@@ -1,5 +1,9 @@
 package com.team2.webservice.sprint1.dto;
 
+<<<<<<< HEAD
+=======
+import java.sql.Blob;
+>>>>>>> timeline
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -8,7 +12,11 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Post.class)
 public abstract class Post_ {
 
+<<<<<<< HEAD
 	public static volatile SingularAttribute<Post, byte[]> img;
+=======
+	public static volatile SingularAttribute<Post, Blob> img;
+>>>>>>> timeline
 	public static volatile SingularAttribute<Post, Long> pid;
 	public static volatile SingularAttribute<Post, String> writer;
 	public static volatile SingularAttribute<Post, String> content;
