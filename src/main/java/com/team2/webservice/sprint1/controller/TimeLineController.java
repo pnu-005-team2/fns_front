@@ -5,17 +5,23 @@ import com.team2.webservice.sprint1.jpa.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
+import java.nio.ByteBuffer;
+import java.sql.Blob;
 import java.util.List;
 
 @Controller
 public class TimeLineController {
-
-
     @Autowired
     private PostRepository postRepository;
+
+
+
+
 
    /* @GetMapping
     @RequestMapping("/post")
@@ -27,14 +33,77 @@ public class TimeLineController {
 
     @PostMapping
     @RequestMapping("/timeline")
-    public String Post(Model model)
+    public String Post(ModelMap modelMap)
     {
 //        String content =request.getParameter("content");
  //       Post client = new Post();
 
 
+
         List<Post> postRecordList = postRepository.findAll();
-        model.addAttribute("postRecordlList",postRecordList);
+
+//       int byte_num=postRecordList.size();
+
+
+/*
+ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    byte[] buf = new byte[1024];
+    Blob blob = profile.getContent();
+    InputStream in =  blob.getBinaryStream();
+    System.out.println("id content" +in);
+    int n = 0;
+    while ((n=in.read(buf))>=0)
+    {
+        baos.write(buf, 0, n);
+
+    }
+
+    in.close();
+    byte[] bytes = baos.toByteArray();
+    System.out.println("bytes" +bytes);
+    byte[] encodeBase64 = Base64.encodeBase64(buf);
+    String base64Encoded = new String(encodeBase64, "UTF-8");
+
+
+    customer.setEmailId(customerName);
+    profile.setCustomer(customer);
+    //profile.setContent(blob);
+    System.out.println();
+    profile = profileService.findProfileById(customer);
+    model.addAttribute("content",base64Encoded);
+    model.addAttribute("profile", profile);
+    return "myProfile";
+ */
+
+     /*   for(int i=0;i<postRecordList.size();i++){
+
+            try{
+                byte[] imgByteArray= postRecordList.get(i).getImg().getBytes();
+
+                //byte[] imgByteArray = Base64.getDecoder().decode(temp_img_String.getBytes());
+
+                postresults_List.get(i).content_result= postRecordList.get(i).getContent();
+                postresults_List.get(i).hashtag_result= postRecordList.get(i).getHashtag();
+                postresults_List.get(i).pid_result= postRecordList.get(i).getPid();
+                postresults_List.get(i).writer_result= postRecordList.get(i).getWriter();
+                postresults_List.get(i).img_result= imgByteArray;
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+
+//
+        }*/
+
+      Post post;
+
+
+        //List<Image>
+
+
+        modelMap.addAttribute("postRecordlList",postRecordList);
+        modelMap.addAttribute("postRecordList_Byte",postRecordList);
+      //  model.addAttribute("postResult_ArrayList",postresults_List);
+       // model.addAttribute("postImageList",)
 
         return "Timeline";
 
@@ -61,6 +130,7 @@ public class TimeLineController {
 */
 
     }
+
 }
 
 /*

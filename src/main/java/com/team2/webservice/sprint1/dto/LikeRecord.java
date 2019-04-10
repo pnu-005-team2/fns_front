@@ -1,5 +1,6 @@
 package com.team2.webservice.sprint1.dto;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,10 @@ public class LikeRecord {
     @Id // 해당 테이블의 PK필드
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK의 생성규칙을 나타냄, 가본키 생성을 DB가 수행하도록 선언
     private Long lid;
+
     // DTO 클래스의 필드는 각각 테이블의 Column의 해당한다.
     private Long uid;
     private Long pid;
+    private Boolean like_boolean;
+
 }

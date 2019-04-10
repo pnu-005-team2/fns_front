@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -25,6 +27,32 @@ public class LikeRecordController {
         System.out.println(likeRecordList.get(0).getLid());
         return "LikeTest";
     }
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/like_btn")
+    public String LikeBtn_Event_Ctr(HttpServletRequest httpServletRequest){
+
+
+        String likeBtn_pid= httpServletRequest.getParameter("pid");
+        String likeBtn_uid =httpServletRequest.getParameter("uid");
+
+        String likeBtn_like_boolean = httpServletRequest.getParameter("like_boolean");
+
+
+
+        LikeRecord likeRecord = new LikeRecord();
+        likeRecord.setPid(Long.parseLong(likeBtn_pid));
+        likeRecord.setUid(Long.parseLong(likeBtn_uid));
+        likeRecord.setLike_boolean(Boolean.parseBoolean(likeBtn_like_boolean));
+
+        likeRecordRepository.save(likeRecord);
+
+
+        return "Timeline";
+    }
+
+
 
 
     //#.DB에서 게시물 받아옴

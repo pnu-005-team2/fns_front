@@ -1,5 +1,6 @@
 package com.team2.webservice.sprint1.dto;
 
+import java.sql.Blob;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -8,7 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Post.class)
 public abstract class Post_ {
 
-	public static volatile SingularAttribute<Post, String> img;
+	public static volatile SingularAttribute<Post, Blob> img;
 	public static volatile SingularAttribute<Post, Long> pid;
 	public static volatile SingularAttribute<Post, String> writer;
 	public static volatile SingularAttribute<Post, String> content;
