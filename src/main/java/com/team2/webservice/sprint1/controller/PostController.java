@@ -72,8 +72,6 @@ public class PostController {
 //            System.out.println("TEST : " + test.get(i).getContent());
 //            System.out.println("TEST : " + test.get(i).getImg());
 
-        byte[] tempImg = test.get(test.size()-1).getImg();
-
 
 //        }
 
