@@ -11,8 +11,11 @@ public class Comment {
     @Id // 해당 테이블의 PK필드
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cid;
-    private Long pid;
     private String writer;
     private String content;
     private String Date;
+
+    @ManyToOne
+    @JoinColumn(name ="pid")
+    private Post post;
 }

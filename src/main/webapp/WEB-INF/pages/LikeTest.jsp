@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
     <jsp:include page="header.jsp"/>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
 </head>
 <body>
 <div class="card gedf-card">
@@ -45,6 +47,7 @@
         <div class="btn-toolbar justify-content-between">
             <div class="btn-group">
                 <button type="submit" class="btn btn-primary">share</button>
+                <button type="button" class="btn btn" id = "execute">Like Register</button>
             </div>
             <div class="btn-group">
                 <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -61,6 +64,27 @@
     </div>
 </div>
 <jsp:include page="body.jsp"/>
+<script>
+    $('#execute').click(function(){
+        var lid = 1;
+        var pid = 1;
+        var uid = "¿ÃΩ¬√µ";
+        var isLike = true;
+        console.log("»Æ¿Œ")
+        $.ajax({
+            type: "POST",
+            url:'like_btn',
+            data: {lid : lid, pid : pid, uid : uid, like_boolean : isLike},
+            success: function(data){
+                console.log(data)
+            },
+            error: function(xhr, status, error){
+                console.log(error)
+            }
+        });
+    })
+
+</script>
     </body>
 </html>
 

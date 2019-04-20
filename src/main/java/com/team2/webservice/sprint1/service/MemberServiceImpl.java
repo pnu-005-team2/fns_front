@@ -3,9 +3,11 @@ package com.team2.webservice.sprint1.service;
 import com.team2.webservice.sprint1.dto.LoginDTO;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.vo.Member;
+import com.team2.webservice.sprint1.vo.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service // 현재 클래스를 스프링에서 관리하는 service bean으로 등록
@@ -32,7 +34,16 @@ public class MemberServiceImpl implements MemberService {
         System.out.println(loginDTO.getMemberPw());
         Optional<Member> oMember = memberRepository.findByEmailAndPassword(
                 loginDTO.getMemberEmail(), loginDTO.getMemberPw());
-
+        // ---------------Join Test--------------------
+//        System.out.println(oMember.get().getEmail());
+//        if(oMember.isPresent()){
+//            System.out.println("--------Before get Post---------");
+//            List<Post> posts = oMember.get().getPosts();
+//            for (int i = 0; i < posts.size(); i++) {
+//                System.out.println("-----------------");
+//                System.out.println(posts.get(i).getMember().getEmail());
+//            }
+//        }
         return oMember;
     }
 
