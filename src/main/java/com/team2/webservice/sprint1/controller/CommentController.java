@@ -68,7 +68,7 @@ public class CommentController {
         copy_comment.setContent(comment_content);
         copy_comment.setDate(comment_date);
 
-        copy_comment.setPid(Long.parseLong(comment_pid));
+//        copy_comment.setPid(Long.parseLong(comment_pid));
         copy_comment.setWriter(comment_writer);
 
         commentRepository.save(copy_comment);

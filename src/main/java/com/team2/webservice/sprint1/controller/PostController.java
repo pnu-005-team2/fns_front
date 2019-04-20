@@ -60,7 +60,7 @@ public class PostController {
         System.out.println(HashTag);
         Post client = new Post();
         client.setContent(content);
-        client.setWriter("KIM");
+//        client.setWriter("KIM");
         client.setHashtag(HashTag);
         client.setImg(img);
         postRepository.save(client);
