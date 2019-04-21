@@ -130,8 +130,7 @@
 <div class="container-fluid" >
     <div class="row">
         <div class="col-xs-3">.col-xs-3</div>
-        <div class="col-xs-3">
-
+        <div class="col-xs-3"  style="border-top:10px solid skyblue; border-bottom:10px solid skyblue; border-left:10px solid skyblue; border-right:10px solid skyblue; border-radius: 10px;" >
             <c:forEach var="item" items="${postRecordlList}">
                 <table class="table" id="timelineTable">
                     <thead>
@@ -154,7 +153,7 @@
                         <td>${item.content}</td>
                     </tr>
                     </tbody>
-                    <tfoot>
+                    <tfoot style="border-bottom:5px solid sky">
                     <tr id="tr_body${item.pid}">
                         <td>
                             <input type="button" id="like_btn${item.pid}" onclick="like_btn_clickevent(${item.pid})">
