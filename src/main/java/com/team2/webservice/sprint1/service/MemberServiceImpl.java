@@ -34,16 +34,7 @@ public class MemberServiceImpl implements MemberService {
         System.out.println(loginDTO.getMemberPw());
         Optional<Member> oMember = memberRepository.findByEmailAndPassword(
                 loginDTO.getMemberEmail(), loginDTO.getMemberPw());
-        // ---------------Join Test--------------------
-//        System.out.println(oMember.get().getEmail());
-//        if(oMember.isPresent()){
-//            System.out.println("--------Before get Post---------");
-//            List<Post> posts = oMember.get().getPosts();
-//            for (int i = 0; i < posts.size(); i++) {
-//                System.out.println("-----------------");
-//                System.out.println(posts.get(i).getMember().getEmail());
-//            }
-//        }
+
         return oMember;
     }
 

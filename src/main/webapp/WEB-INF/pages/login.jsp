@@ -21,7 +21,7 @@
     <div class="container">
         <h1>Welcome
             <span style = "color:yellow">FNS</span></h1>
-        <form class="form" method="POST" action="/login/">
+        <form class="form" method="POST" action="/login">
             <input id="email" type="email" name="memberEmail" placeholder="Email"/>
             <input id="password" type="password" name="memberPw" placeholder="Password"/>
             <%--<input class="login-btn waves-effect waves-light btn" type="submit" value="·Î±×ÀÎ" />--%>
