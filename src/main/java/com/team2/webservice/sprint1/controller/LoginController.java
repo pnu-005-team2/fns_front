@@ -38,14 +38,14 @@ public class LoginController {
     public String login(LoginDTO loginDTO, HttpServletRequest request, HttpSession session, Model model)
     {
         String return_page = "login";
+        //Todo 비밀번호 암호화 필요
         Optional<Member> member = memberService.login(loginDTO);
         if(member.isPresent()){ // 계정존재 확인
                 model.addAttribute("isOk", "true");
-                model.addAttribute("email", member.get().getEmail());
-                session.setAttribute("uid", member.get().getUid()); // 세션에 uid 전달
-                session.setAttribute("This is UID", "allow"); // 세션에 uid 전달
+                model.addAttribute("user", member);
                 return_page = "home";
-                System.out.println("비밀번호 일치");
+                System.out.println("로그인 성공");
+
         } else {
             System.out.println("일치하는 계정이 존재하지 않습니다.");
             model.addAttribute("isOk", "false");

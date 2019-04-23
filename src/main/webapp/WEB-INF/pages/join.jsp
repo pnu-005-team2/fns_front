@@ -73,7 +73,11 @@
 <script src="/resources/vendor/jquery/jquery.min.js"></script>
 <!-- Vendor JS-->
 <script src="/resources/vendor/select2/select2.min.js"></script>
+<script src="vendor/datepicker/moment.min.js"></script>
 
+<!-- Main JS-->
+<script src="/resources/js/global.js"></script>
+r
 
 <script>
     function checkPw() {

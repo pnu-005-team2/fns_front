@@ -171,11 +171,12 @@ h6 {
 }
 
 .bg-gra-01 {
-  background: -webkit-gradient(linear, left bottom, left top, from(#fbc2eb), to(#a18cd1));
-  background: -webkit-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
-  background: -moz-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
-  background: -o-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
-  background: linear-gradient(to top, #fbc2eb 0%, #a18cd1 100%);
+  /*background: -webkit-gradient(linear, left bottom, left top, from(#fbc2eb), to(#a18cd1));*/
+  /*background: -webkit-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);*/
+  /*background: -moz-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);*/
+  /*background: -o-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);*/
+  /*background: linear-gradient(to top, #fbc2eb 0%, #a18cd1 100%);*/
+  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
 }
 
 /* ==========================================================================
@@ -510,7 +511,8 @@ input {
 }
 
 .card-3 .card-heading {
-  background: url("../images/bg-heading-03.jpg") top left/cover no-repeat;
+  /*background: url("../images/bg-heading-03.jpg") top left/cover no-repeat;*/
+  background: deeppink top left/cover no-repeat;
   display: table-cell;
   width: 50%;
 }
