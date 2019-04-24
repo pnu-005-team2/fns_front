@@ -51,7 +51,6 @@ function commentInsert(insertData){
 //댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
 function commentUpdate(cno, content){
     var a ='';
-    
     a += '<div class="input-group">';
     a += '<input type="text" class="form-control" name="content_'+cno+'" value="'+content+'"/>';
     a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+cno+');">수정</button> </span>';

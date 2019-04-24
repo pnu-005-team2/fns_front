@@ -1,4 +1,8 @@
 package com.team2.webservice.sprint1.jpa;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 84b175acf1703fe6845c3c585be3745ca443dde8
 import com.team2.webservice.sprint1.dto.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
