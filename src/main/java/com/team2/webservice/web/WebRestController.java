@@ -10,4 +10,6 @@ public class WebRestController {
     public String hello(){
         return "Hell world";
     }
+
+
 }
