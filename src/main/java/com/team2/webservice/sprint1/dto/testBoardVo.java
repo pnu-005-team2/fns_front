@@ -1,4 +1,4 @@
-package com.team2.webservice.sprint1.dto;
+/*package com.team2.webservice.sprint1.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,3 +19,4 @@ public class testBoardVo {
 
 
 }
+*/
