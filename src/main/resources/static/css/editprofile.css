@@ -26,9 +26,7 @@ div#editprofile .my {
 }
 
 div#editprofle input[type="text"],
-div#editprofile input[type="email"],
 div#editprofile input[type="password"], 
-div#editprofile select,
 div#editprofile textarea,
  {
   font-family: 'Open Sans', sans-serif;
