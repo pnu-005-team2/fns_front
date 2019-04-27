@@ -55,7 +55,7 @@ function validateForm() {
   <h1>Edit Profile</h1>
   <div class="my">
     <div class="email-item"> sch0115@naver.com </div>
-     <form name="myForm" action="/action_page.php" onsubmit="return validateForm()" method="POST">
+     <form name="myForm" action="/user/edit" onsubmit="return validateForm()" method="POST">
      Name: <input type="text"  name="name">
      Password: <input type="password" placeholder="Password" name = "password"/>
      Gender: <input type="text" placeholder="male/female" name = "gender"/>
