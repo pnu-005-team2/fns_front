@@ -1,0 +1,62 @@
+#editprofile {
+  background: #f0f0f0;
+  width: 400px;
+  margin: 0 auto;
+  margin-top: 8px;
+  margin-bottom: 2%;
+  transition: opacity 1s;
+  -webkit-transition: opacity 1s;
+}
+
+#editprofile h1 {
+  background: #f0f0f0;
+  padding: 20px 0;
+  font-size: 140%;
+  font-weight: 600;
+  text-align: center;
+  color: #212121;
+}
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+div#editprofile .my {
+  background: #f0f0f0;
+  padding: 7% 3%;
+}
+
+div#editprofle input[type="text"],
+div#editprofile input[type="email"],
+div#editprofile input[type="password"], 
+div#editprofile select,
+div#editprofile textarea,
+ {
+  font-family: 'Open Sans', sans-serif;
+  font-size: .873rem;
+  padding: 4%;
+  border-radius: 4px;
+  outline: 0;
+  margin-bottom: 4%;
+  color: #212121;
+  height: 50px;
+  width: 100%;
+  border: .063rem solid #b0bec5;
+  
+}
+
+div#editprofile input[type="submit"] {
+  padding: .75rem 1.5rem;
+  margin: .5rem 0 0;
+  outline: 0;
+  border: 0;
+  background: #2196f3;
+  border-radius: 4px;
+  color: #FFF;
+  font-weight: 600;
+  font-size: .800rem;
+  letter-spacing: .25px;
+  transition: background .3s ease;
+  }
+div#editprofile input[type="submit"]:hover {
+    background: lighten(#2196f3, 5%);
+  }
