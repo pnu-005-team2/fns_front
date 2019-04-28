@@ -15,6 +15,49 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Title</title>
 
+	<style media="screen">
+    body{
+      background-color: #f5f5f5;
+    }
+    .in-line{
+      width:250px;
+      height:30px;
+    }
+    input{
+      margin:0;
+    }
+
+    input[type="text"]{
+      width:70%;
+      height:100%;
+      border:none;
+      font-size:1em;
+      padding-left: 5px;
+      font-style: oblique;
+      display:inline;
+      outline:none;
+      box-sizing: border-box;
+      color:black;
+
+    }
+    input[type=button]{
+      width: 20%;
+      height:100%;
+      background-color: lightgray;
+      border:none;
+      background-color: white;
+      font-size:1em;
+      color:#042AaC;
+      outline:none;
+      display:inline;
+      margin-left: -10px;
+      box-sizing: border-box;
+    }
+    input[type=button]:hover{
+      background-color: lightgray;
+    }
+  </style>
+
 
 </head>
 <body>
@@ -22,10 +65,7 @@
 
     $(function(){
 
-
-
     });
-
 
 
     function comment_regist(temppid){
@@ -63,8 +103,6 @@
         //button_like_button.append(comment_text_area_post_p);
         //button_like_button.appendChild(comment_text_area_post_p);
 
-
-
         $.ajax({
             type : "POST",
             url : "/comment",
@@ -77,11 +115,6 @@
 
         comment_text_area.value='';
         //comment_text_area.value=value;
-
-
-
-
-
 
 
     }
@@ -105,11 +138,6 @@
                 "like_boolean" : "true"
             }
         }
-
-
-
-
-
 
         $.ajax({
             type : "POST",
@@ -164,17 +192,16 @@
 
                     </tr>
                     <td>
-                        <div class="btn-group btn-group-sm" role="group" style="float:left;" id="btn_group_div_group${item.pid}">
-
-
-                                <input type="text" class="form-control" onfocus="this.value=''" id="comment${item.pid}" placeholder="´ñ±Û">
-                                <input type="button" id="comment_confirm${item.pid}" onclick="comment_regist(${item.pid});" value="µî·Ï"/>
+                        <div class="btn-group btn-group-sm" role="group" style="float:left;" id="btn_group_div_group${item.pid}">                                		
+                                <div class ="in-line" style="float:left;">
+                                	<img class="btn-img" id="btn_img_like_img_id" width="10%" height="15"src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg"> 
+                                	<input type="text" class="form-control" onfocus="this.value=''" id="comment${item.pid}" placeholder="´ñ±Û">
+                                	<input type="button" id="comment_confirm${item.pid}" onclick="comment_regist(${item.pid});" value="µî·Ï"/>
+                                </div>
+                              
 
                                <!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="µî-·Ï"/>
                                -->
-
-
-
                         </div>
                     </td>
 
