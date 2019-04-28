@@ -1,71 +1,88 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-         pageEncoding="EUC-KR"%>
+	pageEncoding="EUC-KR"%>
 
-<%@page import="com.team2.webservice.sprint1.controller.TimeLineController" %>
+<%@page
+	import="com.team2.webservice.sprint1.controller.TimeLineController"%>
 
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Title</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous">
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>Title</title>
 
-	<style media="screen">
-    body{
-      background-color: #f5f5f5;
-    }
-    .in-line{
-      width:250px;
-      height:30px;
-    }
-    input{
-      margin:0;
-    }
+<style media="screen">
+body {
+	background-color: #f5f5f5;
+}
 
-    input[type="text"]{
-      width:70%;
-      height:100%;
-      border:none;
-      font-size:1em;
-      padding-left: 5px;
-      font-style: oblique;
-      display:inline;
-      outline:none;
-      box-sizing: border-box;
-      color:black;
+.in-line {
+	width: 250px;
+	height: 30px;
+}
 
-    }
-    input[type=button]{
-      width: 20%;
-      height:100%;
-      background-color: lightgray;
-      border:none;
-      background-color: white;
-      font-size:1em;
-      color:#042AaC;
-      outline:none;
-      display:inline;
-      margin-left: -10px;
-      box-sizing: border-box;
-    }
-    input[type=button]:hover{
-      background-color: lightgray;
-    }
-  </style>
+input {
+	margin: 0;
+}
+
+input[type="text"] {
+	width: 70%;
+	height: 100%;
+	border: none;
+	font-size: 1em;
+	padding-left: 5px;
+	font-style: oblique;
+	display: inline;
+	outline: none;
+	box-sizing: border-box;
+	color: black;
+}
+
+input[type=button] {
+	width: 20%;
+	height: 100%;
+	background-color: lightgray;
+	border: none;
+	background-color: white;
+	font-size: 1em;
+	color: #042AaC;
+	outline: none;
+	display: inline;
+	margin-left: -10px;
+	box-sizing: border-box;
+}
+
+input[type=button]:hover {
+	background-color: lightgray;
+}
+</style>
 
 
 </head>
 <body>
-<script type="text/javascript">
+	<script type="text/javascript">
 
     $(function(){
 
     });
+    
+   // window.onload=function(){
+   // 	  $.ajax({
+    //          type : "POST",
+    //          url : "/like_boolean_check",
+             
+       
+   //       });
+   // }
 
 
     function comment_regist(temppid){
@@ -155,82 +172,100 @@
 
 
 </script>
-<div class="container-fluid" >
-    <div class="row">
-        <div class="col-xs-3">.col-xs-3</div>
-        <div class="col-xs-3"  style="border-top:10px solid skyblue; border-bottom:10px solid skyblue; border-left:10px solid skyblue; border-right:10px solid skyblue; border-radius: 10px;" >
-            <c:forEach var="item" items="${postRecordlList}">
-                <table class="table" id="timelineTable">
-                    <thead>
-                    <tr>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-3">.col-xs-3</div>
+			<div class="col-xs-3"
+				style="border-top: 10px solid skyblue; border-bottom: 10px solid skyblue; border-left: 10px solid skyblue; border-right: 10px solid skyblue; border-radius: 10px;">
+				<c:forEach var="item" items="${postRecordlList}">
+					<table class="table" id="timelineTable">
+						<thead>
+							<tr>
 
-                        <th>${item.writer}</th>
+								<th>${item.writer}</th>
 
-                    </tr>
-                    </thead>
-                    <tbody>
+							</tr>
+						</thead>
+						<tbody>
 
 
-                    <tr>
-                         <img> <img src ="/logoShowForStudent/${item.pid}">
-                    </tr>
+							<tr>
+								<td>
+									<img width="250" height="250" src="/logoShowForStudent/${item.pid}">
+									</td>
+							</tr>
 
-                    <tr>
+							<tr>
 
-                        <td>${item.content}</td>
-                    </tr>
-                    </tbody>
-                    <tfoot style="border-bottom:5px solid sky">
-                    <tr id="tr_body${item.pid}">
-                        <td>
-                            <input type="button" id="like_btn${item.pid}" onclick="like_btn_clickevent(${item.pid})">
-                            
-                                <img class="btn-img" id="btn_img_like_img_id" width="10" height="10" src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg">
+								<td>${item.content}</td>
+							</tr>
+						</tbody>
+						<tfoot style="border-bottom: 5px solid sky">
+							<tr id="tr_body${item.pid}">
+								<td><input type="button" id="like_btn${item.pid}"
+									onclick="like_btn_clickevent(${item.pid})"> 
+									<img
+									class="btn-img" id="btn_img_like_img_id" width="10" height="10"
+									src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg">
 
-                        </td>
+								</td>
 
-                    </tr>
-                    <td>
-                        <div class="btn-group btn-group-sm" role="group" style="float:left;" id="btn_group_div_group${item.pid}">                                		
-                                <div class ="in-line" style="float:left;">
-                                	<img class="btn-img" id="btn_img_like_img_id" width="10%" height="15"src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg"> 
-                                	<input type="text" class="form-control" onfocus="this.value=''" id="comment${item.pid}" placeholder="´ñ±Û">
-                                	<input type="button" id="comment_confirm${item.pid}" onclick="comment_regist(${item.pid});" value="µî·Ï"/>
-                                </div>
-                              
+							</tr>
+							<td>
+								<div class="btn-group btn-group-sm" role="group"
+									style="float: left;" id="btn_group_div_group${item.pid}">
+									<div class="in-line" style="float: left;">
+										<img class="btn-img" id="btn_img_like_img_id" width="10%"
+											height="15"
+											src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg">
+										<input type="text" class="form-control"
+											onfocus="this.value=''" id="comment${item.pid}"
+											placeholder="댓글"> 
+										<input type="button"
+											id="comment_confirm${item.pid}"
+											onclick="comment_regist(${item.pid});" value="등록" />
+									</div>
 
-                               <!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="µî-·Ï"/>
+
+									<!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="댓글"/>
                                -->
-                        </div>
-                    </td>
+								</div>
+							</td>
 
-                    </tfoot>
+						</tfoot>
 
-                </table>
+					</table>
 
-            </c:forEach>
-
-
-        </div>
-        <div class="col-xs-3">.col-xs-3</div>
-        <div class="col-xs-3">.col-xs-3</div>
-    </div> <div class="row"> <div class="col-sm-3">.col-sm-3</div>
-    <div class="col-sm-3">.col-sm-3</div>
-    <div class="col-sm-3">.col-sm-3</div>
-    <div class="col-sm-3">.col-sm-3</div>
-</div> <div class="row"> <div class="col-md-3">.col-md-3</div>
-    <div class="col-md-3">.col-md-3</div>
-    <div class="col-md-3">.col-md-3</div>
-    <div class="col-md-3">.col-md-3</div>
-</div> <div class="row"> <div class="col-lg-3">.col-lg-3</div>
-    <div class="col-lg-3">.col-lg-3</div>
-    <div class="col-lg-3">.col-lg-3</div>
-    <div class="col-lg-3">.col-lg-3</div>
-</div> </div>
+				</c:forEach>
 
 
+			</div>
+			<div class="col-xs-3">.col-xs-3</div>
+			<div class="col-xs-3">.col-xs-3</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3">.col-sm-3</div>
+			<div class="col-sm-3">.col-sm-3</div>
+			<div class="col-sm-3">.col-sm-3</div>
+			<div class="col-sm-3">.col-sm-3</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">.col-md-3</div>
+			<div class="col-md-3">.col-md-3</div>
+			<div class="col-md-3">.col-md-3</div>
+			<div class="col-md-3">.col-md-3</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-3">.col-lg-3</div>
+			<div class="col-lg-3">.col-lg-3</div>
+			<div class="col-lg-3">.col-lg-3</div>
+			<div class="col-lg-3">.col-lg-3</div>
+		</div>
+	</div>
 
-<!--<div class="card gedf-card">
+
+
+	<!--<div class="card gedf-card">
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
             <li class="nav-item">

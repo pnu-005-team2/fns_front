@@ -1,6 +1,6 @@
 package com.team2.webservice.sprint1.dto;
 
-<<<<<<< HEAD
+
 import lombok.Data;
 
 import javax.persistence.GeneratedValue;
@@ -8,8 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Data
-=======
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,7 @@ import java.sql.Blob;
 @AllArgsConstructor
 @Data
 @Entity
->>>>>>> 84b175acf1703fe6845c3c585be3745ca443dde8
+
 @Table(name = "post")
 public class Post {
     @Id
@@ -30,15 +29,8 @@ public class Post {
     private Long pid;
     private String content;
     private String writer;
-<<<<<<< HEAD
-    private String imgUrl;
-    private String likeIds;
-    private String hashtags;
 
-}
-=======
     private Blob img;
     private String hashtag;
 
 }
->>>>>>> 84b175acf1703fe6845c3c585be3745ca443dde8

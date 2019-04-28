@@ -23,6 +23,4 @@ public class testBoardVo {
 }
 <<<<<<< HEAD
 */
-=======
 
->>>>>>> 84b175acf1703fe6845c3c585be3745ca443dde8
