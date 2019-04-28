@@ -172,8 +172,7 @@
 
 
                     <tr>
-                        <td> <img id='readAsDataURL${item.pid}'  src="background.png" width="200" height="200"/> </td>
-                        <td> <img id ="itemimg${item.pid}"></td>
+                         <img> <img src ="/logoShowForStudent/${item.pid}">
                     </tr>
 
                     <tr>
@@ -195,12 +194,12 @@
                         <div class="btn-group btn-group-sm" role="group" style="float:left;" id="btn_group_div_group${item.pid}">                                		
                                 <div class ="in-line" style="float:left;">
                                 	<img class="btn-img" id="btn_img_like_img_id" width="10%" height="15"src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg"> 
-                                	<input type="text" class="form-control" onfocus="this.value=''" id="comment${item.pid}" placeholder="´ñ±Û">
-                                	<input type="button" id="comment_confirm${item.pid}" onclick="comment_regist(${item.pid});" value="µî·Ï"/>
+                                	<input type="text" class="form-control" onfocus="this.value=''" id="comment${item.pid}" placeholder="Â´Ã±Â±Ã›">
+                                	<input type="button" id="comment_confirm${item.pid}" onclick="comment_regist(${item.pid});" value="ÂµÃ®Â·Ã"/>
                                 </div>
                               
 
-                               <!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="µî-·Ï"/>
+                               <!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="ÂµÃ®-Â·Ã"/>
                                -->
                         </div>
                     </td>
