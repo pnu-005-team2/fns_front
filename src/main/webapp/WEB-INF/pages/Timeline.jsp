@@ -113,8 +113,10 @@ input[type=button]:hover {
             "writer" : temppid,
             "date": today
         }
-
-        document.getElementById("btn_group_div_group"+temppid).append(comment_text_area_post_p);
+        document.getElementById("btn_group_div_group"+temppid).innerHTML += "<div class=\"in-line\"><img class=\"btn-img\" id=\"btn_img_like_img_id\" width=\"10%\"height=\"15\""+ 
+        		"src=\"https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg\">" + comment_text_area.value + "</div>" + "<div><br></div>";
+        //document.getElementById("btn_group_div_group"+temppid).append(comment_text_area_post_p);
+        
 
         //comment_tr_Area.appendChild(comment_text_area_post_td);
         //button_like_button.append(comment_text_area_post_p);
@@ -220,10 +222,10 @@ input[type=button]:hover {
 											src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg">
 										<input type="text" class="form-control"
 											onfocus="this.value=''" id="comment${item.pid}"
-											placeholder="댓글"> 
+											placeholder="re"> 
 										<input type="button"
 											id="comment_confirm${item.pid}"
-											onclick="comment_regist(${item.pid});" value="등록" />
+											onclick="comment_regist(${item.pid});" value="enter" />
 									</div>
 
 
