@@ -2,14 +2,21 @@ package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.dto.Post;
 import com.team2.webservice.sprint1.jpa.PostRepository;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.sql.Blob;
 import java.util.List;
@@ -20,7 +27,7 @@ public class TimeLineController {
     private PostRepository postRepository;
 
 
-
+    List<Post> postRecordList;
 
 
    /* @GetMapping
@@ -40,7 +47,7 @@ public class TimeLineController {
 
 
 
-        List<Post> postRecordList = postRepository.findAll();
+        postRecordList = postRepository.findAll();
 
 //       int byte_num=postRecordList.size();
 
@@ -130,6 +137,31 @@ ByteArrayOutputStream baos = new ByteArrayOutputStream();
 */
 
     }
+
+    @RequestMapping("/logoShowForStudent/{pid}")
+    public void imageView(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") int pid) throws IOException {
+        res.setContentType("image/png");
+
+
+
+        try{
+            Blob blob = postRecordList.get(pid).getImg();
+            int blob_length =(int)blob.length();
+            try{
+                byte[] imagefile1 =postRecordList.get(pid).getImg().getBytes(1,blob_length);
+                InputStream in1 = new ByteArrayInputStream(imagefile1);
+                IOUtils.copy(in1, res.getOutputStream());
+            }catch (Exception e){
+             e.printStackTrace();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 }
 
