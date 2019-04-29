@@ -25,6 +25,8 @@ public class Member implements Serializable {
     private String password;
     private String gender;
     private String name;
+    private String intro;
+    private String img;
 
     // post에 관계과 종속되어 있음을 의미, post.java에서 member를 가르키는 변수명이랑 같아야한다.
     // OneToMany는 기본적으로 패치전략이 LAZY, 우선적으로 Proxy가 채워지고 필요할 때 가져온다.
