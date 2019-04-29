@@ -16,11 +16,23 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <title>Title</title>
 
 <style media="screen">
+.fa {
+	font-size: 20px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.fa:hover {
+	color: darkblue;
+}
+
 body {
 	background-color: #f5f5f5;
 }
@@ -171,148 +183,140 @@ input[type=button]:hover {
         });
 
          like_button.style.display="none";
-
     }
+   
 
-
-
+	
 </script>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-xs-3">.col-xs-3</div>
 			<div class="col-xs-3">
 				<c:forEach var="item" items="${postRecordlList}" step="2">
-					<div style="border-top: 10px solid skyblue; border-bottom: 10px solid skyblue; border-left: 10px solid skyblue; border-right: 10px solid skyblue; border-radius: 10px;">
-					<table class="table" id="timelineTable">
-						<thead>
-							<tr>
-
-								<th>${item.writer}</th>
-
-							</tr>
-						</thead>
-						<tbody>
-
-
-							<tr>
-								<td>
-									<img width="250" height="250" src="/logoShowForStudent/${item.pid}">
+					<div
+						style="border-top: 10px solid skyblue; border-bottom: 10px solid skyblue; border-left: 10px solid skyblue; border-right: 10px solid skyblue; border-radius: 10px;">
+						<table class="table" id="timelineTable">
+							<thead>
+								<tr>
+									<th>${item.writer}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><img width="250" height="250"
+										src="/logoShowForStudent/${item.pid}"></td>
+								</tr>
+								<tr>
+									<td>${item.content}</td>
+								</tr>
+							</tbody>
+							<tfoot style="border-bottom: 5px solid sky">
+								<tr id="tr_body${item.pid}">
+									<td>
+									<!--
+										<input type="button" id="like_btn${item.pid}"
+										onclick="like_btn_clickevent(${item.pid})"
+										style="margin-left: 5px;">
+									-->
+										
+										<i id="like_btn${item.pid}" 
+										onclick="myFunction(this)" 
+										onclick="like_btn_clickevent(${item.pid})"
+										class="fa fa-thumbs-o-up"></i>
+										<script>
+										function myFunction(x) {
+    										x.classList.toggle("fa-thumbs-up");
+										}
+										</script>
 									</td>
-							</tr>
-
-							<tr>
-
-								<td>${item.content}</td>
-							</tr>
-						</tbody>
-						<tfoot style="border-bottom: 5px solid sky">
-							<tr id="tr_body${item.pid}">
-								<td><input type="button" id="like_btn${item.pid}"
-									onclick="like_btn_clickevent(${item.pid})"
-									style="margin-left: 5px;"> 
-									<img
-									class="btn-img" id="btn_img_like_img_id" width="10" height="10"
-									src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg">
-
-								</td>
-
-							</tr>
-							<td>
-								<div class="btn-group btn-group-sm" role="group"
-									style="float: left;" id="btn_group_div_group${item.pid}">
-									<div class="in-line" style="float: left;">
-										<img class="btn-img" id="btn_img_like_img_id" width="10%"
-											height="15"
-											src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg">
-										<input type="text" class="form-control"
-											onfocus="this.value=''" id="comment${item.pid}"
-											placeholder="re"> 
-										<input type="button"
-											id="comment_confirm${item.pid}"
-											onclick="comment_regist(${item.pid});" value="enter" />
+								</tr>
+								<td>
+									<div class="btn-group btn-group-sm" role="group"
+										style="float: left;" id="btn_group_div_group${item.pid}">
+										<div class="in-line" style="float: left;">
+											<img class="btn-img" id="btn_img_like_img_id" width="10%"
+												height="15"
+												src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg">
+											<input type="text" class="form-control"
+												onfocus="this.value=''" id="comment${item.pid}"
+												placeholder="re"> <input type="button"
+												id="comment_confirm${item.pid}"
+												onclick="comment_regist(${item.pid});" value="enter" />
+										</div>
+										<!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="댓글"/>-->
 									</div>
-
-
-									<!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="댓글"/>
-                               -->
-								</div>
-							</td>
-
-						</tfoot>
-
-					</table>
+								</td>
+							</tfoot>
+						</table>
 					</div>
-					<div><br></div>
+
+					<div>
+						<br>
+					</div>
 				</c:forEach>
-
-
 			</div>
 			<div class="col-xs-3">
-			<div><br><br><br><br><br><br>친구추천부분<br><br><br><br><br><br></div>
-			<c:forEach var="item" items="${postRecordlList}" begin="1" step="2">
-					<div style="border-top: 10px solid skyblue; border-bottom: 10px solid skyblue; border-left: 10px solid skyblue; border-right: 10px solid skyblue; border-radius: 10px;">
-					<table class="table" id="timelineTable">
-						<thead>
-							<tr>
-
-								<th>${item.writer}</th>
-
-							</tr>
-						</thead>
-						<tbody>
-
-
-							<tr>
-								<td>
-									<img width="250" height="250" src="/logoShowForStudent/${item.pid}">
-									</td>
-							</tr>
-
-							<tr>
-
-								<td>${item.content}</td>
-							</tr>
-						</tbody>
-						<tfoot style="border-bottom: 5px solid sky">
-							<tr id="tr_body${item.pid}">
-								<td><input type="button" id="like_btn${item.pid}"
-									onclick="like_btn_clickevent(${item.pid})"
-									style="margin-left: 5px;"> 
-									<img
-									class="btn-img" id="btn_img_like_img_id" width="10" height="10"
-									src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg">
-
-								</td>
-
-							</tr>
-							<td>
-								<div class="btn-group btn-group-sm" role="group"
-									style="float: left;" id="btn_group_div_group${item.pid}">
-									<div class="in-line" style="float: left;">
-										<img class="btn-img" id="btn_img_like_img_id" width="10%"
-											height="15"
-											src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg">
-										<input type="text" class="form-control"
-											onfocus="this.value=''" id="comment${item.pid}"
-											placeholder="re"> 
-										<input type="button"
-											id="comment_confirm${item.pid}"
-											onclick="comment_regist(${item.pid});" value="enter" />
-									</div>
-
-
-									<!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="댓글"/>
-                               -->
-								</div>
-							</td>
-
-						</tfoot>
-
-					</table>
-					</div>
-					<div><br></div>
-				</c:forEach>
+				<div>
+					<br> <br> <br> <br> <br> <br>친구추천부분<br>
+					<br> <br> <br> <br> <br>
 				</div>
+
+				<c:forEach var="item" items="${postRecordlList}" begin="1" step="2">
+					<div
+						style="border-top: 10px solid skyblue; border-bottom: 10px solid skyblue; border-left: 10px solid skyblue; border-right: 10px solid skyblue; border-radius: 10px;">
+						<table class="table" id="timelineTable">
+							<thead>
+								<tr>
+									<th>${item.writer}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><img width="250" height="250"
+										src="/logoShowForStudent/${item.pid}"></td>
+								</tr>
+								<tr>
+									<td>${item.content}</td>
+								</tr>
+							</tbody>
+							<tfoot style="border-bottom: 5px solid sky">
+								<tr id="tr_body${item.pid}">
+									<td>										
+										<i id="like_btn${item.pid}" 
+										onclick="myFunction(this)" 
+										onclick="like_btn_clickevent(${item.pid})"
+										class="fa fa-thumbs-o-up"></i>
+										<script>
+										function myFunction(x) {
+    										x.classList.toggle("fa-thumbs-up");
+										}
+										</script></td>
+									</td>
+								</tr>
+								<td>
+									<div class="btn-group btn-group-sm" role="group"
+										style="float: left;" id="btn_group_div_group${item.pid}">
+										<div class="in-line" style="float: left;">
+											<img class="btn-img" id="btn_img_like_img_id" width="10%"
+												height="15"
+												src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg">
+											<input type="text" class="form-control"
+												onfocus="this.value=''" id="comment${item.pid}"
+												placeholder="re"> <input type="button"
+												id="comment_confirm${item.pid}"
+												onclick="comment_regist(${item.pid});" value="enter" />
+										</div>
+										<!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="댓글"/>-->
+									</div>
+								</td>
+							</tfoot>
+						</table>
+					</div>
+					<div>
+						<br>
+					</div>
+				</c:forEach>
+			</div>
 			<div class="col-xs-3">.col-xs-3</div>
 		</div>
 		<div class="row">
@@ -334,7 +338,6 @@ input[type=button]:hover {
 			<div class="col-lg-3">.col-lg-3</div>
 		</div>
 	</div>
-
 
 
 	<!--<div class="card gedf-card">
