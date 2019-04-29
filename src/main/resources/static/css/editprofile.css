@@ -62,39 +62,66 @@ input[type="text"]:focus, input[type="password"]:focus,type="text":focus {
 }
 
 input[type="submit"] {
-  padding: .75rem 1.5rem;
-  margin: .5rem 0 0;
-  outline: 0;
-  border: 0;
   background: #2196f3;
-  border-radius: 4px;
   color: #FFF;
-  font-weight: 600;
-  font-size: .800rem;
-  letter-spacing: .25px;
-  transition: background .3s ease;
-  position: relative;
   }
 input[type="submit"]:hover {
     background: lighten(#2196f3, 5%);
   }
 
 input[type="reset"] {
+  background: #FF5733;
+  color: #FFF;
+  }
+
+input[type="reset"]:hover {
+    background: lighten(#2196f3, 5%);
+  }  
+
+/*-----------Profile img tag----------------*/
+.profile img {
+  width: 200px;
+  height: 250px;
+}
+
+/*-----------Profile bottom button----------------*/
+.profile-button{
+  width: 30%;
   padding: .75rem 1.5rem;
   margin: .5rem 0 0;
   outline: 0;
   border: 0;
-  background: #FF5733;
   border-radius: 4px;
-  color: #FFF;
   font-weight: 600;
   font-size: .800rem;
   letter-spacing: .25px;
   transition: background .3s ease;
   position: relative;
-  }
-input[type="reset"]:hover {
-    background: lighten(#2196f3, 5%);
-  }  
+}
+
+/*-----------Profile img file tag----------------*/
+.file-box {
+  display: inline-block;
+  color: white;
+  background: gold;
+  text-align: center;
+}
+
+/*.file-box label {*/
+  /**/
+/*}*/
+
+.file-box input[type="file"] { /* 파일 필드 숨기기 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
+
+}
+
 
 
