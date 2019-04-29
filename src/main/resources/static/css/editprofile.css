@@ -1,48 +1,67 @@
-#editprofile {
-  background: #f0f0f0;
-  width: 400px;
-  margin: 0 auto;
-  margin-top: 8px;
-  margin-bottom: 2%;
-  transition: opacity 1s;
-  -webkit-transition: opacity 1s;
-}
-
-#editprofile h1 {
-  background: #f0f0f0;
-  padding: 20px 0;
-  font-size: 140%;
-  font-weight: 600;
-  text-align: center;
-  color: #212121;
-}
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-
-div#editprofile .my {
-  background: #f0f0f0;
-  padding: 7% 3%;
-}
-
-div#editprofle input[type="text"],
-div#editprofile input[type="password"], 
-div#editprofile textarea,
- {
+*{box-sizing:border-box}
+body {
+  margin: 0;
+  background: #F7F7F7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   font-family: 'Open Sans', sans-serif;
-  font-size: .873rem;
-  padding: 4%;
-  border-radius: 4px;
-  outline: 0;
-  margin-bottom: 4%;
-  color: #212121;
-  height: 50px;
-  width: 100%;
-  border: .063rem solid #b0bec5;
-  
 }
 
-div#editprofile input[type="submit"] {
+.secondform {
+  width: 650px;
+  background: white;
+  border-radius: 20px;
+}
+.secondform *{transition: .1s linear}
+.profile {
+  width: 240px;
+  float: left;
+  text-align: center;
+  padding: 30px;
+}
+form {
+  background: white;
+  float: left;
+  width: calc(100% - 240px);
+  padding: 30px;
+  border-radius: 0 20px 20px 0;
+  color: #7b7b7b; 
+}
+.secondform:after, form div:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+form div {
+  margin-bottom: 15px;
+  position: relative;
+}
+h1 {
+  font-size: 23px;
+  font-weight: 400;
+  position: center;
+  margin-top: 50px;
+  font-weight: 600;
+  font-size: .800rem;
+  letter-spacing: .25px;
+}
+
+
+input[type="text"], input[type="password"],textarea {
+  width: 100%;
+  padding: 10px 15px;
+  border-width: 0;
+  background: #e6e6e6;
+  outline: none;
+  margin: 0;
+}
+input[type="text"]:focus, input[type="password"]:focus,type="text":focus {
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,.2);
+}
+
+input[type="submit"] {
   padding: .75rem 1.5rem;
   margin: .5rem 0 0;
   outline: 0;
@@ -54,7 +73,28 @@ div#editprofile input[type="submit"] {
   font-size: .800rem;
   letter-spacing: .25px;
   transition: background .3s ease;
+  position: relative;
   }
-div#editprofile input[type="submit"]:hover {
+input[type="submit"]:hover {
     background: lighten(#2196f3, 5%);
   }
+
+input[type="reset"] {
+  padding: .75rem 1.5rem;
+  margin: .5rem 0 0;
+  outline: 0;
+  border: 0;
+  background: #FF5733;
+  border-radius: 4px;
+  color: #FFF;
+  font-weight: 600;
+  font-size: .800rem;
+  letter-spacing: .25px;
+  transition: background .3s ease;
+  position: relative;
+  }
+input[type="reset"]:hover {
+    background: lighten(#2196f3, 5%);
+  }  
+
+
