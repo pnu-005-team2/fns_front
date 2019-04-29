@@ -74,7 +74,7 @@ function validateForm() {
     alert("The information was successfully changed");
     return true;
   }
-  if (gender != "male" || gender != "female") {
+  if (gender == "male" || gender == "female") {
     return true;
   }
   else {
