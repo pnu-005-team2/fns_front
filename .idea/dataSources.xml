@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="fnsdb@fnsdb.c4t9xb74box1.ap-northeast-2.rds.amazonaws.com" uuid="03968541-cc23-4d7f-8362-a74b8e36756f">
+    <data-source source="LOCAL" name="fnsdb@fnsdb.c4t9xb74box1.ap-northeast-2.rds.amazonaws.com" uuid="7b059a74-8601-4198-83ce-8369b86363d8">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
