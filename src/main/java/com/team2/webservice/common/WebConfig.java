@@ -17,10 +17,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        //---------------로그인 권한이 필요한 페이지-----------
-        registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/board/*")
-                .excludePathPatterns("/login");
+//        //---------------로그인 권한이 필요한 페이지-----------
+//        registry.addInterceptor(authInterceptor)
+//                .addPathPatterns("/board/*")
+//                .excludePathPatterns("/login");
 
         //---------------로그인페이지에 대한 인터셉터----------
         registry.addInterceptor(loginInterceptor)

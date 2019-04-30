@@ -12,4 +12,7 @@ public interface BoardService {
     //게시물 삭제
     public void delete(Long pid);
 
+    //의류 위치태그
+    public void tagCloth(Post board);
+
 }

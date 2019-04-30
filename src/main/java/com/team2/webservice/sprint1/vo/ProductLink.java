@@ -13,4 +13,8 @@ public class ProductLink {
     private Long plid;
     private Long pid;
     private String position;
+
+    @ManyToOne
+    @JoinColumn(name ="tag", referencedColumnName = "pid")
+    private Post post;
 }
