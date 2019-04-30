@@ -2,15 +2,22 @@ package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.service.BoardServiceImpl;
 import com.team2.webservice.sprint1.vo.Post;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.util.Base64;
 
 @Controller
 @RequestMapping("/board")
@@ -32,14 +39,23 @@ public class BoardController {
 
     //--------------프론트에서 넘어온 게시물 정보를 DB에 저장---------------------
     @RequestMapping(value = "/post_", method = RequestMethod.POST)
-    public String writePost(Post post, @RequestParam MultipartFile image, HttpServletRequest httpServletRequest) throws IOException {
+    public ModelAndView writePost(ModelAndView mav, Post post, @RequestParam MultipartFile image, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+
+        httpServletResponse.setContentType("/");
+
+
         System.out.println("Post View In");
         post.setImg(image.getBytes());
         String writer = httpServletRequest.getParameter("writer");
         boardService.write(post, writer);
 
-        return "PostedTest";
 
+
+        mav.addObject("image", new String(Base64.getEncoder().encode(image.getBytes())));
+
+        mav.setViewName("PostedTest");
+//        return "PostedTest";
+        return mav;
     }
 
     //---------------프론트에서 받아온 사진 게시물위의 좌표를 DB에 저장-------------------
