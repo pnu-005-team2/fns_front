@@ -13,23 +13,41 @@
 <body>
 <h1>Tag on your clothing information</h1>
 <%--    <%out.println(request.getParameter("tempImg").toString());%>--%>
-<form action="/timeline" method="post" enctype="multipart/form-data">
+<form action="./tagClothingFin" method="post" enctype="multipart/form-data" >
     <img src="data:image/png;base64, ${image}" alt="test-image" width="250" height="250" onclick="javascript:showCoords(event)"/>
     <br/>
     <p id="demo"></p>
 
-    <input id="X" name = "X" type="hidden"/>
-    <input id="Y" name = "Y" type="hidden"/>
+<%--    <h1>test</h1>--%>
+<%--    <p id="test"></p>--%>
+<%--    <p id="test2"></p>--%>
+
+
     <script>
+
+        console.log("tagClothing script start");
+        var x,y;
         function showCoords(event) {
-            var x = event.clientX;
-            var y = event.clientY;
+            x = event.clientX;
+            y = event.clientY;
             var coords = "X coords: " + x + ", Y coords: " + y;
             document.getElementById("demo").innerHTML = coords;
-            $("#X").val(x);
-            $("#Y").val(y);
+            // $("#X").val(x);
+            // $("#Y").val(y);
+
+            //test
+            // var testText = "test X:" + x + ", test Y: " + y;
+            // document.getElementById("test").innerHTML = testText;
+            // var text1 = "test fin";
+            // document.getElementById("test2").innerHTML = text1;
+            return false;
         }
     </script>
+
+    <input id="X" name = "X" type="hidden" value=444 />
+    <input id="Y" name = "Y" type="hidden" value=444 />
+
+    <input id="linktext" name = "linktext" type="text"/>
     <button type="submit">finished</button>
 </form>
 </body>
