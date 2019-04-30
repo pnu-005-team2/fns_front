@@ -2,8 +2,10 @@ package com.team2.webservice.sprint1.service;
 
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.jpa.PostRepository;
+import com.team2.webservice.sprint1.jpa.ProductLinkRepository;
 import com.team2.webservice.sprint1.vo.Member;
 import com.team2.webservice.sprint1.vo.Post;
+import com.team2.webservice.sprint1.vo.ProductLink;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class BoardServiceImpl implements BoardService{
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    ProductLinkRepository productLinkRepository;
 
     @Override
     public void write(Post board, String writer) {
@@ -67,9 +72,20 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public void tagCloth(Post board){
+    public void tagCloth(ProductLink productLink, Post board, int x, int y, String link){
+        System.out.println("-------------tag clothing-------------");
 
+        productLink.setLinkText(link);
+        productLink.setPosition_x(x);
+        productLink.setPosition_y(y);
+        productLink.setPid(board.getPid());
 
+        System.out.println(productLink.getLinkText());
+
+        //계속 저장이 안된다는데 문법에 안맞다는데 왜??왜왜왜왜왜?
+//        productLinkRepository.save(productLink);
+
+        System.out.println("------------completed tag-------------");
     }
 
     //---------- 특수문자를 ,로 바꿔줍니다.---------------

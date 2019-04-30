@@ -1,5 +1,6 @@
 package com.team2.webservice.sprint1.service;
 import com.team2.webservice.sprint1.vo.Post;
+import com.team2.webservice.sprint1.vo.ProductLink;
 
 public interface BoardService {
 
@@ -13,6 +14,6 @@ public interface BoardService {
     public void delete(Long pid);
 
     //의류 위치태그
-    public void tagCloth(Post board);
+    public void tagCloth(ProductLink productLink, Post board, int x, int y, String link);
 
 }

@@ -1,8 +1,9 @@
 package com.team2.webservice.sprint1.controller;
 
+import com.team2.webservice.sprint1.jpa.PostRepository;
 import com.team2.webservice.sprint1.service.BoardServiceImpl;
 import com.team2.webservice.sprint1.vo.Post;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import com.team2.webservice.sprint1.vo.ProductLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
 import java.util.Base64;
+
+import static java.lang.Integer.parseInt;
 
 @Controller
 @RequestMapping("/board")
@@ -29,6 +29,9 @@ public class BoardController {
     //서비스는 인터페이스로 구현해야 할 메소드만 명세하며, 서비스를 구현받는 구현체를 따로 만들어줍니다.
     @Autowired
     BoardServiceImpl boardService;
+
+    @Autowired
+    PostRepository postRepository;
 
     //--------------게시물쓰기 요청시 해당하는 유효성을 검증하고 view 리턴---------------------
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -49,23 +52,24 @@ public class BoardController {
         String writer = httpServletRequest.getParameter("writer");
         boardService.write(post, writer);
 
-
-
         mav.addObject("image", new String(Base64.getEncoder().encode(image.getBytes())));
+        mav.setViewName("tagClothing");
 
-        mav.setViewName("PostedTest");
-//        return "PostedTest";
         return mav;
     }
 
     //---------------프론트에서 받아온 사진 게시물위의 좌표를 DB에 저장-------------------
-    @RequestMapping(value = "/tagClothing", method = RequestMethod.POST)
-    public String tagClothing(Post post, @RequestParam int location){
-        System.out.println("--Clothing tag page--");
-//        post.setClothingTag("");
-//        boardService.tagCloth(post);
+    @RequestMapping(value = "/tagClothingFin", method = RequestMethod.POST)
+    public String tagClothing(ModelAndView mav, Post post, ProductLink productLink, @RequestParam String X, @RequestParam String Y, @RequestParam String linktext, HttpServletRequest httpServletRequest) throws IOException {
 
-        return "Timeline"; //어디로가야하지,,
+        int x, y;
+        String linkText;
+        x = parseInt(httpServletRequest.getParameter("X"));
+        y = parseInt(httpServletRequest.getParameter("Y"));
+        linkText = httpServletRequest.getParameter("linktext");
+
+        boardService.tagCloth(productLink, post, x, y, linkText);
+
+        return "tagClothingFin";
     }
-
 }

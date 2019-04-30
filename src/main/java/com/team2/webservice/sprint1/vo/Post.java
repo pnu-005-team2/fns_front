@@ -29,7 +29,7 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<ProductLink> productLinks;
+//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+//    private List<ProductLink> productLinks;
 
 }
