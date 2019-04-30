@@ -42,4 +42,14 @@ public class BoardController {
 
     }
 
+    //---------------프론트에서 받아온 사진 게시물위의 좌표를 DB에 저장-------------------
+    @RequestMapping(value = "/tagClothing", method = RequestMethod.POST)
+    public String tagClothing(Post post, @RequestParam int location){
+        System.out.println("--Clothing tag page--");
+//        post.setClothingTag("");
+//        boardService.tagCloth(post);
+
+        return "Timeline"; //어디로가야하지,,
+    }
+
 }
