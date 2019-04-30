@@ -14,8 +14,22 @@
 <h1>Tag on your clothing information</h1>
 <%--    <%out.println(request.getParameter("tempImg").toString());%>--%>
 <form action="/timeline" method="post" enctype="multipart/form-data">
-    <img src="<%request.getParameter("tempImg");%>" alt="test-image" sizes="900" />
+    <img src="data:image/png;base64, ${image}" alt="test-image" width="250" height="250" onclick="javascript:showCoords(event)"/>
     <br/>
+    <p id="demo"></p>
+
+    <input id="X" name = "X" type="hidden"/>
+    <input id="Y" name = "Y" type="hidden"/>
+    <script>
+        function showCoords(event) {
+            var x = event.clientX;
+            var y = event.clientY;
+            var coords = "X coords: " + x + ", Y coords: " + y;
+            document.getElementById("demo").innerHTML = coords;
+            $("#X").val(x);
+            $("#Y").val(y);
+        }
+    </script>
     <button type="submit">finished</button>
 </form>
 </body>
