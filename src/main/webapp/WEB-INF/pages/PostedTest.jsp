@@ -8,12 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>postedtest</title>
+    <title>Tag on your clothing information</title>
 </head>
 <body>
-<h1>image upload test</h1>
+<h1>Tag on your clothing information</h1>
 <%--    <%out.println(request.getParameter("tempImg").toString());%>--%>
+<form action="/timeline" method="post" enctype="multipart/form-data">
     <img src="<%request.getParameter("tempImg");%>" alt="test-image" sizes="900" />
-
+    <br/>
+    <button type="submit">finished</button>
+</form>
 </body>
 </html>

@@ -44,6 +44,7 @@ public class BoardServiceImpl implements BoardService{
         //Todo ManyToOne 관계일 때 id에 해당하는 객체를 찾아서 넘겨줘야함, 비효율적 리팩토링 필요
         setMember(board,writer);
         board.setHashtag(hashTag);
+//        board.setClothingTag("@ ");
         postRepository.save(board);
         System.out.println("-------------------Write Complete---------------");
 
@@ -62,6 +63,12 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public void delete(Long pid) {
+
+    }
+
+    @Override
+    public void tagCloth(Post board){
+
 
     }
 
