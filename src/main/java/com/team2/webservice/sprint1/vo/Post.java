@@ -17,7 +17,6 @@ public class Post {
     private String content;
     private byte[] img;
     private String hashtag;
-//    private String clothingTag;
 
     @ManyToOne
     @JoinColumn(name = "writer", referencedColumnName = "name", nullable = false)
@@ -29,7 +28,7 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-//    private List<ProductLink> productLinks;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<ProductLink> productLinks;
 
 }
