@@ -18,12 +18,6 @@
     <br/>
     <p id="demo"></p>
 
-<%--    <h1>test</h1>--%>
-<%--    <p id="test"></p>--%>
-<%--    <p id="test2"></p>--%>
-
-
-
 
     <input id="X" name = "X" type="hidden" value=444 />
     <input id="Y" name = "Y" type="hidden" value=444 />
@@ -31,7 +25,6 @@
     <input id="linktext" name = "linktext" type="text"/>
     <script>
 
-        console.log("tagClothing script start");
         var x,y;
         function showCoords(event) {
             x = event.clientX;
