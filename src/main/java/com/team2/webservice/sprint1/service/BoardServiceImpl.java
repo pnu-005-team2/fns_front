@@ -87,22 +87,12 @@ public class BoardServiceImpl implements BoardService{
 
         int i;
         for(i = postSize-1 ; i >= 0 && !(post.get(i).getMember().getName().equals(writer) ) ; --i)
-        {
-//            System.out.println(post.get(i).getContent());
-//            System.out.println(post.get(i).getMember().getName());
-            System.out.println(i);
-        }
+            ;
 
         long temp_pid = post.get(i).getPid();
 
         setPid(productLink, temp_pid);
 
-//        System.out.println(productLink.getLinktext());
-//        System.out.println(productLink.getPosition_x());
-//        System.out.println(productLink.getPosition_y());
-//        System.out.println(post.get(i).getPid());
-
-        //계속 저장이 안된다는데 문법에 안맞다는데 왜??왜왜왜왜왜?
         productLinkRepository.save(productLink);
 
         System.out.println("------------completed tag-------------");
