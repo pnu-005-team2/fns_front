@@ -23,6 +23,12 @@
 <%--    <p id="test2"></p>--%>
 
 
+
+
+    <input id="X" name = "X" type="hidden" value=444 />
+    <input id="Y" name = "Y" type="hidden" value=444 />
+
+    <input id="linktext" name = "linktext" type="text"/>
     <script>
 
         console.log("tagClothing script start");
@@ -32,23 +38,13 @@
             y = event.clientY;
             var coords = "X coords: " + x + ", Y coords: " + y;
             document.getElementById("demo").innerHTML = coords;
-            // $("#X").val(x);
-            // $("#Y").val(y);
-
-            //test
-            // var testText = "test X:" + x + ", test Y: " + y;
-            // document.getElementById("test").innerHTML = testText;
-            // var text1 = "test fin";
-            // document.getElementById("test2").innerHTML = text1;
+            $("#X").val(x);
+            $("#Y").val(y);
             return false;
         }
     </script>
-
-    <input id="X" name = "X" type="hidden" value=444 />
-    <input id="Y" name = "Y" type="hidden" value=444 />
-
-    <input id="linktext" name = "linktext" type="text"/>
     <button type="submit">finished</button>
+    <jsp:include page="body.jsp"/>
 </form>
 </body>
 </html>
