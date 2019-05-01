@@ -23,6 +23,8 @@ import static java.lang.Integer.parseInt;
 @RequestMapping("/board")
 public class BoardController {
 
+    String writer;
+
     //기능구현에 대한 로직은 Service 클래스에서 관리합니다.
     //컨트롤러는 오직 view와 정보를 주고받고, Service를 호출하는 역할만 합니다.
     //이렇게 컨트롤러와 서비스를 분리함으로서 유지보수가 쉬워지며 코드가 간결해지고 가독성이 증가합니다.
@@ -49,7 +51,7 @@ public class BoardController {
 
         System.out.println("Post View In");
         post.setImg(image.getBytes());
-        String writer = httpServletRequest.getParameter("writer");
+        writer = httpServletRequest.getParameter("writer");
         boardService.write(post, writer);
 
         mav.addObject("image", new String(Base64.getEncoder().encode(image.getBytes())));
@@ -68,7 +70,9 @@ public class BoardController {
         y = parseInt(httpServletRequest.getParameter("Y"));
         linkText = httpServletRequest.getParameter("linktext");
 
-        boardService.tagCloth(productLink, post, x, y, linkText);
+
+
+        boardService.tagCloth(productLink, post, x, y, linkText, writer);
 
         return "tagClothingFin";
     }

@@ -14,6 +14,6 @@ public interface BoardService {
     public void delete(Long pid);
 
     //의류 위치태그
-    public void tagCloth(ProductLink productLink, Post board, int x, int y, String link);
+    public void tagCloth(ProductLink productLink, Post board, int x, int y, String link, String writer);
 
 }

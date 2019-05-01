@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,18 +73,37 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public void tagCloth(ProductLink productLink, Post board, int x, int y, String link){
+    public void tagCloth(ProductLink productLink, Post board, int x, int y, String link, String writer){
         System.out.println("-------------tag clothing-------------");
 
-        productLink.setLinkText(link);
+        productLink.setLinktext(link);
         productLink.setPosition_x(x);
         productLink.setPosition_y(y);
-        productLink.setPid(board.getPid());
 
-        System.out.println(productLink.getLinkText());
+        List<Post> post = postRepository.findAll();
+        int postSize = post.size();
+
+        System.out.println(writer);
+
+        int i;
+        for(i = postSize-1 ; i >= 0 && !(post.get(i).getMember().getName().equals(writer) ) ; --i)
+        {
+//            System.out.println(post.get(i).getContent());
+//            System.out.println(post.get(i).getMember().getName());
+            System.out.println(i);
+        }
+
+        long temp_pid = post.get(i).getPid();
+
+        setPid(productLink, temp_pid);
+
+//        System.out.println(productLink.getLinktext());
+//        System.out.println(productLink.getPosition_x());
+//        System.out.println(productLink.getPosition_y());
+//        System.out.println(post.get(i).getPid());
 
         //계속 저장이 안된다는데 문법에 안맞다는데 왜??왜왜왜왜왜?
-//        productLinkRepository.save(productLink);
+        productLinkRepository.save(productLink);
 
         System.out.println("------------completed tag-------------");
     }
@@ -105,6 +125,15 @@ public class BoardServiceImpl implements BoardService{
         else
             System.out.println("해당 계정이 존재하지 않습니다.");
         return member;
+    }
+
+    protected Optional<Post> setPid(ProductLink productLink, long pid){
+        Optional<Post> post = postRepository.findById(pid);
+        if(post.isPresent())
+            productLink.setPost(post.get());
+        else
+            System.out.println("해당 게시물이 존재하지 않습니다.");
+        return post;
     }
 
 }
