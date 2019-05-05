@@ -5,7 +5,8 @@
 [![GitHub stars](https://img.shields.io/github/stars/pnu-005-team2/fns_front.svg)](https://github.com/pnu-005-team2/fns_front/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/pnu-005-team2/fns_front.svg)](https://github.com/pnu-005-team2/fns_front/network)
 [![GitHub license](https://img.shields.io/github/license/pnu-005-team2/fns_front.svg)](https://github.com/pnu-005-team2/fns_front/blob/master/LICENSE)
-
+![Sonar Quality Gate](https://img.shields.io/sonar/http/164.125.34.143:9000/com.team2.webservice/quality_gate.svg?sonarVersion=6.7.6)
+![Sonar Coverage](https://img.shields.io/sonar/http/164.125.34.143:9000/com.team2.webservice/coverage.svg?sonarVersion=6.7.6)
 ## Release History
 
 * 0.0.2
