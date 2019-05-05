@@ -16,67 +16,13 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
-<link rel="stylesheet"
+	<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<title>Title</title>
+	<script
+			src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>Title</title>
 
-<style media="screen">
-.fa {
-	font-size: 20px;
-	cursor: pointer;
-	user-select: none;
-}
-
-.fa:hover {
-	color: darkblue;
-}
-
-body {
-	background-color: #f5f5f5;
-}
-
-.in-line {
-	width: 250px;
-	height: 30px;
-}
-
-input {
-	margin: 0;
-}
-
-input[type="text"] {
-	width: 70%;
-	height: 100%;
-	border: none;
-	font-size: 1em;
-	padding-left: 5px;
-	font-style: oblique;
-	display: inline;
-	outline: none;
-	box-sizing: border-box;
-	color: black;
-}
-
-input[type=button] {
-	width: 20%;
-	height: 100%;
-	background-color: lightgray;
-	border: none;
-	background-color: white;
-	font-size: 1em;
-	color: #042AaC;
-	outline: none;
-	display: inline;
-	margin-left: -10px;
-	box-sizing: border-box;
-}
-
-input[type=button]:hover {
-	background-color: lightgray;
-}
-</style>
+<link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
 
 
 </head>
@@ -95,6 +41,9 @@ input[type=button]:hover {
        
    //       });
    // }
+
+
+
 
 
     function comment_regist(temppid){
@@ -188,6 +137,7 @@ input[type=button]:hover {
 
 	
 </script>
+	<jsp:include page="Post.jsp"/>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-xs-3">.col-xs-3</div>
@@ -243,7 +193,7 @@ input[type=button]:hover {
 												id="comment_confirm${item.pid}"
 												onclick="comment_regist(${item.pid});" value="enter" />
 										</div>
-										<!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="ëŒ“ê¸€"/>-->
+										<!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="´ñ±Û"/>-->
 									</div>
 								</td>
 							</tfoot>
@@ -257,7 +207,7 @@ input[type=button]:hover {
 			</div>
 			<div class="col-xs-3">
 				<div>
-					<br> <br> <br> <br> <br> <br>ì¹œêµ¬ì¶”ì²œë¶€ë¶„<br>
+					<br> <br> <br> <br> <br> <br>Ä£±¸ÃßÃµºÎºÐ<br>
 					<br> <br> <br> <br> <br>
 				</div>
 
@@ -306,7 +256,7 @@ input[type=button]:hover {
 												id="comment_confirm${item.pid}"
 												onclick="comment_regist(${item.pid});" value="enter" />
 										</div>
-										<!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="ëŒ“ê¸€"/>-->
+										<!-- <input type="button" id="comment_confirm" onclick="document.getElementById('comment').value = ''" value="´ñ±Û"/>-->
 									</div>
 								</td>
 							</tfoot>

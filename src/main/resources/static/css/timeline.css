@@ -1,0 +1,53 @@
+.fa {
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.fa:hover {
+    color: darkblue;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+.in-line {
+    width: 250px;
+    height: 30px;
+}
+
+input {
+    margin: 0;
+}
+
+input[type="text"] {
+    width: 70%;
+    height: 100%;
+    border: none;
+    font-size: 1em;
+    padding-left: 5px;
+    font-style: oblique;
+    display: inline;
+    outline: none;
+    box-sizing: border-box;
+    color: black;
+}
+
+input[type=button] {
+    width: 20%;
+    height: 100%;
+    background-color: lightgray;
+    border: none;
+    background-color: white;
+    font-size: 1em;
+    color: #042AaC;
+    outline: none;
+    display: inline;
+    margin-left: -10px;
+    box-sizing: border-box;
+}
+
+input[type=button]:hover {
+    background-color: lightgray;
+}
