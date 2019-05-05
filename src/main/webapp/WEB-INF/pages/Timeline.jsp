@@ -217,7 +217,7 @@ input[type=button]:hover {
 										<input type="button" id="like_btn${item.pid}"
 										onclick="like_btn_clickevent(${item.pid})"
 										style="margin-left: 5px;">
-									-->
+										-->
 										
 										<i id="like_btn${item.pid}" 
 										onclick="myFunction(this)" 
@@ -227,8 +227,7 @@ input[type=button]:hover {
 										function myFunction(x) {
     										x.classList.toggle("fa-thumbs-up");
 										}
-										</script>
-									</td>
+										</script></td>
 								</tr>
 								<td>
 									<div class="btn-group btn-group-sm" role="group"
