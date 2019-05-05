@@ -1,8 +1,6 @@
 package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.vo.Post;
-import com.team2.webservice.sprint1.dto.Comment;
-import com.team2.webservice.sprint1.dto.Post;
 import com.team2.webservice.sprint1.jpa.PostRepository;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +47,9 @@ public class TimeLineController {
 
 
         postRecordList = postRepository.findAll();
-
+        for (int i = 0; i < postRecordList.size(); i++) {
+            System.out.printf("pot : " + postRecordList.get(i).getMember().getEmail());
+        }
 //       int byte_num=postRecordList.size();
 
 
