@@ -43,13 +43,13 @@ public class LoginController {
         if(member.isPresent()){ // 계정존재 확인
                 model.addAttribute("isOk", "true");
                 model.addAttribute("user", member.get());
-                return_page = "home";
+//                return_page = "redirect:timeline";
                 System.out.println("로그인 성공");
         } else {
             System.out.println("일치하는 계정이 존재하지 않습니다.");
             model.addAttribute("isOk", "false");
         }
-
+        System.out.println(return_page);
         return return_page;
     }
 
