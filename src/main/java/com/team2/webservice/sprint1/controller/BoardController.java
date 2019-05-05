@@ -4,6 +4,7 @@ import com.team2.webservice.sprint1.jpa.PostRepository;
 import com.team2.webservice.sprint1.service.BoardServiceImpl;
 import com.team2.webservice.sprint1.vo.Post;
 import com.team2.webservice.sprint1.vo.ProductLink;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Base64;
 
 import static java.lang.Integer.parseInt;
@@ -50,7 +53,11 @@ public class BoardController {
 
 
         System.out.println("Post View In");
-        post.setImg(image.getBytes());
+        try {
+            post.setImg(new javax.sql.rowset.serial.SerialBlob(image.getBytes()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         writer = httpServletRequest.getParameter("writer");
         boardService.write(post, writer);
 
