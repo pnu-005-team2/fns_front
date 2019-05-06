@@ -36,7 +36,7 @@ public class UserController {
         Optional<Member> oMember = memberService.editProfile(profileDTO);
         if(oMember.isPresent())
             model.addAttribute("updateUser", oMember.get());
-        return "home";
+        return "redirect:/timeline";
     }
 
 }

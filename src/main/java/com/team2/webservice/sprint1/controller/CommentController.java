@@ -81,7 +81,7 @@ public class CommentController {
         //System.out.println("+++"+comment.getContent());
         //String content = httpServletRequest.getParameter("")
         //String content =request.getParameter("content");
-        //       Post client = new Post();
+        //       Board client = new Board();
 
         //List<Comment> commentsRecordList = commentRepository.findAll();
         //model.addAttribute("_commentList",commentsRecordList);
@@ -104,9 +104,9 @@ public class CommentController {
         client.setWriter("KIM");
         client.setHashtag("안녕, 안녕하세요");
         client.setImg("1234");
-//        Post client = new Post((long) 1, content, "Lee", ",,,,", "부산대");
-//        postRepository.save(client);
-        List<Post> test = postRepository.findAll();
+//        Board client = new Board((long) 1, content, "Lee", ",,,,", "부산대");
+//        boardRepository.save(client);
+        List<Board> test = boardRepository.findAll();
         for(int i = 0 ; i < test.size() ; ++i){
             System.out.println("TEST : " + test.get(i).getContent());
         }

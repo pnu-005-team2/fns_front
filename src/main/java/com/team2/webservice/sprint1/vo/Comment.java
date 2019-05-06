@@ -17,5 +17,5 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name ="pid")
-    private Post post;
+    private Board board;
 }

@@ -1,14 +1,13 @@
 package com.team2.webservice.sprint1.controller;
 
-import com.team2.webservice.sprint1.vo.Post;
-import com.team2.webservice.sprint1.jpa.PostRepository;
+import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.vo.Board;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,117 +16,120 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class TimeLineController {
 
     @Autowired
-    private PostRepository postRepository;
+    private BoardRepository boardRepository;
 
 
-    List<Post> postRecordList;
+    List<Board> boardRecordList;
 
 
-   /* @GetMapping
-    @RequestMapping("/post")
+    @RequestMapping(value = "/timeline/origin", method = RequestMethod.GET)
     public String write(Model model)
     {
+        System.out.println("Origin");
+        boardRecordList = boardRepository.findAll();
 
-        return "Post";
-    }*/
+        model.addAttribute("postRecordlList", boardRecordList);
+        model.addAttribute("postRecordList_Byte", boardRecordList);
+        return "Timeline";
+
+    }
 
     @PostMapping
     @RequestMapping("/timeline")
     public String Post(ModelMap modelMap)
     {
 //        String content =request.getParameter("content");
- //       Post client = new Post();
+ //       Board client = new Board();
 
 
 
-        postRecordList = postRepository.findAll();
-//       int byte_num=postRecordList.size();
+//        System.out.println(boardRecordList);
+//       int byte_num=boardRecordList.size();
 
-
-/*
-ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    byte[] buf = new byte[1024];
-    Blob blob = profile.getContent();
-    InputStream in =  blob.getBinaryStream();
-    System.out.println("id content" +in);
-    int n = 0;
-    while ((n=in.read(buf))>=0)
-    {
-        baos.write(buf, 0, n);
-
-    }
-
-    in.close();
-    byte[] bytes = baos.toByteArray();
-    System.out.println("bytes" +bytes);
-    byte[] encodeBase64 = Base64.encodeBase64(buf);
-    String base64Encoded = new String(encodeBase64, "UTF-8");
-
-
-    customer.setEmailId(customerName);
-    profile.setCustomer(customer);
-    //profile.setContent(blob);
-    System.out.println();
-    profile = profileService.findProfileById(customer);
-    model.addAttribute("content",base64Encoded);
-    model.addAttribute("profile", profile);
-    return "myProfile";
- */
-
-     /*   for(int i=0;i<postRecordList.size();i++){
-
-            try{
-                byte[] imgByteArray= postRecordList.get(i).getImg().getBytes();
-
-                //byte[] imgByteArray = Base64.getDecoder().decode(temp_img_String.getBytes());
-
-                postresults_List.get(i).content_result= postRecordList.get(i).getContent();
-                postresults_List.get(i).hashtag_result= postRecordList.get(i).getHashtag();
-                postresults_List.get(i).pid_result= postRecordList.get(i).getPid();
-                postresults_List.get(i).writer_result= postRecordList.get(i).getWriter();
-                postresults_List.get(i).img_result= imgByteArray;
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
-
+//ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//    byte[] buf = new byte[1024];
+//    Blob blob = profile.getContent();
+//    InputStream in =  blob.getBinaryStream();
+//    System.out.println("id content" +in);
+//    int n = 0;
+//    while ((n=in.read(buf))>=0)
+//    {
+//        baos.write(buf, 0, n);
 //
-        }*/
+//    }
+//
+//    in.close();
+//    byte[] bytes = baos.toByteArray();
+//    System.out.println("bytes" +bytes);
+//    byte[] encodeBase64 = Base64.encodeBase64(buf);
+//    String base64Encoded = new String(encodeBase64, "UTF-8");
+//
+//
+//    customer.setEmailId(customerName);
+//    profile.setCustomer(customer);
+//    //profile.setContent(blob);
+//    System.out.println();
+//    profile = profileService.findProfileById(customer);
+//    model.addAttribute("content",base64Encoded);
+//    model.addAttribute("profile", profile);
+//    return "myProfile";
+//
 
-      Post post;
+//        for(int i=0;i<boardRecordList.size();i++){
+//
+//            try{
+//                byte[] imgByteArray= boardRecordList.get(i).getImg().getBytes();
+//
+//                //byte[] imgByteArray = Base64.getDecoder().decode(temp_img_String.getBytes());
+//
+//                postresults_List.get(i).content_result= boardRecordList.get(i).getContent();
+//                postresults_List.get(i).hashtag_result= boardRecordList.get(i).getHashtag();
+//                postresults_List.get(i).pid_result= boardRecordList.get(i).getPid();
+//                postresults_List.get(i).writer_result= boardRecordList.get(i).getWriter();
+//                postresults_List.get(i).img_result= imgByteArray;
+//            }catch (Exception ex){
+//                ex.printStackTrace();
+//            }
+//
+//        }
+
+ //     Board board;
 
 
         //List<Image>
+        boardRecordList = boardRepository.findAll();
 
-
-        modelMap.addAttribute("postRecordlList",postRecordList);
-        modelMap.addAttribute("postRecordList_Byte",postRecordList);
+        modelMap.addAttribute("postRecordlList", boardRecordList);
+        modelMap.addAttribute("postRecordList_Byte", boardRecordList);
       //  model.addAttribute("postResult_ArrayList",postresults_List);
        // model.addAttribute("postImageList",)
 
-        return "Timeline";
+//        return "Timeline";
+        return "timeLineVer2";
 
-        /*
 
-          System.out.println("In LikeRecord");
-        List<LikeRecord> likeRecordList = likeRecordRepository.findAll(); // select * from LikeRecord
-        model.addAttribute("LikeList", likeRecordList);
-        System.out.println(likeRecordList.get(0).getLid());
-        return "LikeTest";
-         */
+//
+//          System.out.println("In LikeRecord");
+//        List<LikeRecord> likeRecordList = likeRecordRepository.findAll(); // select * from LikeRecord
+//        model.addAttribute("LikeList", likeRecordList);
+//        System.out.println(likeRecordList.get(0).getLid());
+//        return "LikeTest";
+
 
 //        client.setPid((long)2);
      /*   client.setContent(content);
         client.setWriter("KIM");
         client.setHashtag("안녕, 안녕하세요");
         client.setImg("1234");
-//        Post client = new Post((long) 1, content, "Lee", ",,,,", "부산대");
-//        postRepository.save(client);
-        List<Post> test = postRepository.findAll();
+//        Board client = new Board((long) 1, content, "Lee", ",,,,", "부산대");
+//        boardRepository.save(client);
+        List<Board> test = boardRepository.findAll();
         for(int i = 0 ; i < test.size() ; ++i){
             System.out.println("TEST : " + test.get(i).getContent());
         }
@@ -136,16 +138,17 @@ ByteArrayOutputStream baos = new ByteArrayOutputStream();
     }
 
     @RequestMapping("/logoShowForStudent/{pid}")
-    public void imageView(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") int pid) throws IOException {
+    public void imageView(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") Long pid) throws IOException {
         res.setContentType("image/png");
 
 
-
         try{
-            Blob blob = postRecordList.get(pid).getImg();
+            Optional<Board> oBoard = boardRepository.findById(pid);
+            Board board = oBoard.get();
+            Blob blob = board.getImg();
             int blob_length =(int)blob.length();
             try{
-                byte[] imagefile1 =postRecordList.get(pid).getImg().getBytes(1,blob_length);
+                byte[] imagefile1 = board.getImg().getBytes(1,blob_length);
                 InputStream in1 = new ByteArrayInputStream(imagefile1);
                 IOUtils.copy(in1, res.getOutputStream());
             }catch (Exception e){

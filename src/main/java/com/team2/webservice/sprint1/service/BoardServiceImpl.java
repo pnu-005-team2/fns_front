@@ -1,10 +1,10 @@
 package com.team2.webservice.sprint1.service;
 
+import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
-import com.team2.webservice.sprint1.jpa.PostRepository;
 import com.team2.webservice.sprint1.jpa.ProductLinkRepository;
+import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.Member;
-import com.team2.webservice.sprint1.vo.Post;
 import com.team2.webservice.sprint1.vo.ProductLink;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 public class BoardServiceImpl implements BoardService{
 
     @Autowired
-    PostRepository postRepository;
+    BoardRepository boardRepository;
 
     @Autowired
     MemberRepository memberRepository;
@@ -29,7 +29,7 @@ public class BoardServiceImpl implements BoardService{
     ProductLinkRepository productLinkRepository;
 
     @Override
-    public void write(Post board, String writer) {
+    public void write(Board board, String writer) {
         System.out.println("-------------------In Board---------------");
         System.out.println(board);
 
@@ -51,19 +51,19 @@ public class BoardServiceImpl implements BoardService{
         setMember(board,writer);
         board.setHashtag(hashTag);
 //        board.setClothingTag("@ ");
-        postRepository.save(board);
+        boardRepository.save(board);
         System.out.println("-------------------Write Complete---------------");
 
 
     }
 
     @Override
-    public Post read(Long pid) {
+    public Board read(Long pid) {
         return null;
     }
 
     @Override
-    public void update(Post board) {
+    public void update(Board board) {
 
     }
 
@@ -73,20 +73,20 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public void tagCloth(ProductLink productLink, Post board, int x, int y, String link, String writer){
+    public void tagCloth(ProductLink productLink, Board board, int x, int y, String link, String writer){
         System.out.println("-------------tag clothing-------------");
 
         productLink.setLinktext(link);
         productLink.setPosition_x(x);
         productLink.setPosition_y(y);
 
-        List<Post> post = postRepository.findAll();
+        List<Board> post = boardRepository.findAll();
         int postSize = post.size();
 
         System.out.println(writer);
 
         int i;
-        for(i = postSize-1 ; i >= 0 && !(post.get(i).getMember().getName().equals(writer) ) ; --i)
+        for(i = postSize-1 ; i >= 0 && !(post.get(i).getMember().getEmail().equals(writer) ) ; --i)
             ;
 
         long temp_pid = post.get(i).getPid();
@@ -108,19 +108,20 @@ public class BoardServiceImpl implements BoardService{
     }
 
     //---------- 작성회원 엔티티를 찾아서 넣어줍니다..---------------
-    protected Optional<Member> setMember(Post post, String name){
-        Optional<Member> member = memberRepository.findByName(name);
+    protected Optional<Member> setMember(Board board, String email){
+        System.out.println(email);
+        Optional<Member> member = memberRepository.findByEmail(email);
         if(member.isPresent())
-            post.setMember(member.get());
+            board.setMember(member.get());
         else
             System.out.println("해당 계정이 존재하지 않습니다.");
         return member;
     }
 
-    protected Optional<Post> setPid(ProductLink productLink, long pid){
-        Optional<Post> post = postRepository.findById(pid);
+    protected Optional<Board> setPid(ProductLink productLink, long pid){
+        Optional<Board> post = boardRepository.findById(pid);
         if(post.isPresent())
-            productLink.setPost(post.get());
+            productLink.setBoard(post.get());
         else
             System.out.println("해당 게시물이 존재하지 않습니다.");
         return post;
