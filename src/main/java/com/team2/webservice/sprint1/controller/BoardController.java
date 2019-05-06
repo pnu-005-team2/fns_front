@@ -1,10 +1,9 @@
 package com.team2.webservice.sprint1.controller;
 
-import com.team2.webservice.sprint1.jpa.PostRepository;
+import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.service.BoardServiceImpl;
-import com.team2.webservice.sprint1.vo.Post;
+import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.ProductLink;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Base64;
 
@@ -36,7 +34,7 @@ public class BoardController {
     BoardServiceImpl boardService;
 
     @Autowired
-    PostRepository postRepository;
+    BoardRepository boardRepository;
 
     //--------------게시물쓰기 요청시 해당하는 유효성을 검증하고 view 리턴---------------------
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -47,19 +45,19 @@ public class BoardController {
 
     //--------------프론트에서 넘어온 게시물 정보를 DB에 저장---------------------
     @RequestMapping(value = "/post_", method = RequestMethod.POST)
-    public ModelAndView writePost(ModelAndView mav, Post post, @RequestParam MultipartFile image, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+    public ModelAndView writePost(ModelAndView mav, Board board, @RequestParam MultipartFile image, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
 
         httpServletResponse.setContentType("/");
 
 
-        System.out.println("Post View In");
+        System.out.println("Board View In");
         try {
-            post.setImg(new javax.sql.rowset.serial.SerialBlob(image.getBytes()));
+            board.setImg(new javax.sql.rowset.serial.SerialBlob(image.getBytes()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         writer = httpServletRequest.getParameter("writer");
-        boardService.write(post, writer);
+        boardService.write(board, writer);
 
         mav.addObject("image", new String(Base64.getEncoder().encode(image.getBytes())));
         mav.setViewName("tagClothing");
@@ -69,7 +67,7 @@ public class BoardController {
 
     //---------------프론트에서 받아온 사진 게시물위의 좌표를 DB에 저장-------------------
     @RequestMapping(value = "/tagClothingFin", method = RequestMethod.POST)
-    public String tagClothing(ModelAndView mav, Post post, ProductLink productLink, @RequestParam String X, @RequestParam String Y, @RequestParam String linktext, HttpServletRequest httpServletRequest) throws IOException {
+    public String tagClothing(ModelAndView mav, Board board, ProductLink productLink, @RequestParam String X, @RequestParam String Y, @RequestParam String linktext, HttpServletRequest httpServletRequest) throws IOException {
 
         int x, y;
         String linkText;
@@ -79,7 +77,7 @@ public class BoardController {
 
 
 
-        boardService.tagCloth(productLink, post, x, y, linkText, writer);
+        boardService.tagCloth(productLink, board, x, y, linkText, writer);
 
         return "tagClothingFin";
     }

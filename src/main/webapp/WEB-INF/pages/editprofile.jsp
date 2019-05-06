@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/editprofile.css">
     <script src="//code.jquery.com/jquery.min.js"></script>
 
-    <%
+<%
     Member user = (Member)session.getAttribute("login");
     String email = user.getEmail();
     String name = user.getName();
