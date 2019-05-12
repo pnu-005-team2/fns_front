@@ -1,0 +1,79 @@
+
+
+.left{
+    width: 25%;
+    display: inline-block;
+    background-color: #FF5733;
+}
+
+.right{
+    width: 25%;
+    display: inline-block;
+    background-color: #2c6ed5;
+
+}
+
+.time-line{
+    width: 50%;
+    display: inline-block;
+}
+
+
+.board-item {
+    border: solid;
+    margin-top: 1em;
+    height: 50em;
+}
+
+.board-item div {
+    width: 100%;
+}
+
+
+.writer img {
+    width: 5em;
+    height: 5em;
+}
+
+.board-img img {
+    width: 100%;
+    height: 25em;
+}
+
+.board-content {
+    padding-left: 1em;
+    font-size: 2em;
+}
+
+.board-hashtag {
+    color: #2c6ed5;
+    padding-left: 1em;
+    font-size: 1.2em;
+}
+
+.board-funtion {
+    height: 4em;
+    padding: 1em;
+}
+
+.board-funtion i{
+    margin-right: 1em;
+}
+
+.comment-box {
+    height: 10em;
+    overflow: hidden;
+    padding: 1em;
+}
+
+.comment-input-box{
+    text-align: center;
+}
+
+.comment-input {
+    width: 80%;
+}
+.enter-key {
+    width: 10%;
+}
+

@@ -1,7 +1,9 @@
 package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.dto.LoginDTO;
+import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.service.MemberServiceImpl;
+import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.Member;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
 // 모델은 수명이 딱 그 페이지만임!
@@ -19,9 +22,6 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-
-    @Autowired
-    MemberRepository memberRepository;
 
     @Autowired
     MemberServiceImpl memberService;
@@ -43,13 +43,13 @@ public class LoginController {
         if(member.isPresent()){ // 계정존재 확인
                 model.addAttribute("isOk", "true");
                 model.addAttribute("user", member.get());
-                return_page = "home";
+//                return_page = "timeline";
                 System.out.println("로그인 성공");
         } else {
             System.out.println("일치하는 계정이 존재하지 않습니다.");
             model.addAttribute("isOk", "false");
         }
-
+        System.out.println(return_page);
         return return_page;
     }
 
