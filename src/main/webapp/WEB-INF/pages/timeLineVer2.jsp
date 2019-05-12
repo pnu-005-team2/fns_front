@@ -52,7 +52,9 @@
                 </div>
             </c:forEach>
         </div>
-        <div class="right"></div>
+        <div class="friendshow">
+        	
+        </div>
     </div>
 <script>
 
