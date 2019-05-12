@@ -39,7 +39,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         if(member != null){
             logger.info("New Login Success");
             httpSession.setAttribute(LOGIN, member); // 세션에 로그인정보 저장
+            logger.info("New Session : " + member.toString());
+            response.sendRedirect("/timeline");
         }
+
     }
 
 

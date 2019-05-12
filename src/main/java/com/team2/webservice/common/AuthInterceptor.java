@@ -3,6 +3,8 @@ package com.team2.webservice.common;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,5 +31,16 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         // 따라서 true로하면 컨트롤러 uri로 가게 됨.
     }
 
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        HttpSession httpSession = request.getSession();
+        ModelMap modelMap = modelAndView.getModelMap();
+        Object member = modelMap.get("updateUser");
 
+        if(member != null){
+            logger.info("Update User");
+            modelMap.remove("updateUser");
+            httpSession.setAttribute(LOGIN, member); // 세션에 로그인정보 저장
+        }
+    }
 }

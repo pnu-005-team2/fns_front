@@ -27,7 +27,8 @@ public class JoinController {
     public String registerPost(Member member, HttpServletRequest request)
     {
         System.out.println(member);
-        System.out.println("Post");
+        System.out.println("Board");
+        member.setImg("no img");
         memberService.register(member);
         return "redirect:/login";
     }

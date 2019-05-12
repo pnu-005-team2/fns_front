@@ -77,7 +77,7 @@
 
 <!-- Main JS-->
 <script src="/resources/js/global.js"></script>
-r
+
 
 <script>
     function checkPw() {
@@ -95,3 +95,6 @@ r
 
 
 </html>
+
+
+
