@@ -53,8 +53,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Optional<Member> editProfile(ProfileDTO profileDTO) throws IOException {
         Optional<Member> oMember = memberRepository.findByEmail(profileDTO.getEmail());
-        Member member = oMember.get();
+        Member member = null;
         if(oMember.isPresent()){
+            member = oMember.get();
             logger.info("Edit Find");
             if(!profileDTO.getName().equals(""))
                 member.setName(profileDTO.getName());

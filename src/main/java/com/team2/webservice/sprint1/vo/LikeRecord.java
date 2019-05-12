@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter // lombook, getter/setter 자동으로 만들어줌
 @Setter
@@ -27,7 +26,7 @@ public class LikeRecord {
 
     @ManyToOne
     @JoinColumn(name = "pid")
-    Post post;
+    Board board;
 
 
 }

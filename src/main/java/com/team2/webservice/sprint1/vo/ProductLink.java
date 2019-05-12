@@ -18,5 +18,5 @@ public class ProductLink {
 
     @ManyToOne
     @JoinColumn(name ="pid")
-    Post post;
+    Board board;
 }
