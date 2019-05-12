@@ -37,7 +37,7 @@ function commentList(){
 function commentInsert(insertData){
     $.ajax({
         url : '/comment/insert',
-        type : 'post',
+        type : 'board',
         data : insertData,
         success : function(data){
             if(data == 1) {
@@ -66,7 +66,7 @@ function commentUpdateProc(cno){
     
     $.ajax({
         url : '/comment/update',
-        type : 'post',
+        type : 'board',
         data : {'content' : updateContent, 'cno' : cno},
         success : function(data){
             if(data == 1) commentList(bno); //댓글 수정후 목록 출력 
@@ -78,7 +78,7 @@ function commentUpdateProc(cno){
 function commentDelete(cno){
     $.ajax({
         url : '/comment/delete/'+cno,
-        type : 'post',
+        type : 'board',
         success : function(data){
             if(data == 1) commentList(bno); //댓글 삭제후 목록 출력 
         }
