@@ -66,7 +66,7 @@ public class BoardController {
     }
 
     //---------------프론트에서 받아온 사진 게시물위의 좌표를 DB에 저장-------------------
-    @RequestMapping(value = "/tagClothingFin", method = RequestMethod.POST)
+    @RequestMapping(value = "/timeline", method = RequestMethod.POST)
     public String tagClothing(ModelAndView mav, Board board, ProductLink productLink, @RequestParam String X, @RequestParam String Y, @RequestParam String linktext, HttpServletRequest httpServletRequest) throws IOException {
 
         int x, y;
