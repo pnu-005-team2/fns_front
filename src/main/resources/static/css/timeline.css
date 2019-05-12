@@ -6,10 +6,17 @@
     background-color: #FF5733;
 }
 
-.right{
-    width: 25%;
+.friendshow{
+    width: 23%;
+    margin-top: 1em;
     display: inline-block;
-    background-color: #2c6ed5;
+    vertical-align: top;
+    
+    border-top: 10px solid skyblue; 
+    border-bottom: 10px solid skyblue; 
+    border-left: 10px solid skyblue; 
+    border-right: 10px solid skyblue; 
+    border-radius: 10px;
 
 }
 
@@ -23,6 +30,12 @@
     border: solid;
     margin-top: 1em;
     height: 50em;
+    
+    border-top: 10px solid skyblue; 
+    border-bottom: 10px solid skyblue; 
+    border-left: 10px solid skyblue; 
+    border-right: 10px solid skyblue; 
+    border-radius: 10px;
 }
 
 .board-item div {

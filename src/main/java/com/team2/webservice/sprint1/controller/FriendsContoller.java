@@ -7,13 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/timeline")
+@RequestMapping("/timeline2")
 public class FriendsContoller {
     @Autowired
     MemberRepository memberRepository;
-
-
-
-
-
 }
