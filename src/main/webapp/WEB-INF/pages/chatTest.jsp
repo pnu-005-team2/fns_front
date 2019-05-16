@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.team2.webservice.sprint1.vo.ChatRoom" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,14 +13,23 @@
 
 </head>
 <body>
-<h1>{{room.name}}({{room.id}})</h1>
 
-<textarea id="chatOutput" name = "" class="chat-history" rows="24"></textarea>
+
+<h1>${chatRoom.name}</h1>
+
+<textarea id="chatOutput" name = "" class="chat-history" rows="24" style="width: 20%"></textarea>
 <div class="chat-input">
     <input id="chatInput" type="text" class="chat">
 </div>
 <button id = "exit-room">Exit</button>
 <%--채팅을 위한 Js 코드--%>
 <script src="/resources/js/socket.js"></script>
+<script>
+    window.addEventListener("load", ()=>{
+        <c:forEach var="item" items="${chatRoom.messages}" >
+            $("#chatOutput").val('${item.member.name} : ' + '${item.content}' +'\n');
+        </c:forEach>
+    });
+</script>
 </body>
 </html>

@@ -33,7 +33,7 @@ let WebSocket = (()=>{
 
         // /topic/message로 구독을 신청한다. 해당 url로 메시지가 올 경우 콜백함수가 호출
         // 주로 일대다 채팅은 /topic, 일대일 통신은 /queue를 사용한다.
-           stompClient.subscribe('/topic/roomId' , (msg)=>{
+           stompClient.subscribe('/topic/message' , (msg)=>{
                 printMessage(JSON.parse(msg.body).content);
             });
         });
