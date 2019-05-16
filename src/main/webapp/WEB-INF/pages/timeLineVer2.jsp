@@ -1,3 +1,4 @@
+<%@ page import="com.team2.webservice.sprint1.vo.Member" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -14,9 +15,17 @@
 <body>
 <jsp:include page="Post.jsp"/>
 <link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
-
+<%
+    request.setAttribute("member", (Member)session.getAttribute("login"));
+    Member user = (Member)session.getAttribute("login");
+    String email = user.getEmail();
+    long uid = user.getUid();
+%>
     <div class="page-container">
-        <div class="left"></div>
+        <div class="left">
+            <button onclick="chatClick()">채팅하기</button>
+            <div id = "chat-area"></div>
+        </div>
         <div class="time-line">
             <c:forEach var="item" items="${postRecordlList}" step="1">
                 <div class="board-item">
@@ -55,6 +64,29 @@
         <div class="right"></div>
     </div>
 <script>
+
+    // --------테스트 채팅 버튼 -----------
+    function chatClick() {
+        console.log("Chat")
+        var user = {};
+        user.uid = <%=uid%>;
+        user.email = "<%=email%>";
+
+        $.ajax({
+            type : "POST",
+            url : "/chat_list",
+            data : user,
+            success: function (data) {
+                alert(data);
+                data.forEach((item)=> {
+                    $("#chat-area").append(
+                       "<a href = 'chat?cid='" + item.cid + ">" + item.content + "</a>"
+                    )
+                })
+            }
+        });
+    }
+
 
     // --------- 좋아요 클릭시 아이콘 Toggle ---------
     function likeToggle(target) {

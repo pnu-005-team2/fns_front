@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static org.springframework.messaging.simp.stomp.StompHeaders.LOGIN;
+
 @Component
 public class AuthInterceptor extends HandlerInterceptorAdapter {
-    private static final String LOGIN = "login";
     private static final Logger logger =LoggerFactory.getLogger(LoginInterceptor.class);
 
     @Override
