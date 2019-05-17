@@ -44,62 +44,6 @@ public class TimeLineController {
     @RequestMapping("/timeline")
     public String Post(ModelMap modelMap)
     {
-//        String content =request.getParameter("content");
- //       Board client = new Board();
-
-
-
-//        System.out.println(boardRecordList);
-//       int byte_num=boardRecordList.size();
-
-//ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//    byte[] buf = new byte[1024];
-//    Blob blob = profile.getContent();
-//    InputStream in =  blob.getBinaryStream();
-//    System.out.println("id content" +in);
-//    int n = 0;
-//    while ((n=in.read(buf))>=0)
-//    {
-//        baos.write(buf, 0, n);
-//
-//    }
-//
-//    in.close();
-//    byte[] bytes = baos.toByteArray();
-//    System.out.println("bytes" +bytes);
-//    byte[] encodeBase64 = Base64.encodeBase64(buf);
-//    String base64Encoded = new String(encodeBase64, "UTF-8");
-//
-//
-//    customer.setEmailId(customerName);
-//    profile.setCustomer(customer);
-//    //profile.setContent(blob);
-//    System.out.println();
-//    profile = profileService.findProfileById(customer);
-//    model.addAttribute("content",base64Encoded);
-//    model.addAttribute("profile", profile);
-//    return "myProfile";
-//
-
-//        for(int i=0;i<boardRecordList.size();i++){
-//
-//            try{
-//                byte[] imgByteArray= boardRecordList.get(i).getImg().getBytes();
-//
-//                //byte[] imgByteArray = Base64.getDecoder().decode(temp_img_String.getBytes());
-//
-//                postresults_List.get(i).content_result= boardRecordList.get(i).getContent();
-//                postresults_List.get(i).hashtag_result= boardRecordList.get(i).getHashtag();
-//                postresults_List.get(i).pid_result= boardRecordList.get(i).getPid();
-//                postresults_List.get(i).writer_result= boardRecordList.get(i).getWriter();
-//                postresults_List.get(i).img_result= imgByteArray;
-//            }catch (Exception ex){
-//                ex.printStackTrace();
-//            }
-//
-//        }
-
- //     Board board;
 
 
         //List<Image>
@@ -113,27 +57,6 @@ public class TimeLineController {
 //        return "Timeline";
         return "timeLineVer2";
 
-
-//
-//          System.out.println("In LikeRecord");
-//        List<LikeRecord> likeRecordList = likeRecordRepository.findAll(); // select * from LikeRecord
-//        model.addAttribute("LikeList", likeRecordList);
-//        System.out.println(likeRecordList.get(0).getLid());
-//        return "LikeTest";
-
-
-//        client.setPid((long)2);
-     /*   client.setContent(content);
-        client.setWriter("KIM");
-        client.setHashtag("안녕, 안녕하세요");
-        client.setImg("1234");
-//        Board client = new Board((long) 1, content, "Lee", ",,,,", "부산대");
-//        boardRepository.save(client);
-        List<Board> test = boardRepository.findAll();
-        for(int i = 0 ; i < test.size() ; ++i){
-            System.out.println("TEST : " + test.get(i).getContent());
-        }
-*/
 
     }
 
