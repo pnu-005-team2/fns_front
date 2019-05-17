@@ -1,7 +1,7 @@
 // 자기 이전의 문서의 모든 콘텐츠(script, css 등)이 로드된 후 발생되는 이벤트
-window.addEventListener("load", ()=>{
-    WebSocket.init();
-});
+// window.addEventListener("load", ()=>{
+//     WebSocket.init();
+// });
 
 // WebSocket 은 클로저
 // JS는 클로저를 통해 캡슐화, 모듈화 작업을 수행 할 수 있다.
@@ -12,9 +12,14 @@ let WebSocket = (()=>{
     let stompClient;
     let textArea = document.getElementById("chatOutput");
     let inputEle = document.getElementById("chatInput");
+    let roomId;
+    let userNumber;
+    let sender = 1 //Todo 임시로 받고 있음;
 
-    function init() {
-        console.log("Socket Init......")
+    function init(_roomId, _userNumber) {
+        console.log("Socket Init......");
+        roomId = _roomId;
+        userNumber = _userNumber;
         connect();
         inputEle.addEventListener("keydown", chatKeyDownHandler);
     }
@@ -33,8 +38,10 @@ let WebSocket = (()=>{
 
         // /topic/message로 구독을 신청한다. 해당 url로 메시지가 올 경우 콜백함수가 호출
         // 주로 일대다 채팅은 /topic, 일대일 통신은 /queue를 사용한다.
-           stompClient.subscribe('/topic/message' , (msg)=>{
-                printMessage(JSON.parse(msg.body).content);
+           stompClient.subscribe('/topic/message/' + roomId , (msg)=>{
+               msg = JSON.parse(msg.body)
+               console.log(msg)
+               printMessage(msg.member.name +" : " +  msg.content);
             });
         });
     }
@@ -55,7 +62,8 @@ let WebSocket = (()=>{
     //-------서버에 message 전송------------
     function sendMessage(text) {
         console.log("Send Message")
-        stompClient.send("/app/chat", {}, JSON.stringify({"content" : text}));
+        stompClient.send("/app/chat/"+roomId, {},
+            JSON.stringify({"content" : text, "cid": roomId, "readCnt": userNumber, "sender": sender}));
     }
 
     function clear(input) {

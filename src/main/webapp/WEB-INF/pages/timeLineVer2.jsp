@@ -77,10 +77,10 @@
             url : "/chat_list",
             data : user,
             success: function (data) {
-                alert(data);
+                console.log(data)
                 data.forEach((item)=> {
                     $("#chat-area").append(
-                       "<a href = 'chat?cid='" + item.cid + ">" + item.content + "</a>"
+                       "<a href = 'chat?cid=" + item.cid + "'>" + item.messages[item.messages.length-1].content + "</a><br/>"
                     )
                 })
             }

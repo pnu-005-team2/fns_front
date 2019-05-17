@@ -26,9 +26,13 @@
 <script src="/resources/js/socket.js"></script>
 <script>
     window.addEventListener("load", ()=>{
+        console.log(WebSocket)
+        console.log("${chatRoom.messages}")
         <c:forEach var="item" items="${chatRoom.messages}" >
-            $("#chatOutput").val('${item.member.name} : ' + '${item.content}' +'\n');
+            $("#chatOutput").append('${item.member.name} : ' + '${item.content}' +'\n');
         </c:forEach>
+        WebSocket.init(${chatRoom.cid}, ${chatRoom.members.size()-1});
+
     });
 </script>
 </body>
