@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name="chat_room")
-public class ChatRoom {
+public class ChatRoom{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

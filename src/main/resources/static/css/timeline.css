@@ -4,12 +4,14 @@
     width: 25%;
     display: inline-block;
     background-color: #FF5733;
+    vertical-align: top;
 }
 
 .right{
     width: 25%;
     display: inline-block;
     background-color: #2c6ed5;
+    vertical-align: top;
 
 }
 
