@@ -1,7 +1,10 @@
 package com.team2.webservice.common;
 
+import com.team2.webservice.sprint1.jpa.MemberRepository;
+import com.team2.webservice.sprint1.vo.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,6 +18,7 @@ import static org.springframework.messaging.simp.stomp.StompHeaders.LOGIN;
 @Component
 public class AuthInterceptor extends HandlerInterceptorAdapter {
     private static final Logger logger =LoggerFactory.getLogger(LoginInterceptor.class);
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
