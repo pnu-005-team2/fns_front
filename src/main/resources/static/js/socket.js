@@ -14,12 +14,14 @@ let WebSocket = (()=>{
     let inputEle = document.getElementById("chatInput");
     let roomId;
     let userNumber;
+    let userName;
     let sender = 1 //Todo 임시로 받고 있음;
 
-    function init(_roomId, _userNumber) {
+    function init(_roomId, _userNumber, _userName) {
         console.log("Socket Init......");
         roomId = _roomId;
         userNumber = _userNumber;
+        userName = _userName;
         connect();
         inputEle.addEventListener("keydown", chatKeyDownHandler);
     }
@@ -41,7 +43,15 @@ let WebSocket = (()=>{
            stompClient.subscribe('/topic/message/' + roomId , (msg)=>{
                msg = JSON.parse(msg.body)
                console.log(msg)
-               printMessage(msg.member.name +" : " +  msg.content);
+               console.log(msg.readCnt)
+               sendMsg = '';
+
+               if(msg.readCnt == -1)
+                    sendMsg = msg.content;
+               else
+                    sendMsg = msg.member.name +" : " +  msg.content;
+
+               printMessage(sendMsg);
             });
         });
     }
@@ -62,15 +72,22 @@ let WebSocket = (()=>{
     //-------서버에 message 전송------------
     function sendMessage(text) {
         console.log("Send Message")
-        stompClient.send("/app/chat/"+roomId, {},
+        stompClient.send("/app/chat/"+ roomId, {},
             JSON.stringify({"content" : text, "cid": roomId, "readCnt": userNumber, "sender": sender}));
     }
 
+    function sendEixt() {
+        stompClient.send("/app/exit_room/"+ roomId, {},
+            // JSON.stringify({"memberName" : userName}));
+            userName);
+    }
+    
     function clear(input) {
         input.value = "";
     }
 
     return {
-        init : init
+        init : init,
+        sendEixt : sendEixt
     }
 })();
