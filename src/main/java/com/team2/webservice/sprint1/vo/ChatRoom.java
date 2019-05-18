@@ -1,8 +1,7 @@
 package com.team2.webservice.sprint1.vo;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name="chat_room")
 public class ChatRoom{
 
@@ -26,4 +26,9 @@ public class ChatRoom{
     @OneToMany
     @JoinColumn(name = "cid")
     private List<ChatMember> members;
+
+    public ChatRoom(String _name){
+        this.name = _name;
+    }
+
 }

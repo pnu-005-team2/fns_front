@@ -1,7 +1,6 @@
 package com.team2.webservice.sprint1.controller;
 
 
-import com.team2.webservice.common.LoginInterceptor;
 import com.team2.webservice.sprint1.jpa.ChatRoomRepository;
 import com.team2.webservice.sprint1.service.ChatServiceImpl;
 import com.team2.webservice.sprint1.vo.ChatRoom;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +39,36 @@ public class ChatController {
     @Autowired
     ChatRoomRepository chatRoomRepository;
 
+    //-----------채팅방을 만듭니다..-----------
+    @ResponseBody
+    @RequestMapping(value = "create_room", method = RequestMethod.POST)
+    public ChatRoom createRoom(String roomName,
+                             @RequestParam("memberNames[]") String[] memberNames){
+        logger.info("Create Room");
+        ChatRoom chatRoom = chatService.createRoom(roomName, memberNames);
+        return chatRoom;
+    }
+
+    @MessageMapping(value = "exit_room/{roomId}")
+    @SendTo("/topic/message/{roomId}")
+    public Message exitRoom(@DestinationVariable String roomId,
+                            String memberName){
+        //Todo 구현필요
+        logger.info("Exit Room");
+        logger.info("Room Id : "+roomId);
+        logger.info("Name    : "+memberName);
+        int intRoomId = Integer.parseInt(roomId);
+        boolean isExit = chatService.exitRoom(intRoomId, memberName);
+
+        if(isExit){
+            logger.info("Exit Success");
+            Message message = chatService.makeExitMessage(intRoomId, memberName);
+            return message;
+        }
+
+        else logger.info("Exit Failed");
+        return null;
+    }
     //-----------채팅방 기록들을 모델에 담고 채팅방 화면을 리턴합니다.-----------
     @RequestMapping(value = "chat", method = RequestMethod.GET)
     public String enterRoom(Model model, @RequestParam("cid") int chatRoomId){
@@ -49,32 +79,31 @@ public class ChatController {
     }
 
     //-----------채팅방리스트를 리턴합니다.-----------
-    @RequestMapping(value = "chat_list", method = RequestMethod.POST)
     @ResponseBody // 객체를 json형식으로 변환하여 던져준다.
+    @RequestMapping(value = "chat_list", method = RequestMethod.POST)
     public List<ChatRoom> loadList(Member member){
         logger.info("loadList");
         List<ChatRoom> chatRooms = chatService.loadChatList(member);
         return chatRooms;
     }
 
-    @MessageMapping("info")
-    @SendToUser("/queue/info")
-    public String info(String message, SimpMessageHeaderAccessor messageHeaderAccessor){
-        System.out.println("Info In");
-        return message;
-    }
-
-
     //-----------채팅 메시지를 저장하고, 구독중인 클라이언트들에게 뿌려줍니다.-----------
+    @ResponseBody
     @MessageMapping("chat/{roomId}")
     @SendTo("/topic/message/{roomId}")
-    @ResponseBody
     public Message chat(Message message, @RequestBody Map<String,String> data,
 //                        String sender,// data[sender]만 가져올 수 없나?
                         @DestinationVariable String roomId){
         logger.info("Chat in : " + roomId);
         String sender = data.get("sender");
-        chatService.SaveMessage(message,Integer.parseInt(sender));
+        chatService.saveMessage(message,Integer.parseInt(sender));
+        return message;
+    }
+
+    @MessageMapping("info")
+    @SendToUser("/queue/info")
+    public String info(String message, SimpMessageHeaderAccessor messageHeaderAccessor){
+        System.out.println("Info In");
         return message;
     }
 

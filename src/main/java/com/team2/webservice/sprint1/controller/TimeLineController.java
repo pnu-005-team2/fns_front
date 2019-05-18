@@ -1,7 +1,9 @@
 package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.vo.Board;
+import com.team2.webservice.sprint1.vo.Member;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,12 +21,17 @@ import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.messaging.simp.stomp.StompHeaders.LOGIN;
+
 @Controller
 public class TimeLineController {
 
     @Autowired
     private BoardRepository boardRepository;
 
+
+    @Autowired
+    MemberRepository memberRepository;
 
     List<Board> boardRecordList;
 
@@ -36,14 +44,18 @@ public class TimeLineController {
 
         model.addAttribute("postRecordlList", boardRecordList);
         model.addAttribute("postRecordList_Byte", boardRecordList);
+
         return "Timeline";
 
     }
 
     @PostMapping
     @RequestMapping("/timeline")
-    public String Post(ModelMap modelMap)
+    public String Post(ModelMap modelMap, HttpSession session)
     {
+        Member member = memberRepository.findById(46).get(); // Todo Test 용
+        session.setAttribute(LOGIN, member);
+
 //        String content =request.getParameter("content");
  //       Board client = new Board();
 
