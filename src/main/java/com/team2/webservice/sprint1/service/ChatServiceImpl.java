@@ -13,9 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -33,6 +31,36 @@ public class ChatServiceImpl  implements ChatService{
 
     @Autowired
     MessageRepository messageRepo;
+
+    //-----------------채팅방을 생성합니다.-------------------
+    @Override
+    public ChatRoom createRoom(String roomName, String[] memberNames){
+        logger.info("Create Room Service");
+
+        ChatRoom chatRoom = new ChatRoom(roomName);
+        chatRoom = chatRoomRepository.save(chatRoom);
+        saveChatMember(memberNames, chatRoom.getCid());
+
+        return chatRoom;
+    }
+
+    //-----------------채팅방에서 나갑니다.-------------------
+    @Override
+    public boolean exitRoom(int cid, String memberName){
+        logger.info("Exit Room Service");
+        Optional<Member> member = memberRepository.findByName(memberName);
+        if(!member.isPresent()){
+            logger.error("존재하지 않는 유저입니다.");
+            return false;
+        }
+        Optional<ChatMember> chatMember = chatMemberRepo.findByMemberAndCid(member.get(), cid);
+        if(!chatMember.isPresent()){
+            logger.error("채팅방 목록에 존재하지 않는 유저입니다.");
+            return false;
+        }
+        chatMemberRepo.delete(chatMember.get());
+        return true;
+    }
 
     //-----------------채팅방 목록을 불러옵니다.-------------------
     @Override
@@ -68,7 +96,6 @@ public class ChatServiceImpl  implements ChatService{
         return chatRooms;
     }
 
-
     //-----------------채팅방 기록을 불러옵니다.-------------------
     @Override
     public ChatRoom loadRoomInfo(int chatRoomId){
@@ -83,7 +110,7 @@ public class ChatServiceImpl  implements ChatService{
 
     //-----------------메시지를 저장합니다.-------------------
     @Override
-    public void SaveMessage(Message message, int sender){
+    public void saveMessage(Message message, int sender){
         message.setMember(this.findSender(sender)); // 조인객체는 직접 찾아줘야하나?
         messageRepo.save(message);
         logger.info("메시지 저장완료");
@@ -99,4 +126,40 @@ public class ChatServiceImpl  implements ChatService{
         }
     }
 
+    //-----------------ChatMember를 DB에 저장합니다.-------------------
+    public void saveChatMember(String[] memberNames, int cid){
+        Set<String> setNames = new HashSet<String>(Arrays.asList(memberNames));
+        List<Object> uidList = memberRepository.getUidByName(setNames);
+
+        for (int i = 0; i < uidList.size(); i++) {
+            ChatMember chatMember = new ChatMember();
+            chatMember.setCid(cid);
+            chatMember.setRole("User");
+            Member member = findSender((int)uidList.get(i));
+            chatMember.setMember(member);
+            chatMemberRepo.save(chatMember);
+        }
+    }
+
+
+    //-----------------채팅퇴장 메시지를 만듭니다.-------------------
+    public Message makeExitMessage(int cid, String name){
+        Optional<Member> member = memberRepository.findByName(name);
+
+        if(!member.isPresent()){
+            logger.info("채팅방에 존재하지 않는 계정입니다.");
+            return null;
+        }
+
+        Message message = new Message();
+        message.setCid(cid);
+        message.setMember(member.get());
+        message.setContent(name + " left chat room");
+        message.setReadCnt(-1); // -1은 채팅퇴장 메시지
+
+        message = messageRepo.save(message);
+
+        return message;
+
+    }
 }

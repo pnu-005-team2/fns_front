@@ -18,7 +18,7 @@ public class ChatMember implements Serializable {
     private String role;
 
     @OneToOne
-    @JoinColumn(name = "mid")
+    @JoinColumn(name = "uid")
     private Member member;
 
 }

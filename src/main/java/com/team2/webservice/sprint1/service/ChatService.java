@@ -10,5 +10,7 @@ public interface ChatService {
 
     List<ChatRoom> loadChatList(Member uid);
     ChatRoom loadRoomInfo(int chatRoomId);
-    void SaveMessage(Message message, int sender);
+    ChatRoom createRoom(String roomName, String[] memberNames);
+    boolean exitRoom(int cid, String memberName);
+    void saveMessage(Message message, int sender);
 }
