@@ -40,17 +40,17 @@ let WebSocket = (()=>{
         // /topic/message로 구독을 신청한다. 해당 url로 메시지가 올 경우 콜백함수가 호출
         // 주로 일대다 채팅은 /topic, 일대일 통신은 /queue를 사용한다.
            stompClient.subscribe('/topic/message/' + roomId , (msg)=>{
-               msg = JSON.parse(msg.body)
-               console.log(msg)
-               console.log(msg.readCnt)
-               sendMsg = '';
-
+               msg = JSON.parse(msg.body);
+               console.log(msg);
+               console.log(msg.readCnt);
+               //sendMsg = '';
+                /*
                if(msg.readCnt == -1)
                     sendMsg = msg.content;
                else
                     sendMsg = msg.member.name +" : " +  msg.content;
-
-               printMessage(sendMsg);
+                */
+               printMessage(msg);
             });
         });
     }
@@ -65,7 +65,25 @@ let WebSocket = (()=>{
 
     //-------서버에서 온 message 채팅창에 출력------------
     function printMessage(message) {
-        textArea.value += message + "\n";
+        if(message.member.name == userName)
+            appendHtml(textArea,'<div class="d-flex justify-content-end mb-4">'+
+                '<div class="msg_cotainer_send">'+message.content+
+                '<span class="msg_time_send">8:55 AM, Today</span>'+
+                '</div>'+
+                '<div class="img_cont_msg">'+
+                '<img src='+message.member.img+ 'class="rounded-circle user_img_msg">'+
+                '</div>'+
+                '</div>');
+        else
+            appendHtml(textArea,'<div class="d-flex justify-content-start mb-4">\n' +
+                            '<div class="img_cont_msg">\n' +
+                            '<img src='+message.member.img+'class="rounded-circle user_img_msg">\n' +
+                            '</div>\n' +
+                            '<div class="msg_cotainer">\n' +
+                            message.content+
+                            '<span class="msg_time">8:40 AM, Today</span>\n' +
+                        '</div>\n' +
+                        '</div>');
     }
 
     //-------서버에 message 전송------------
@@ -84,6 +102,15 @@ let WebSocket = (()=>{
     function clear(input) {
         input.value = "";
     }
+
+    function appendHtml(el, str) {
+        var div = document.createElement('div');
+        div.innerHTML = str;
+        while (div.children.length > 0) {
+            el.appendChild(div.children[0]);
+        }
+    }
+
 
     return {
         init : init,
