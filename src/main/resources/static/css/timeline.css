@@ -89,4 +89,22 @@
 .enter-key {
     width: 10%;
 }
+.following{
+	border: solid;
+    margin-top: 1em;
+	
+	
+}
+.follower{
+	border: solid;
+    margin-top: 1em;
+	
+	
+}
+.friendRecommend{
+	border: solid;
+    margin-top: 1em;
+	
+	
+}
 
