@@ -39,6 +39,22 @@ public class ChatController {
     @Autowired
     ChatRoomRepository chatRoomRepository;
 
+
+    //-----------채팅 View를 리턴합니다..-----------
+    @RequestMapping(value = "chat", method = RequestMethod.GET)
+    public String view(HttpServletRequest request, Model model){
+
+        HttpSession httpSession = request.getSession();
+        if(httpSession.getAttribute(LOGIN) == null){
+            logger.info("로그인 계정이 존재하지 않습니다.");
+            return null;
+        }
+        Member member = (Member)httpSession.getAttribute(LOGIN);
+        List<ChatRoom> chatRoomlist = chatService.loadChatList(member);
+        model.addAttribute("RoomList",chatRoomlist);
+        return "chat";
+    }
+
     //-----------채팅방을 만듭니다.-----------
     @ResponseBody
     @RequestMapping(value = "create_room", method = RequestMethod.POST)
@@ -72,11 +88,13 @@ public class ChatController {
     }
     //-----------채팅방 기록들을 모델에 담고 채팅방 화면을 리턴합니다.-----------
     @RequestMapping(value = "chat", method = RequestMethod.GET)
-    public String enterRoom(Model model, @RequestParam("cid") int chatRoomId){
+    public ChatRoom enterRoom(Model model, HttpServletRequest request,
+                            @RequestParam("cid") int chatRoomId){
         logger.info("EnterRoom");
+
         ChatRoom chatRoom = chatService.loadRoomInfo(chatRoomId);
         model.addAttribute("chatRoom", chatRoom);
-        return "chat";
+        return chatRoom;
     }
 
     //-----------채팅방리스트를 리턴합니다.-----------

@@ -18,6 +18,7 @@
     Member user = (Member)session.getAttribute("login");
     String name = user.getName();
     int uid = user.getUid();
+    String img = user.getImg();
 %>
 
 <h1>${chatRoom.name}</h1>
