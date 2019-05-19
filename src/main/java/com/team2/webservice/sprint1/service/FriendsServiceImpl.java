@@ -1,4 +1,4 @@
- package com.team2.webservice.sprint1.service;
+package com.team2.webservice.sprint1.service;
 
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.vo.Member;
@@ -33,73 +33,75 @@ public class FriendsServiceImpl implements FriendsService{
 
     @Override
     public List<Member> showFriends(Member me) {
+
+        System.out.println("show Friends List");
+        System.out.println(me.getName());
         String friends = me.getFriends();
-        ArrayList<Integer> friendList = new ArrayList<>();
 
-        for(int i = 0 ; i < friends.length() ; ++i){
+        System.out.println(me.getFriends());
+        System.out.println(friends);
 
-            String temp = "";
-            while(friends.charAt(i) != ' ' || i < friends.length()){
-                char cTemp = friends.charAt(i++);
-                temp += cTemp;
-            }
-            int iTemp = parseInt(temp);
-        }
-
-
-        List<Member> member = memberRepository.findAll();
-        ArrayList<Member> friendsListR = new ArrayList<>();
-
-        for(int i = 0 ; i < member.size(); ++i){
-            for(int j = 0 ; j < friendList.size() ; ++j){
-                if(member.get(i).getUid() == (long) friendList.get(j) ){
-                    friendList.remove(j);
-                    friendsListR.add(member.get(i));
-                    break;
-                }
-            }
-        }
-
-        return friendsListR;
+        return showFList(me, friends);
     }
 
     @Override
     public List<Member> showFriended(Member me){
+
+        System.out.println("show Friended List");
         String friended = me.getFriended();
-        ArrayList<Integer> friendedList = new ArrayList<>();
 
-        for(int i = 0 ; i < friended.length() ; ++i){
-            String temp = "";
-            while(friended.charAt(i) != ' ' || i < friended.length()){
-                char cTemp = friended.charAt(i++);
-                temp += cTemp;
-            }
-            int iTemp = parseInt(temp);
-        }
-
-        List<Member> member = memberRepository.findAll();
-        ArrayList<Member> friendedListR = new ArrayList<>();
-
-        for(int i = 0 ; i < member.size(); ++i){
-            for(int j = 0 ; j < friendedList.size() ; ++j){
-                if(member.get(i).getUid() == (long) friendedList.get(j) ){
-                    friendedList.remove(j);
-                    friendedListR.add(member.get(i));
-                    break;
-                }
-            }
-        }
-
-        return friendedListR;
-
+        return  showFList(me, friended);
     }
 
 
     @Override
     public Member findAFriend(Member me, String findName) {
 
-
-
         return null;
     }
+
+
+
+    public List<Member> showFList(Member me, String fList) {
+
+        ArrayList<Integer> fIList = new ArrayList<>();
+
+        String temp = "";
+        for(int i = 0 ; i < fList.length() ; ++i){
+
+            if(fList.charAt(i) == ' ' ||
+                    (i == fList.length()-1 && fList.charAt(i) < 30 && fList.charAt(i) > 39)) {
+                System.out.println("index : " + i);
+                int iTemp = Integer.parseInt(temp);
+                fIList.add(iTemp);
+                temp = "";
+                continue;
+            }
+            char cTemp = fList.charAt(i);
+            temp += cTemp;
+            System.out.println("test----------------" + temp);
+
+            if(i == fList.length()-1){
+                int iTemp = Integer.parseInt(temp);
+                fIList.add(iTemp);
+            }
+
+        }
+
+
+        List<Member> member = memberRepository.findAll();
+        ArrayList<Member> fListR = new ArrayList<>();
+
+        for(int i = 0 ; i < member.size(); ++i){
+            for(int j = 0 ; j < fIList.size() ; ++j){
+                if(member.get(i).getUid() == (long) fIList.get(j) ){
+                    fListR.add(member.get(i));
+                    break;
+                }
+            }
+        }
+
+        return fListR;
+    }
 }
+
