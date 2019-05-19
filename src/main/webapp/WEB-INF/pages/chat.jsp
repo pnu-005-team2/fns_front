@@ -38,16 +38,16 @@
             </div>
             <div class="card-body contacts_body">
                 <ui class="contacts">
-                    <c:forEach var="member" items="${memberList}" begin="1" step="1">
-                    <li class="ToActive" id = ${member.uid}>
+                    <c:forEach var="room" items="${RoomList}" begin="1" step="1">
+                    <li class="ToActive" id = ${room.cid}>
                         <div class="d-flex bd-highlight">
                             <div class="img_cont">
-                                <img src= ${member.img} class="rounded-circle user_img">
+                                <%--<img src= "${room.messages[room.messages.length-1].sender.img}" class="rounded-circle user_img">--%>
                                 <span class="online_icon"></span>
                             </div>
                             <div class="user_info">
-                                <span>${member.name}</span>
-                                <p>${member.name} is online</p>
+                                <span>${room.name}</span>
+                                <p>${mroom.messages[room.messages.length-1].content}</p>
                             </div>
                         </div>
                     </li>
@@ -57,7 +57,7 @@
             <div class="card-footer"></div>
         </div></div>
         <div class="col-md-8 col-xl-6 chat">
-            <div class="card">
+            <div type = "hidden" class="card" >
                 <div class="card-header msg_head">
                     <div class="d-flex bd-highlight">
                         <div class="img_cont">
@@ -65,8 +65,8 @@
                             <span class="online_icon"></span>
                         </div>
                         <div id="user_info">
-                            <span id = 'user_name'>hw</span>
-                            <p>1767 Messages</p>
+                            <span id = 'chat_room_number'>${chatRoom.name}</span>
+                            <p></p>
                         </div>
                     </div>
                     <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
@@ -123,20 +123,22 @@
         }
         else{
             $(".msg_card_body").append('<div class="d-flex justify-content-start mb-4">\n' +
-                '            <div class="img_cont_msg">\n' +
-                '            <img src="${item.member.img}" class="rounded-circle user_img_msg">\n' +
-                '            </div>\n' +
-                '            <div class="msg_cotainer">\n' +
-                '            ${item.content}\n' +
-                '            <span class="msg_time">8:40 AM, Today</span>\n' +
-                '        </div>\n' +
-                '        </div>');
+                                            '<div class="img_cont_msg">\n' +
+                                                '<img src="${item.member.img}" class="rounded-circle user_img_msg">\n' +
+                                            '</div>\n' +
+                                            '<div class="msg_cotainer">\n' +
+                                                        '${item.content}\n' +
+                                                '<span class="msg_time">8:40 AM, Today</span>\n' +
+                                            '</div>\n' +
+                                        '</div>');
         }
         </c:forEach>
+
         WebSocket.init(${chatRoom.cid}, ${chatRoom.members.size()-1}, userName);
     });
     $(document).ready(function(){
         $('.ToActive').click(function(){
+            $('.card').show();
             $('.active').removeClass('active').addClass('ToActive');
             $(this).removeClass('ToActive').addClass('active');
             <c:forEach var="member" items="${memberList}" begin="1" step="1">

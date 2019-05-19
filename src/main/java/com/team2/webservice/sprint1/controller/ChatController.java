@@ -18,9 +18,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static com.team2.webservice.common.Constant.LOGIN;
 
 
 /*Todo
@@ -38,6 +42,8 @@ public class ChatController {
 
     @Autowired
     ChatRoomRepository chatRoomRepository;
+
+
 
     //-----------채팅방을 만듭니다.-----------
     @ResponseBody
@@ -72,9 +78,18 @@ public class ChatController {
     }
     //-----------채팅방 기록들을 모델에 담고 채팅방 화면을 리턴합니다.-----------
     @RequestMapping(value = "chat", method = RequestMethod.GET)
-    public String enterRoom(Model model, @RequestParam("cid") int chatRoomId){
+    public String enterRoom(Model model, HttpServletRequest request,
+                            @RequestParam("cid") int chatRoomId){
         logger.info("EnterRoom");
+        HttpSession httpSession = request.getSession();
+        if(httpSession.getAttribute(LOGIN) == null){
+            logger.info("로그인 계정이 존재하지 않습니다.");
+            return "chat";
+        }
+        Member member = (Member)httpSession.getAttribute(LOGIN);
         ChatRoom chatRoom = chatService.loadRoomInfo(chatRoomId);
+        List<ChatRoom> chatRoomlist = chatService.loadChatList(member);
+        model.addAttribute("RoomList",chatRoomlist);
         model.addAttribute("chatRoom", chatRoom);
         return "chat";
     }
