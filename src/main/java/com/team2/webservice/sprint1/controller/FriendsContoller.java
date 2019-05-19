@@ -11,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -24,19 +27,31 @@ public class FriendsContoller {
     FriendsServiceImpl friendsService;
 
     @RequestMapping(value = "/timeline" , method = RequestMethod.GET)
-    public String showList(Model model, Member member){
+    public String showList(Model model, HttpServletRequest request){
 
+        HttpSession session = request.getSession();
+        System.out.println(session.getAttribute("login"));
         //show following
-        List<Member> Friends = friendsService.showFriends(member);
+
+        Member me = (Member)session.getAttribute("login");
+        List<Member> Friends = friendsService.showFriends(me);
 
         model.addAttribute("friendsRecordList", Friends);
         model.addAttribute("friendsRecordList_Byte", Friends);
 
         //show follower
-        List<Member> Friended = friendsService.showFriended(member);
+        List<Member> Friended = friendsService.showFriended(me);
 
         model.addAttribute("friendedRecordList", Friended);
         model.addAttribute("friendedRecordList_Byte", Friended);
+
+        System.out.println(Friends.size());
+        for(int i = 0 ; i < Friends.size() ; i++){
+            System.out.println(Friends.get(i).getName());
+        }
+        for(int i = 0; i< Friended.size() ; i++){
+            System.out.println(Friended.get(i).getName());
+        }
 
         return "timelineVer2";
     }
