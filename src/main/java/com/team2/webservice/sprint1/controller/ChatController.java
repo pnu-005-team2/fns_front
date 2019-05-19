@@ -76,7 +76,7 @@ public class ChatController {
         logger.info("EnterRoom");
         ChatRoom chatRoom = chatService.loadRoomInfo(chatRoomId);
         model.addAttribute("chatRoom", chatRoom);
-        return "chatTest";
+        return "chat";
     }
 
     //-----------채팅방리스트를 리턴합니다.-----------
