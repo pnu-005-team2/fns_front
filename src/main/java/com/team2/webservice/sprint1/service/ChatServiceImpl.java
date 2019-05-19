@@ -91,6 +91,7 @@ public class ChatServiceImpl  implements ChatService{
                 return null;
             }
             chatRooms.add(chatRoom.get());
+            System.out.println("size : "+chatRoom.get().getMessages().size());
         }
 
         return chatRooms;

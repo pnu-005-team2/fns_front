@@ -42,12 +42,12 @@
                     <li class="ToActive" id = ${room.cid}>
                         <div class="d-flex bd-highlight">
                             <div class="img_cont">
-                                <%--<img src= "${room.messages[room.messages.length-1].sender.img}" class="rounded-circle user_img">--%>
+                                <img src= "${room.messages[room.messages.size()-1].member.img}" class="rounded-circle user_img">
                                 <span class="online_icon"></span>
                             </div>
                             <div class="user_info">
                                 <span>${room.name}</span>
-                                <p>${mroom.messages[room.messages.length-1].content}</p>
+                                <p>${room.messages[room.messages.size()-1].content}</p>
                             </div>
                         </div>
                     </li>
