@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%--
   Created by IntelliJ IDEA.
   User: iseungcheon
@@ -6,64 +6,89 @@
   Time: PM 6:44
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-    <title>FNS</title>
+<title>FNS</title>
 </head>
 <body>
-<jsp:include page="Post.jsp"/>
-<link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
+	<jsp:include page="Post.jsp" />
+	<link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
 
-    <div class="page-container">
-        <div class="left"></div>
-        <div class="time-line">
-            <c:forEach var="item" items="${postRecordlList}" step="1">
-                <div class="board-item">
-                    <div class="writer" >
-                        <img src="${item.member.img}">
-                        <strong>${item.member.name}</strong>
-                    </div>
-                    <div class="board-img" >
-                     <img
-                        src="/logoShowForStudent/${item.pid}">
-                    </div>
-                    <div class="board-content" >${item.content}</div>
-                    <div class="board-hashtag" >${item.hashtag}</div>
-                    <div class="board-funtion" >
-                        <i id="like_btn${item.pid}"
-                                class = "fa fa-thumbs-o-up fa-2x"
-                                onclick="likeToggle(this), like_btn_clickevent(${item.pid})"></i>
-                        <i class="comment-icon fa-comments-o fa-2x"></i>
-                    </div>
-                    <div class="comment-box"
-                         id="btn_group_div_group${item.pid}">
-                        <div class="comment-input-box">
-                        <input type="text" class="comment-input"
-                               onfocus="this.value=''" id="comment${item.pid}"
-                               placeholder="re">
-                        <input type="button"
-                               class="enter-key"
-                               id="comment_confirm${item.pid}"
-                               onclick="comment_regist(${item.pid});" value="enter" />
-                        </div>
-                        <div id="comment-list${item.pid}"></div>
-                    </div>
-                </div>
-            </c:forEach>
-        </div>
-        <div class="friendshow">
-        	<c:forEach var="item" items="${friendsRecordList}">
-        		<div>
-        			<p>1111111</p>
-                     <img src="${item.img}">
-                     <strong>${item.name}</strong>
-                </div>
-        	</c:forEach>
-        	<p>2222222222</p>
-        </div>
-    </div>
-<script>
+	<div class="page-container">
+		<div class="left"></div>
+		<div class="time-line">
+			<c:forEach var="item" items="${postRecordlList}" step="1">
+				<div class="board-item">
+					<div class="writer">
+						<img src="${item.member.img}"> <strong>${item.member.name}</strong>
+					</div>
+					<div class="board-img">
+						<img src="/logoShowForStudent/${item.pid}">
+					</div>
+					<div class="board-content">${item.content}</div>
+					<div class="board-hashtag">${item.hashtag}</div>
+					<div class="board-funtion">
+						<i id="like_btn${item.pid}" class="fa fa-thumbs-o-up fa-2x"
+							onclick="likeToggle(this), like_btn_clickevent(${item.pid})"></i>
+						<i class="comment-icon fa-comments-o fa-2x"></i>
+					</div>
+					<div class="comment-box" id="btn_group_div_group${item.pid}">
+						<div class="comment-input-box">
+							<input type="text" class="comment-input" onfocus="this.value=''"
+								id="comment${item.pid}" placeholder="re"> <input
+								type="button" class="enter-key" id="comment_confirm${item.pid}"
+								onclick="comment_regist(${item.pid});" value="enter" />
+						</div>
+						<div id="comment-list${item.pid}"></div>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+		<div class="friendshow">
+			<div class = "following">
+				<strong>Following </strong>
+				<c:forEach var="item" items="${postRecordlList}">
+					<div>
+						<img src="${item.member.img}" width="12%" height="15"> 
+						<strong>${item.member.name}</strong>
+					</div>
+				</c:forEach>
+			</div>
+			
+			<div><br>
+			<br>
+			<br></div>
+			
+			<div class = "follower">
+				<strong>Follower </strong>
+				<c:forEach var="item" items="${postRecordlList}">
+					<div>
+						<img src="${item.member.img}" width="12%" height="15"> 
+						<strong>${item.member.name}</strong>
+					</div>
+				</c:forEach>
+			</div>
+			<div><br>
+			<br>
+			<br></div>
+			
+			<div class="friendRecommend">
+				<strong>Friend Recommend </strong>
+				<c:forEach var="item" items="${postRecordlList}" step="3">
+					<div>
+						<img src="${item.member.img}" width="12%" height="15">
+						<strong>${item.member.name}</strong>
+						<input type="button" value="!FFF!" height="15"/>
+					</div>
+				</c:forEach>
+			</div>
+
+
+		</div>
+
+	</div>
+	<script>
 
     // --------- 좋아요 클릭시 아이콘 Toggle ---------
     function likeToggle(target) {
