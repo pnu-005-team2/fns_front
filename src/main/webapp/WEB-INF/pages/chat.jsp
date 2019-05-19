@@ -17,7 +17,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
-    <%-- todo script Á¤¸® ÇÊ¿ä --%>
+    <%-- todo script ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ --%>
 </head>
 <body>
 <jsp:include page="body.jsp"/>
@@ -42,12 +42,12 @@
                     <li class="ToActive" id = ${member.uid}>
                         <div class="d-flex bd-highlight">
                             <div class="img_cont">
-                                <img src= ${member.img} class="rounded-circle user_img">
+                                <img src= "${room.messages[room.messages.size()-1].member.img}" class="rounded-circle user_img">
                                 <span class="online_icon"></span>
                             </div>
                             <div class="user_info">
-                                <span>${member.name}</span>
-                                <p>${member.name} is online</p>
+                                <span>${room.name}</span>
+                                <p>${room.messages[room.messages.size()-1].content}</p>
                             </div>
                         </div>
                     </li>
