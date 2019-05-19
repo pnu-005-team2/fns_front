@@ -1,7 +1,10 @@
 package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.jpa.MemberRepository;
+import com.team2.webservice.sprint1.service.FriendsServiceImpl;
 import com.team2.webservice.sprint1.vo.Board;
+import com.team2.webservice.sprint1.vo.Member;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +27,12 @@ public class TimeLineController {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
+    FriendsServiceImpl friendsService;
 
 
     List<Board> boardRecordList;
@@ -42,7 +52,7 @@ public class TimeLineController {
 
     @PostMapping
     @RequestMapping("/timeline")
-    public String Post(ModelMap modelMap)
+    public String Post(ModelMap modelMap, Model model, HttpServletRequest request)
     {
 
 
@@ -51,14 +61,56 @@ public class TimeLineController {
 
         modelMap.addAttribute("postRecordlList", boardRecordList);
         modelMap.addAttribute("postRecordList_Byte", boardRecordList);
-      //  model.addAttribute("postResult_ArrayList",postresults_List);
-       // model.addAttribute("postImageList",)
 
-//        return "Timeline";
+
+        //about Friends controlling
+        HttpSession session = request.getSession();
+        System.out.println(session.getAttribute("login"));
+        Member me = (Member)session.getAttribute("login");
+
+        //show following
+        List<Member> Friends = friendsService.showFriends(me);
+
+        model.addAttribute("friendsRecordList", Friends);
+        model.addAttribute("friendsRecordList_Byte", Friends);
+
+        //show follower
+        List<Member> Friended = friendsService.showFriended(me);
+
+        model.addAttribute("friendedRecordList", Friended);
+        model.addAttribute("friendedRecordList_Byte", Friended);
+
+
+        //확인
+        System.out.println(Friends.size());
+        for(int i = 0 ; i < Friends.size() ; i++){
+            System.out.println(Friends.get(i).getName());
+        }
+        for(int i = 0; i< Friended.size() ; i++){
+            System.out.println(Friended.get(i).getName());
+        }
+
         return "timeLineVer2";
 
 
     }
+
+
+    @RequestMapping(value = "" , method = RequestMethod.GET)
+    public String showList(){
+
+
+
+        return "timeLineVer2";
+    }
+
+    //    @RequestMapping(method = RequestMethod.GET)
+//    public void add(Member member1, Member member2){
+//        //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
+//        friendsService.addFriends(member1, member2);
+//    }
+
+
 
     @RequestMapping("/logoShowForStudent/{pid}")
     public void imageView(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") Long pid) throws IOException {
