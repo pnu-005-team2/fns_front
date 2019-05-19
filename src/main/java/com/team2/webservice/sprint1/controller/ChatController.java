@@ -39,7 +39,7 @@ public class ChatController {
     @Autowired
     ChatRoomRepository chatRoomRepository;
 
-    //-----------채팅방을 만듭니다..-----------
+    //-----------채팅방을 만듭니다.-----------
     @ResponseBody
     @RequestMapping(value = "create_room", method = RequestMethod.POST)
     public ChatRoom createRoom(String roomName,
@@ -49,11 +49,12 @@ public class ChatController {
         return chatRoom;
     }
 
+    //-----------채팅방 삭제합니다..-----------
     @MessageMapping(value = "exit_room/{roomId}")
     @SendTo("/topic/message/{roomId}")
     public Message exitRoom(@DestinationVariable String roomId,
                             String memberName){
-        //Todo 구현필요
+
         logger.info("Exit Room");
         logger.info("Room Id : "+roomId);
         logger.info("Name    : "+memberName);
@@ -92,11 +93,11 @@ public class ChatController {
     @MessageMapping("chat/{roomId}")
     @SendTo("/topic/message/{roomId}")
     public Message chat(Message message, @RequestBody Map<String,String> data,
-//                        String sender,// data[sender]만 가져올 수 없나?
                         @DestinationVariable String roomId){
         logger.info("Chat in : " + roomId);
-        String sender = data.get("sender");
-        chatService.saveMessage(message,Integer.parseInt(sender));
+        String sender = data.get("userName");
+        logger.info("UserName : " + sender);
+        chatService.saveMessage(message,sender);
         return message;
     }
 

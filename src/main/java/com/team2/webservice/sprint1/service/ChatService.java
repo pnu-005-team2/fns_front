@@ -12,5 +12,5 @@ public interface ChatService {
     ChatRoom loadRoomInfo(int chatRoomId);
     ChatRoom createRoom(String roomName, String[] memberNames);
     boolean exitRoom(int cid, String memberName);
-    void saveMessage(Message message, int sender);
+    void saveMessage(Message message, String sender);
 }

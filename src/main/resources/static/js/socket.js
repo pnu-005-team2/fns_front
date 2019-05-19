@@ -10,12 +10,11 @@ let WebSocket = (()=>{
     const SERVER_SOCKET_API = "room"; // endpoint
     const ENTER_KEY = 13;
     let stompClient;
-    let textArea = document.getElementById("chatOutput");
+    let textArea = document.getElementById( "chatOutput");
     let inputEle = document.getElementById("chatInput");
     let roomId;
     let userNumber;
     let userName;
-    let sender = 1 //Todo 임시로 받고 있음;
 
     function init(_roomId, _userNumber, _userName) {
         console.log("Socket Init......");
@@ -73,7 +72,7 @@ let WebSocket = (()=>{
     function sendMessage(text) {
         console.log("Send Message")
         stompClient.send("/app/chat/"+ roomId, {},
-            JSON.stringify({"content" : text, "cid": roomId, "readCnt": userNumber, "sender": sender}));
+            JSON.stringify({"content" : text, "cid": roomId, "readCnt": userNumber, "userName": userName}));
     }
 
     function sendEixt() {
