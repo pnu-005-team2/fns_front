@@ -53,7 +53,14 @@
             </c:forEach>
         </div>
         <div class="friendshow">
-        	
+        	<c:forEach var="item" items="${friendsRecordList}">
+        		<div>
+        			<p>1111111</p>
+                     <img src="${item.img}">
+                     <strong>${item.name}</strong>
+                </div>
+        	</c:forEach>
+        	<p>2222222222</p>
         </div>
     </div>
 <script>

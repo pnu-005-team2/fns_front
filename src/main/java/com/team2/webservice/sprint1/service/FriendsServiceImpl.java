@@ -1,4 +1,4 @@
-package com.team2.webservice.sprint1.service;
+ package com.team2.webservice.sprint1.service;
 
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.vo.Member;
