@@ -40,7 +40,7 @@ public class ChatServiceImpl  implements ChatService{
         ChatRoom chatRoom = new ChatRoom(roomName);
         chatRoom = chatRoomRepository.save(chatRoom);
         saveChatMember(memberNames, chatRoom.getCid());
-
+        makeEnterMessage(chatRoom.getCid(), memberNames);
         return chatRoom;
     }
 
@@ -110,15 +110,15 @@ public class ChatServiceImpl  implements ChatService{
 
     //-----------------메시지를 저장합니다.-------------------
     @Override
-    public void saveMessage(Message message, int sender){
+    public void saveMessage(Message message, String sender){
         message.setMember(this.findSender(sender)); // 조인객체는 직접 찾아줘야하나?
         messageRepo.save(message);
         logger.info("메시지 저장완료");
     }
 
     //-----------------발신자를 찾습니다.-------------------
-    public Member findSender(int uid){
-        Optional<Member> member = memberRepository.findById(uid);
+    public Member findSender(String name){
+        Optional<Member> member = memberRepository.findByName(name);
         if(member.isPresent()) return member.get();
         else{
             logger.error("올바른 계정이 아닙니다.");
@@ -135,10 +135,39 @@ public class ChatServiceImpl  implements ChatService{
             ChatMember chatMember = new ChatMember();
             chatMember.setCid(cid);
             chatMember.setRole("User");
-            Member member = findSender((int)uidList.get(i));
-            chatMember.setMember(member);
+            Optional<Member> member = memberRepository.findById((int)uidList.get(i));
+            if(!member.isPresent()){
+                logger.error("채팅방에 없는 계정입니다.");
+            }
+            chatMember.setMember(member.get());
             chatMemberRepo.save(chatMember);
         }
+    }
+
+    //-----------------채팅퇴장 메시지를 만듭니다.-------------------
+    public Message makeEnterMessage(int cid, String[] memberNames){
+
+        Optional<Member> admin = memberRepository.findById(0);
+        if(!admin.isPresent()){
+            logger.error("관리자 계정이 존재하지 않습니다.");
+            return null;
+        }
+
+        String msg = "";
+
+        for (int i = 0; i < memberNames.length; i++) {
+            msg += memberNames[i] + ", ";
+        }
+        msg += "are invited.";
+        
+        Message message = new Message();
+        message.setCid(cid);
+        message.setContent(msg);
+        message.setReadCnt(-1);
+        message.setMember(admin.get());
+        message = messageRepo.save(message);
+
+        return message;
     }
 
 

@@ -17,6 +17,7 @@
 <%
     Member user = (Member)session.getAttribute("login");
     String name = user.getName();
+    int uid = user.getUid();
 %>
 
 <h1>${chatRoom.name}</h1>
@@ -34,7 +35,12 @@
         console.log(WebSocket)
         console.log("${chatRoom.messages}")
         <c:forEach var="item" items="${chatRoom.messages}" >
-            $("#chatOutput").append('${item.member.name} : ' + '${item.content}' +'\n');
+            <c:if test="${item.member.name eq 'Admin'}">
+                $("#chatOutput").append('${item.content}' +'\n');
+            </c:if>
+            <c:if test="${item.member.name ne 'Admin'}">
+                $("#chatOutput").append('${item.member.name} : ' + '${item.content}' +'\n');
+            </c:if>
         </c:forEach>
         WebSocket.init(${chatRoom.cid}, ${chatRoom.members.size()-1}, userName);
 

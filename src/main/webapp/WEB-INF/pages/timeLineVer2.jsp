@@ -19,6 +19,7 @@
     request.setAttribute("member", (Member)session.getAttribute("login"));
     Member user = (Member)session.getAttribute("login");
     String email = user.getEmail();
+    String name = user.getName();
     long uid = user.getUid();
 %>
     <div class="page-container">
@@ -68,7 +69,8 @@
 
     // --------테스트 채팅 버튼 -----------
     function chatClick() {
-        console.log("Chat")
+        console.log("Chat");
+        console.log("<%=name%>");
         var user = {};
         user.uid = <%=uid%>;
         user.email = "<%=email%>";
@@ -90,7 +92,7 @@
 
     // --------- 채팅방을 만듭니다. ---------
     function createChatRoom() {
-        var users = ["KIM", "Lee", "SamSung"];
+        var users = ["KIM", "Lee", "SamSung", "Mr.Park"];
         var title_room = prompt("채팅방 이름을 입력하세요");
         console.log(title_room);
         $.ajax({

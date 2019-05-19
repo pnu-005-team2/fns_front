@@ -54,8 +54,8 @@ public class TimeLineController {
     public String Post(ModelMap modelMap, HttpSession session)
     {
         Member member = memberRepository.findById(46).get(); // Todo Test 용
-        session.setAttribute(LOGIN, member);
-
+        if(session.getAttribute(LOGIN) == null)
+            session.setAttribute(LOGIN, member);
 //        String content =request.getParameter("content");
  //       Board client = new Board();
 
