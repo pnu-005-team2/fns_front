@@ -18,9 +18,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static com.team2.webservice.common.Constant.LOGIN;
 
 
 /*Todo
@@ -50,6 +54,8 @@ public class ChatController {
             return null;
         }
         Member member = (Member)httpSession.getAttribute(LOGIN);
+        ChatRoom chatRoom = chatService.loadRoomInfo(16);
+        model.addAttribute("chatRoom", chatRoom);
         List<ChatRoom> chatRoomlist = chatService.loadChatList(member);
         model.addAttribute("RoomList",chatRoomlist);
         return "chat";
@@ -87,13 +93,12 @@ public class ChatController {
         return null;
     }
     //-----------채팅방 기록들을 모델에 담고 채팅방 화면을 리턴합니다.-----------
-    @RequestMapping(value = "chat", method = RequestMethod.GET)
-    public ChatRoom enterRoom(Model model, HttpServletRequest request,
-                            @RequestParam("cid") int chatRoomId){
+    @ResponseBody // 객체를 json형식으로 변환하여 던져준다.
+    @RequestMapping(value = "chatRoom", method = RequestMethod.POST)  // Todo 맵핑수정 필요
+    public ChatRoom enterRoom(Integer chatRoomId){
         logger.info("EnterRoom");
-
+        System.out.println(chatRoomId);
         ChatRoom chatRoom = chatService.loadRoomInfo(chatRoomId);
-        model.addAttribute("chatRoom", chatRoom);
         return chatRoom;
     }
 
@@ -125,6 +130,5 @@ public class ChatController {
         System.out.println("Info In");
         return message;
     }
-
 
 }

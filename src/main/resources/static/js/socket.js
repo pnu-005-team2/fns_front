@@ -51,6 +51,7 @@ let WebSocket = (()=>{
                     sendMsg = msg.member.name +" : " +  msg.content;
                 */
                printMessage(msg);
+               //todo 스크롤 내리기
             });
         });
     }
@@ -65,25 +66,26 @@ let WebSocket = (()=>{
 
     //-------서버에서 온 message 채팅창에 출력------------
     function printMessage(message) {
-        if(message.member.name == userName)
+        if(message.member.name === userName)
             appendHtml(textArea,'<div class="d-flex justify-content-end mb-4">'+
                 '<div class="msg_cotainer_send">'+message.content+
                 '<span class="msg_time_send">8:55 AM, Today</span>'+
                 '</div>'+
                 '<div class="img_cont_msg">'+
-                '<img src='+message.member.img+ 'class="rounded-circle user_img_msg">'+
+                '<img src=" ' + message.member.img + ' " class="rounded-circle user_img_msg">'+
                 '</div>'+
                 '</div>');
         else
             appendHtml(textArea,'<div class="d-flex justify-content-start mb-4">\n' +
                             '<div class="img_cont_msg">\n' +
-                            '<img src='+message.member.img+'class="rounded-circle user_img_msg">\n' +
+                            '<img src='+ '"' +message.member.img+'"'+'class="rounded-circle user_img_msg">\n' +
                             '</div>\n' +
                             '<div class="msg_cotainer">\n' +
                             message.content+
                             '<span class="msg_time">8:40 AM, Today</span>\n' +
                         '</div>\n' +
                         '</div>');
+        // TODO ( " 가 제대로 안찍힘 ..)
     }
 
     //-------서버에 message 전송------------
