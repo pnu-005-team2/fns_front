@@ -38,8 +38,8 @@
             </div>
             <div class="card-body contacts_body">
                 <ui class="contacts">
-                    <c:forEach var="member" items="${memberList}" begin="1" step="1">
-                    <li class="ToActive" id = ${member.uid}>
+                    <c:forEach var="room" items="${RoomList}" begin="1" step="1">
+                    <li class="ToActive" id = ${room.cid}>
                         <div class="d-flex bd-highlight">
                             <div class="img_cont">
                                 <img src= "${room.messages[room.messages.size()-1].member.img}" class="rounded-circle user_img">
@@ -97,8 +97,9 @@
 </div>
 <script src="/resources/js/socket.js"></script>
 <script>
+    var userName = "<%=name%>";
 
-    var curMember={};
+
 
     $(document).ready(function(){
         $('#action_menu_btn').click(function(){
@@ -107,14 +108,13 @@
     });
 
     window.addEventListener("load", ()=>{
-        var userName = "<%=name%>";
         console.log(WebSocket)
         console.log("${chatRoom.messages}")
         <c:forEach var="item" items="${chatRoom.messages}" >
-        if ("${item.member.name}"=="<%=name%>"){
+        if ("${item.member.name}"==userName){
             $(".msg_card_body").append('<div class="d-flex justify-content-end mb-4">'+
                                             '<div class="msg_cotainer_send">"${item.content}"'+
-                                                '<span class="msg_time_send">8:55 AM, Today</span>'+
+                                                //'<span class="msg_time_send">8:55 AM, Today</span>'+
                                             '</div>'+
                                             '<div class="img_cont_msg">'+
                                                 '<img src="${user.img}" class="rounded-circle user_img_msg">'+
@@ -128,28 +128,53 @@
                 '            </div>\n' +
                 '            <div class="msg_cotainer">\n' +
                 '            ${item.content}\n' +
-                '            <span class="msg_time">8:40 AM, Today</span>\n' +
+                //'            <span class="msg_time">8:40 AM, Today</span>\n' +
                 '        </div>\n' +
                 '        </div>');
         }
         </c:forEach>
+        // Todo 채팅방 입장시 화면 다시생감
+        $("#chatOutput").scrollTop($("#chatOutput")[0].scrollHeight);
         WebSocket.init(${chatRoom.cid}, ${chatRoom.members.size()-1}, userName);
     });
     $(document).ready(function(){
         $('.ToActive').click(function(){
+            $("#chatOutput").empty();
             $('.active').removeClass('active').addClass('ToActive');
             $(this).removeClass('ToActive').addClass('active');
-            <c:forEach var="member" items="${memberList}" begin="1" step="1">
-                if (${member.uid} == $(this).attr('id')){
-                    curMember.name ="${member.name}";
-                    curMember.img = "${member.img}";
-                };
-            </c:forEach>
-            $('#user_name').text(curMember.name);
-            $('.user_img_msg').attr('src',curMember.img);
-            $('#user_img').attr('src',curMember.img);
+            $.ajax({
+                type : "POST",
+                url : "/chatRoom",
+                data : {"chatRoomId":$(this).attr('id')},
+                success: function (data) {
+                    for(var i = 0 ; i<data.messages.length ; ++i){
+                        if(data.messages[i].member.name === userName){
+                            $("#chatOutput").append('<div class="d-flex justify-content-end mb-4">'+
+                                '<div class="msg_cotainer_send">'+ data.messages[i].content+
+                                '<span class="msg_time_send">8:55 AM, Today</span>'+
+                                '</div>'+
+                                '<div class="img_cont_msg">'+
+                                '<img src="'+data.messages[i].member.img+'"class="rounded-circle user_img_msg">'+
+                                '</div>'+
+                                '</div>');
+                        }
+                        else{
+                            $("#chatOutput").append('<div class="d-flex justify-content-start mb-4">' +
+                                '<div class="img_cont_msg">' +
+                                '<img src="'+data.messages[i].member.img+'" class="rounded-circle user_img_msg">' +
+                                '</div>' +
+                                '<div class="msg_cotainer">' +
+                                data.messages[i].content +
+                                '<span class="msg_time">8:40 AM, Today</span>' +
+                                '</div>' +
+                                '</div>')
+                        }
+                    }
+                    $("#chatOutput").scrollTop($("#chatOutput")[0].scrollHeight);
+                }
+                });
+            });
         });
-    });
 
 </script>
 </body>
