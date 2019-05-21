@@ -1,7 +1,9 @@
 package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.vo.Board;
+import com.team2.webservice.sprint1.vo.Member;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,11 +23,16 @@ import java.util.Optional;
 @Controller
 public class TimeLineController {
 
+
+    @Autowired
+    private MemberRepository memberRepository;
+
     @Autowired
     private BoardRepository boardRepository;
 
 
     List<Board> boardRecordList;
+    List<Member> memberList;
 
 
     @RequestMapping(value = "/timeline/origin", method = RequestMethod.GET)
@@ -33,6 +40,8 @@ public class TimeLineController {
     {
         System.out.println("Origin");
         boardRecordList = boardRepository.findAll();
+
+
 
         model.addAttribute("postRecordlList", boardRecordList);
         model.addAttribute("postRecordList_Byte", boardRecordList);
@@ -44,62 +53,6 @@ public class TimeLineController {
     @RequestMapping("/timeline")
     public String Post(ModelMap modelMap)
     {
-//        String content =request.getParameter("content");
- //       Board client = new Board();
-
-
-
-//        System.out.println(boardRecordList);
-//       int byte_num=boardRecordList.size();
-
-//ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//    byte[] buf = new byte[1024];
-//    Blob blob = profile.getContent();
-//    InputStream in =  blob.getBinaryStream();
-//    System.out.println("id content" +in);
-//    int n = 0;
-//    while ((n=in.read(buf))>=0)
-//    {
-//        baos.write(buf, 0, n);
-//
-//    }
-//
-//    in.close();
-//    byte[] bytes = baos.toByteArray();
-//    System.out.println("bytes" +bytes);
-//    byte[] encodeBase64 = Base64.encodeBase64(buf);
-//    String base64Encoded = new String(encodeBase64, "UTF-8");
-//
-//
-//    customer.setEmailId(customerName);
-//    profile.setCustomer(customer);
-//    //profile.setContent(blob);
-//    System.out.println();
-//    profile = profileService.findProfileById(customer);
-//    model.addAttribute("content",base64Encoded);
-//    model.addAttribute("profile", profile);
-//    return "myProfile";
-//
-
-//        for(int i=0;i<boardRecordList.size();i++){
-//
-//            try{
-//                byte[] imgByteArray= boardRecordList.get(i).getImg().getBytes();
-//
-//                //byte[] imgByteArray = Base64.getDecoder().decode(temp_img_String.getBytes());
-//
-//                postresults_List.get(i).content_result= boardRecordList.get(i).getContent();
-//                postresults_List.get(i).hashtag_result= boardRecordList.get(i).getHashtag();
-//                postresults_List.get(i).pid_result= boardRecordList.get(i).getPid();
-//                postresults_List.get(i).writer_result= boardRecordList.get(i).getWriter();
-//                postresults_List.get(i).img_result= imgByteArray;
-//            }catch (Exception ex){
-//                ex.printStackTrace();
-//            }
-//
-//        }
-
- //     Board board;
 
 
         //List<Image>
@@ -107,34 +60,7 @@ public class TimeLineController {
 
         modelMap.addAttribute("postRecordlList", boardRecordList);
         modelMap.addAttribute("postRecordList_Byte", boardRecordList);
-      //  model.addAttribute("postResult_ArrayList",postresults_List);
-       // model.addAttribute("postImageList",)
-
-//        return "Timeline";
         return "timeLineVer2";
-
-
-//
-//          System.out.println("In LikeRecord");
-//        List<LikeRecord> likeRecordList = likeRecordRepository.findAll(); // select * from LikeRecord
-//        model.addAttribute("LikeList", likeRecordList);
-//        System.out.println(likeRecordList.get(0).getLid());
-//        return "LikeTest";
-
-
-//        client.setPid((long)2);
-     /*   client.setContent(content);
-        client.setWriter("KIM");
-        client.setHashtag("안녕, 안녕하세요");
-        client.setImg("1234");
-//        Board client = new Board((long) 1, content, "Lee", ",,,,", "부산대");
-//        boardRepository.save(client);
-        List<Board> test = boardRepository.findAll();
-        for(int i = 0 ; i < test.size() ; ++i){
-            System.out.println("TEST : " + test.get(i).getContent());
-        }
-*/
-
     }
 
     @RequestMapping("/logoShowForStudent/{pid}")
@@ -161,7 +87,40 @@ public class TimeLineController {
 
 
     }
-    
+
+
+
+
+
+
+
+
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/text_Check")
+    public String Check_Search_Name(HttpServletRequest request)
+    {
+
+
+        String name_Search= request.getParameter("For_Search_User_Text");
+        Optional<Member> member_o = memberRepository.findByName(name_Search);
+        if(member_o.isPresent()){
+            Member member = member_o.get();
+            return member.getImg();
+        }
+        return "null";
+
+
+
+
+        //System.out.print(comment_content+"\n"+comment_pid+"\n"+comment_writer+"\n"+comment_date+"\n");
+
+
+
+
+
+    }
     
     
     
