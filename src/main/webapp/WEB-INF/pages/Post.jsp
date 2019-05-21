@@ -19,7 +19,10 @@
     Member user = (Member)session.getAttribute("login");
     String email = user.getEmail();
 %>
+
+
 <div class="card gedf-card">
+
     <div class="card-header">
     </div>
     <div class="card-body">

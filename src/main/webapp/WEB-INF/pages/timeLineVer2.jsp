@@ -12,6 +12,15 @@
     <title>FNS</title>
 </head>
 <body>
+<div style="position:relative; z-index: 1;">
+    <input type="text" class="comment-input"
+           onfocus="this.value=''" id="search_User_text"
+           placeholder="검색"  >
+    <div style="position: relative; z-index: 2; left:10px; top:20px;" id="search_Result_div">
+
+    </div>
+</div>
+
 <jsp:include page="Post.jsp"/>
 <link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
 
@@ -55,6 +64,107 @@
         <div class="right"></div>
     </div>
 <script>
+
+    var text_number=0;
+    var text_For_Search_User = document.getElementById("search_User_text");
+    var search_UserText=text_For_Search_User.value;
+
+    $(document).ready(function (e) {
+
+
+        setInterval(text_Check,1000);
+
+    });
+
+
+    var input1 = document.getElementById('search_User_text');
+    input1.onkeydown = function(event) {
+        text_number=0;
+
+        var temp=   document.getElementById("search_Result_div");
+
+
+        if(temp.getElementsByTagName("p").length!=0){
+
+
+
+            while(temp.hasChildNodes()){
+
+                temp.removeChild(temp.lastChild);
+            }
+
+        }
+
+
+    }
+
+
+    var text_Check_flag=false;
+
+    function text_Check(){
+        var text_For_Search_User = document.getElementById("search_User_text");
+
+        search_UserText= text_For_Search_User.value;
+
+
+
+        var sendData = { "For_Search_User_Text" : search_UserText
+        }
+
+
+        if(text_number==0){
+            $.ajax({
+                type : "POST",
+                url : "/text_Check",
+                data : sendData,
+                success: function (data) {
+                    if(data!="null"){
+                        text_number=1;
+                        var search_Result_text= document.getElementById("search_Result_div");
+                        var comment_text_area_value = search_UserText;
+                        //#.시도
+                        var comment_text_area_post_p = document.createElement("p");
+                        comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
+                            "<img class=\"btnclass-img\" width=\"5%\"height=\"5%\""+
+                            "src="+ data+ ">" +"&nbsp;"+ comment_text_area_value + "</div>" +
+                            "<br></div>";
+
+                       /* var comment_textNode=document.createTextNode(comment_text_area_value);
+                        comment_text_area_post_p.appendChild(comment_textNode);*/
+                        search_Result_text.appendChild(comment_text_area_post_p);
+
+
+                        //#.답
+                     /*   var comment_text_area_post_p = document.createElement("p");
+
+                        var comment_text_area_value = search_UserText;
+
+                        var comment_textNode=document.createTextNode(comment_text_area_value);
+                        comment_text_area_post_p.appendChild(comment_textNode);
+                        search_Result_text.appendChild(comment_text_area_post_p);*/
+
+                    }
+
+                    // alert(data);
+                }
+            });
+
+        }
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
 
     // --------- 좋아요 클릭시 아이콘 Toggle ---------
     function likeToggle(target) {
