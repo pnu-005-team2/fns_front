@@ -31,8 +31,8 @@
                 <div class="board-img">
                     <img src="/logoShowForStudent/${item.pid}">
                 </div>
-                <div class="board-content" ><p>${item.content}</p></div>
-                <div class="board-hashtag" ><p>${item.hashtag}</p></div>
+                <div class="board-content">${item.content}</div>
+                <div class="board-hashtag">${item.hashtag}</div>
                 <div class="board-funtion">
                     <i id="like_btn${item.pid}" class="fa fa-thumbs-o-up fa-2x"
                        onclick="likeToggle(this), like_btn_clickevent(${item.pid})"></i>
@@ -51,12 +51,15 @@
         </c:forEach>
     </div>
     <div class="friendshow">
-        <div class = "following">
+        <div class = "following" id = "following">
             <strong>Following </strong>
             <c:forEach var="item" items="${friendsRecordList}">
                 <div>
                     <img class='profile' src="${item.img}" width="12%" height="15">
-                    <strong>${item.name}</strong>
+                    <strong style="width:58%">${item.name}</strong>
+                    <div style="text-align:right" style="width:39%">
+                        <input type="button" onclick="deletefriend(<%=uid%>,${item.uid});" value="unfollow" height="15"/>
+                    </div>
                 </div>
             </c:forEach>
         </div>
@@ -71,20 +74,16 @@
             </c:forEach>
         </div>
 
-        <div class="friendRecommend">
+        <div class="friendRecommend" id="friendRecommend">
             <strong>Friend Recommend </strong>
             <c:forEach var="item" items="${friendRecommendList}">
                 <div>
                     <img class='profile' src="${item.img}" width="12%" height="15">
-                    <strong>${item.name}</strong>
-                    <div style="text-align:right">
-                        <input type="button" onclick="addfriend(<%=uid%>,${item.uid});" value="follow" height="15"/>
-                    </div>
+                    <strong style="width:58%">${item.name}</strong>
+                    <input type="button" onclick="addfriend(<%=uid%>,${item.uid});" value="follow" height="15"/>
                 </div>
             </c:forEach>
         </div>
-
-
     </div>
 
 </div>
@@ -100,11 +99,24 @@
         var sendData = {
             "uid1" : mypid,
             "uid2" : fripid
-
         }
         $.ajax({
             type : "POST",
             url : "/friendAdd",
+            data : sendData,
+            success: function (response) {
+                alert(response);
+            }
+        });
+    }
+    function deletefriend(mypid,fripid){
+        var sendData = {
+            "uid1" : mypid,
+            "uid2" : fripid
+        }
+        $.ajax({
+            type : "POST",
+            url : "/friendDelete",
             data : sendData,
             success: function (response) {
                 alert(response);
