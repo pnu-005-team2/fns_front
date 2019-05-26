@@ -10,13 +10,18 @@
 .clearfix:before, .clearfix:after { display: table; content: ''; }
 .clearfix:after { clear: both; }
 
+div.clearfix {
+	
+}
+div.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 body {
   background: #E2e2e2;
   color: #333;
   font-weight: normal;
   font-size: 1em;
-  /* font-family: 'Roboto', Arial, sans-serif; */
   font-family: 'Open Sans', serif;
 }
 
