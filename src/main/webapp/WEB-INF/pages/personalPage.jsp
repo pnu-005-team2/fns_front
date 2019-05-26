@@ -53,7 +53,7 @@
       <div class="grid">
       
         <div class="col3 first">
-        
+        <div class="card">
           <div class="postcont"><img src="https://www.larutadelsorigens.cat/filelook/full/2/22881/best-iphone-wallpapers.jpg" alt="">
           </div>
           <div class="profileinfo">
@@ -61,11 +61,13 @@
             <p>this is my home</p>
 
           </div>
+          </div>
         </div>
         
         
         
         <div class="col3 center">
+        <div class="card">
           <div class="postcont"><img src="https://www.praqma.com/images/stories/jenkins-concourse/swissknife.jpg" alt="">
           </div>
           <div class="profileinfo">
@@ -73,17 +75,19 @@
             <p>yes I am cool</p>
           <!--   <span>Read more <i class="fa fa-angle-right"></i></span> -->
           </div>
+          </div>
         </div>
         
         
        
         <div class="col3 last">
+        <div class="card">
           <div class="postcont"><img src="https://i.pinimg.com/236x/af/74/6e/af746ed7d4872b31f37292a5b716205b.jpg" alt="">
           </div>
           <div class="profileinfo">
 
             <p>I watched this movie</p>
-           
+           </div>
           </div>
         </div>
         
