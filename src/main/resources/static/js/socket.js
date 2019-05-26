@@ -29,10 +29,10 @@ let WebSocket = (()=>{
     function connect() {
 
         //localhost:8080/{SERVER_SOCKET_API}와 연결하는 소켓을 만든다.
-        let socket = new SockJS(SERVER_SOCKET_API)
+        let socket = new SockJS(SERVER_SOCKET_API);
 
         // 만든 소켓을 서버에 등록
-        stompClient = Stomp.over(socket)
+        stompClient = Stomp.over(socket);
         stompClient.connect({}, (frame)=>{ // frame에는 연결정보가 담겨있다.
             console.log("Connect Success");
             console.log(frame);

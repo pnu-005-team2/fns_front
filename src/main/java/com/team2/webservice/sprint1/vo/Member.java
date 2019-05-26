@@ -33,7 +33,7 @@ public class Member implements Serializable {
     // 외래키는 post에 있다.
 //    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
 //    private List<Board> boards;
-//
+
 //    @OneToMany(mappedBy = "member")
 //    private List<LikeRecord> likeRecords;
 
