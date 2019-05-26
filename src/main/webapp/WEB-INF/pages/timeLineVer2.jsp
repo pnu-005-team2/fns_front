@@ -84,6 +84,36 @@
     });
 
 
+    $(function(){
+        for(var i=0;i<${likeRecordList.size()};i++){
+            if((${likeRecordList.get(i).like_boolean}==false)){
+                //#.Class의 이름을 받아와서 이에 대한 class값의 target을 받아와서 classList를 변형시키면됨.
+                //document.getElementsByClassName("fa-2x"+${likeRecordList.get(i).board})[0].getAttribute("value");
+                console.log("asdsadasdsad");
+            }
+
+        }
+       /* for(var i=0;i<${likeRecordList.size()};i++){
+            console.log("sadasdsadsadsadasdsad");
+            if((${likeRecordList.get(i).like_boolean})==false){
+                console.log(${likeRecordList.get(i).like_boolean});
+            }
+        }*/
+
+        /*$.ajax({
+            type:"POST",
+            url: "/like_btn_Value_Url",
+            data : "null",
+            success: function(data){
+
+            }
+        });*/
+
+
+    });
+
+
+
     var input1 = document.getElementById('search_User_text');
     input1.onkeydown = function(event) {
         text_number=0;
@@ -250,16 +280,7 @@
             }
         }
 
-       /* $.ajax({
-            type : "POST",
-            url : "/like_btn",
-            data : sendData,
-            success: function (data) {
-                alert(data);
-            }
-        });*/
 
-        //like_button.style.display="none";
     }
 
 

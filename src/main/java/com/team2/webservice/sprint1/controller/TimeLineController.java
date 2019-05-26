@@ -64,9 +64,10 @@ public class TimeLineController {
 
         //List<Image>
         boardRecordList = boardRepository.findAll();
+       likeRecordList= likeRecordRepository.findAll();
 
         modelMap.addAttribute("postRecordlList", boardRecordList);
-        modelMap.addAttribute("postRecordList_Byte", boardRecordList);
+        modelMap.addAttribute("likeRecordList",likeRecordList);
         return "timeLineVer2";
     }
 
