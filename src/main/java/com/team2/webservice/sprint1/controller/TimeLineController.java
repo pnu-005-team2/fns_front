@@ -38,7 +38,7 @@ public class TimeLineController {
     List<Board> boardRecordList;
 
 
-    @RequestMapping(value = "/timeline/origin", method = RequestMethod.GET)
+    @RequestMapping(value = "/timeline/origin", method = RequestMethod.POST)
     public String write(Model model)
     {
         System.out.println("Origin");
@@ -54,7 +54,6 @@ public class TimeLineController {
     @RequestMapping("/timeline")
     public String Post(ModelMap modelMap, Model model, HttpServletRequest request)
     {
-
 
         //List<Image>
         boardRecordList = boardRepository.findAll();
@@ -80,37 +79,33 @@ public class TimeLineController {
         model.addAttribute("friendedRecordList", Friended);
         model.addAttribute("friendedRecordList_Byte", Friended);
 
+        //show recomend
+        List<Member> recommend = friendsService.recommendFriends(me);
+
+        model.addAttribute("friendRecommendList", recommend);
+        model.addAttribute("friendRecommendList_Byte", recommend);
+
 
         //확인
-        System.out.println(Friends.size());
-        for(int i = 0 ; i < Friends.size() ; i++){
-            System.out.println(Friends.get(i).getName());
-        }
-        for(int i = 0; i< Friended.size() ; i++){
-            System.out.println(Friended.get(i).getName());
-        }
-
-        return "timeLineVer2";
-
-
-    }
-
-
-    @RequestMapping(value = "" , method = RequestMethod.GET)
-    public String showList(){
-
-
+//        System.out.println(Friends.size());
+//        for(int i = 0 ; i < Friends.size() ; i++){
+//            System.out.println(Friends.get(i).getName());
+//        }
+//        for(int i = 0; i< Friended.size() ; i++){
+//            System.out.println(Friended.get(i).getName());
+//        }
 
         return "timeLineVer2";
     }
 
-    //    @RequestMapping(method = RequestMethod.GET)
-//    public void add(Member member1, Member member2){
-//        //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
-//        friendsService.addFriends(member1, member2);
-//    }
-
-
+    @RequestMapping(value = "/friendAdd" , method = RequestMethod.POST)
+    public void friendAdd(int uid1, int uid2){
+        //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
+        System.out.println("##### Entry Friend Add #######");
+        System.out.println("uid1 : " + uid1);
+        System.out.println("uid2 : " + uid2);
+        friendsService.addFriends(uid1, uid2);
+    }
 
     @RequestMapping("/logoShowForStudent/{pid}")
     public void imageView(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") Long pid) throws IOException {
@@ -136,17 +131,17 @@ public class TimeLineController {
 
 
     }
-    
-    
-    
-    
+
+
+
+
    /* @ResponseBody
     @PostMapping
     @RequestMapping("/like_boolean_check")
     public String Comment(HttpServletRequest request)
     {
-    	
-    	
+
+
         System.out.printf("In Timeline");
 
 
@@ -168,7 +163,7 @@ public class TimeLineController {
         commentRepository.save(copy_comment);
         return "Timeline";
 
-   
+
 
     }*/
 

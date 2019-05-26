@@ -17,29 +17,73 @@ public class FriendsServiceImpl implements FriendsService{
     MemberRepository memberRepository;
 
     @Override
-    public void addFriends(Member mem1, Member mem2) {
-        //mem1 : mem2를 본인의 친구목록에 추가 하고자 하는사람
+    public void addFriends(int uid1, int uid2) {
+        //mem1 :(본인) mem2를 본인의 친구목록에 추가 하고자 하는사람
         //mem2 : 추가 당하는 사람
-        String temp1 = mem1.getFriends();
-        String temp2 = " " + mem2.getUid();
-        String newFriends = temp1 + temp2;
-        mem1.setFriends(newFriends);
 
-        temp1 = mem2.getFriended();
-        temp2 = " " + mem1.getUid();
-        String newFriended = temp1 + temp2;
-        mem2.setFriended(newFriended);
+        List<Member> member = memberRepository.findAll();
+        Member mem1 = null;
+        Member mem2 = null;
+        boolean check = true;
+
+        for(int i = 0 ; i < member.size() ; ++i){
+            if(member.get(i).getUid() == uid1){
+                mem1 = member.get(i);
+                System.out.println("mem1 : " + mem1.getName());
+            }
+            if(member.get(i).getUid() == uid2){
+                mem2 = member.get(i);
+                System.out.println("mem2 : " + mem2.getName());
+            }
+        }
+
+        List<Member> fList1 = showFList(mem1, mem1.getFriends());
+        for(int i = 0 ; i < fList1.size() ; ++i){
+            if(fList1.get(i) == mem2){
+                check = false;
+            }
+        }
+
+        if(check){
+            String temp1 = mem1.getFriends();
+            String temp2;
+            String newFriends ;
+            if(temp1 == null){
+                temp2 = "" + mem2.getUid();
+                newFriends = temp2;
+            }
+            else{
+                temp2 = " " + mem2.getUid();
+                newFriends = temp1 + temp2;
+            }
+
+            mem1.setFriends(newFriends);
+            memberRepository.save(mem1);
+
+
+            temp1 = mem2.getFriended();
+            String newFriended ;
+            if(temp1 == null){
+                temp2 = "" + mem1.getUid();
+                newFriended = temp2;
+            }
+            else{
+                temp2 = " " + mem1.getUid();
+                newFriended = temp1 + temp2;
+            }
+
+            mem2.setFriended(newFriended);
+            memberRepository.save(mem1);
+        }
+        else{
+            System.out.println("already friends");
+        }
     }
 
     @Override
     public List<Member> showFriends(Member me) {
 
-        System.out.println("show Friends List");
-        System.out.println(me.getName());
         String friends = me.getFriends();
-
-        System.out.println(me.getFriends());
-        System.out.println(friends);
 
         return showFList(me, friends);
     }
@@ -47,10 +91,39 @@ public class FriendsServiceImpl implements FriendsService{
     @Override
     public List<Member> showFriended(Member me){
 
-        System.out.println("show Friended List");
         String friended = me.getFriended();
 
         return  showFList(me, friended);
+    }
+    @Override
+    public List<Member> recommendFriends(Member me){
+        List<Member>  all = memberRepository.findAll();
+        ArrayList<Member> recoI = new ArrayList<>();
+//        List<Member> reco  = new List<Member>();
+        List<Member> myfri = showFList(me, me.getFriends());
+        boolean check = true;
+
+
+        for(int i = 1; i < all.size(); ++i){
+            check = true;
+            if(all.get(i).getUid() == me.getUid()){
+                check = false;
+            }
+            if(myfri.size() != 0) {
+                for (int j = 0; j < myfri.size(); ++j) {
+                    if (all.get(i).getUid() == myfri.get(j).getUid()) {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            if(check){
+                System.out.println("uid check     " + i);
+                recoI.add(all.get(i));
+            }
+        }
+
+        return recoI;
     }
 
 
