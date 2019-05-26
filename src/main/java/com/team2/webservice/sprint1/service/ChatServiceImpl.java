@@ -67,7 +67,8 @@ public class ChatServiceImpl  implements ChatService{
             logger.error("존재하지 않는 유저입니다.");
             return false;
         }
-        Optional<ChatMember> chatMember = chatMemberRepo.findByMemberAndCid(member.get(), cid);
+        //Todo need Refactory
+        Optional<ChatMember> chatMember = chatMemberRepo.findByUidAndCid(member.get().getUid(), cid);
         if(!chatMember.isPresent()){
             logger.error("채팅방 목록에 존재하지 않는 유저입니다.");
             return false;
@@ -88,7 +89,8 @@ public class ChatServiceImpl  implements ChatService{
             return null;
         }
 
-        Optional<List<ChatMember>> chatMembers = chatMemberRepo.findByMember(memberO.get());
+        //Todo Need to refactory
+        Optional<List<ChatMember>> chatMembers = chatMemberRepo.findByUid(memberO.get().getUid());
 
         if(!chatMembers.isPresent()){
             logger.info("채팅목록이 존재하지 않습니다");
@@ -154,7 +156,7 @@ public class ChatServiceImpl  implements ChatService{
             if(!member.isPresent()){
                 logger.error("채팅방에 없는 계정입니다.");
             }
-            chatMember.setMember(member.get());
+            chatMember.setUid(member.get().getUid());
             chatMemberRepo.save(chatMember);
         }
     }
