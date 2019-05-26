@@ -1,6 +1,8 @@
 package com.team2.webservice.sprint1.service;
 
+import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
+import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import static java.lang.Long.parseLong;
 public class FriendsServiceImpl implements FriendsService{
     @Autowired
     MemberRepository memberRepository;
+    @Autowired
+    BoardRepository boardRepository;
 
     @Override
     public void addFriends(int uid1, int uid2) {
@@ -95,6 +99,12 @@ public class FriendsServiceImpl implements FriendsService{
 
         return  showFList(me, friended);
     }
+
+    @Override
+    public List<Board> showFBoard(Member me){
+        return showFriBoard(me);
+    }
+
     @Override
     public List<Member> recommendFriends(Member me){
         List<Member>  all = memberRepository.findAll();
@@ -118,7 +128,7 @@ public class FriendsServiceImpl implements FriendsService{
                 }
             }
             if(check){
-                System.out.println("uid check     " + i);
+//                System.out.println("uid check     " + i);
                 recoI.add(all.get(i));
             }
         }
@@ -134,8 +144,30 @@ public class FriendsServiceImpl implements FriendsService{
     }
 
 
+    protected List<Board> showFriBoard(Member me){
+        ArrayList<Board> fbList = new ArrayList<>();
 
-    public List<Member> showFList(Member me, String fList) {
+        List<Board> all =  boardRepository.findAll();
+        List<Member> myfri = showFList(me, me.getFriends());
+
+        boolean check ;
+
+        for(int i = 0 ; i< all.size() ; ++i){
+            check = false;
+            for(int j = 0 ; j < myfri.size() ; ++j){
+                if(all.get(i).getMember().getUid() == me.getUid() ||
+                    all.get(i).getMember().getUid() == myfri.get(j).getUid()){
+                    check= true;
+                }
+            }
+            if(check)
+                fbList.add(all.get(i));
+        }
+        return fbList;
+    }
+
+
+    protected List<Member> showFList(Member me, String fList) {
 
         ArrayList<Integer> fIList = new ArrayList<>();
 
