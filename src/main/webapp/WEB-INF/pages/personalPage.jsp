@@ -38,7 +38,9 @@
               <span>Age</span></div>
             </div>
           </div>
+           <button class="button button2">Edit profile</button>
         </div>
+       
         <div class="row clearfix">
           <ul class="row2tab clearfix">
 
