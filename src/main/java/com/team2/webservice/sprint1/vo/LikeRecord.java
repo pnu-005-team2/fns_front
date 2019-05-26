@@ -18,6 +18,7 @@ public class LikeRecord {
     // DTO 클래스의 필드는 각각 테이블의 Column의 해당한다.
     private Boolean like_boolean;
 
+
     // uid를 외부키로 갖는다, referencedColumnName 속성을 넣어주면 상대 엔티티에서 참조할 컬럼을 지정 할 수 있다
     // 참조엔티티의 컬럼과 외부키 이름이 같을 경우 생략 가능하다.
     @ManyToOne

@@ -1,8 +1,10 @@
 package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.vo.Board;
+import com.team2.webservice.sprint1.vo.LikeRecord;
 import com.team2.webservice.sprint1.vo.Member;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class TimeLineController {
 
 
     @Autowired
+    private LikeRecordRepository likeRecordRepository;
+
+    @Autowired
     private MemberRepository memberRepository;
 
     @Autowired
@@ -33,6 +38,7 @@ public class TimeLineController {
 
     List<Board> boardRecordList;
     List<Member> memberList;
+    List<LikeRecord> likeRecordList;
 
 
     @RequestMapping(value = "/timeline/origin", method = RequestMethod.GET)
@@ -53,6 +59,7 @@ public class TimeLineController {
     @RequestMapping("/timeline")
     public String Post(ModelMap modelMap)
     {
+
 
 
         //List<Image>
@@ -112,49 +119,61 @@ public class TimeLineController {
         return "null";
 
 
+    }
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/like_btn_Value_Url")
+    public String Like_Board_Check_And_Change(HttpServletRequest request)
+    {
 
 
-        //System.out.print(comment_content+"\n"+comment_pid+"\n"+comment_writer+"\n"+comment_date+"\n");
+
+        String like_Value= request.getParameter("like_Value");
+        String post_Pid = request.getParameter("post_Pid");
+
+
+        Optional<Board> board_Optional = boardRepository.findByPid(Long.parseLong(post_Pid));
+        Optional<LikeRecord> likeRecord_Optional= likeRecordRepository.findByBoard(board_Optional.get());
+        System.out.println(likeRecord_Optional);
+        if(likeRecord_Optional.isPresent()){
+            LikeRecord likeRecord = likeRecord_Optional.get();
+            if(like_Value.equals("false")){
+                like_Value="true";
+            }
+            else{
+                like_Value="false";
+            }
+            Boolean temp_Boolean =Boolean.parseBoolean(like_Value);
+            likeRecord.setLike_boolean(temp_Boolean);
+            likeRecordRepository.save(likeRecord);
+            return "success";
+        }
+        return "null";
 
 
 
 
 
     }
-    
-    
-    
-   /* @ResponseBody
+
+
+    @ResponseBody
     @PostMapping
-    @RequestMapping("/like_boolean_check")
-    public String Comment(HttpServletRequest request)
+    @RequestMapping("/likeBoolean_FirstCheck")
+    public String Like_Record_BooleanValue_Check(HttpServletRequest request)
     {
-    	
-    	
-        System.out.printf("In Timeline");
+
+        return "success";
 
 
-        String comment_content= request.getParameter("comment");
-        String comment_pid =request.getParameter("pid");
-        String comment_writer= request.getParameter("writer");
-        String comment_date = request.getParameter("date");
+    }
 
 
-        System.out.print(comment_content+"\n"+comment_pid+"\n"+comment_writer+"\n"+comment_date+"\n");
 
-        Comment copy_comment = new Comment();
-        copy_comment.setContent(comment_content);
-        copy_comment.setDate(comment_date);
+    
+    
 
-        copy_comment.setPid(Long.parseLong(comment_pid));
-        copy_comment.setWriter(comment_writer);
-
-        commentRepository.save(copy_comment);
-        return "Timeline";
-
-   
-
-    }*/
 
 
 }

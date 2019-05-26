@@ -1,14 +1,13 @@
 package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
 import com.team2.webservice.sprint1.service.BoardServiceImpl;
 import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.ProductLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
@@ -35,6 +35,8 @@ public class BoardController {
 
     @Autowired
     BoardRepository boardRepository;
+
+
 
     //--------------게시물쓰기 요청시 해당하는 유효성을 검증하고 view 리턴---------------------
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -81,4 +83,17 @@ public class BoardController {
 
         return "tagClothingFin";
     }
+
+
+   /* @ResponseBody
+    @PostMapping
+    @RequestMapping("/hashTag")
+    public String Check_HashTagSearch(HttpServletRequest request)
+    {
+
+
+
+
+
+    }*/
 }

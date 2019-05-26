@@ -125,6 +125,7 @@
             "writer" : temppid,
             "date": today
         }
+
         document.getElementById("btn_group_div_group"+temppid).innerHTML += "<div><div class=\"in-line\">"+
             "<img class=\"btn-img\" id=\"btn_img_like_img_id\" width=\"10%\"height=\"15\""+
             "src=\"https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg\">" +
@@ -234,12 +235,13 @@
 							<div class="btn-group btn-group-sm" role="group"
 								 style="float: left;" id="btn_group_div_group${item.pid}">
 								<div class="in-line" style="float: left;">
-									<img class="btn-img" id="btn_img_like_img_id" width="10%"
-										 height="15"
+									<img class="btn-img" id="btn_img_like_img_id" width="50%"
+										 height="30"
 										 src="https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg">
 									<input type="text" class="form-control"
 										   onfocus="this.value=''" id="comment${item.pid}"
-										   placeholder="re"> <input type="button"
+										   placeholder="re">
+									<input type="button"
 																	id="comment_confirm${item.pid}"
 																	onclick="comment_regist(${item.pid});" value="enter" />
 								</div>
@@ -289,6 +291,7 @@
 								<script>
                                     function myFunction(x) {
                                         x.classList.toggle("fa-thumbs-up");
+
                                     }
 								</script></td>
 							</td>
