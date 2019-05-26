@@ -25,8 +25,6 @@
     <div class="page-container">
         <div class="left">
             <a href="chat">채팅하기</a><br/>
-            <button onclick="createChatRoom()">채팅방만들기</button>
-            <div id = "chat-area"></div>
         </div>
         <div class="time-line">
             <c:forEach var="item" items="${postRecordlList}" step="1">
@@ -66,46 +64,6 @@
         <div class="right"></div>
     </div>
 <script>
-
-    // --------테스트 채팅 버튼 -----------
-    function chatClick() {
-        console.log("Chat");
-        console.log("<%=name%>");
-        var user = {};
-        user.uid = <%=uid%>;
-        user.email = "<%=email%>";
-
-        $.ajax({
-            type : "POST",
-            url : "/chat_list",
-            data : user,
-            success: function (data) {
-                console.log(data)
-                data.forEach((item)=> {
-                    $("#chat-area").append(
-                       "<a href = 'chat?cid=" + item.cid + "'>" + item.messages[item.messages.length-1].content + "</a><br/>"
-                    )
-                })
-            }
-        });
-
-    }
-
-    // --------- 채팅방을 만듭니다. ---------
-    function createChatRoom() {
-        var users = ["KIM", "Lee", "SamSung", "Mr.Park"];
-        var title_room = prompt("채팅방 이름을 입력하세요");
-        console.log(title_room);
-        $.ajax({
-            type : "POST",
-            url  : "/create_room",
-            data : {memberNames : users, roomName : title_room},
-            success: response => {
-                console.log("Success")
-                console.log(response);
-            }
-        })
-    }
 
     // --------- 좋아요 클릭시 아이콘 Toggle ---------
     function likeToggle(target) {

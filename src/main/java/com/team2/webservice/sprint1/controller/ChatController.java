@@ -1,7 +1,6 @@
 package com.team2.webservice.sprint1.controller;
 
 
-import com.team2.webservice.sprint1.jpa.ChatRoomRepository;
 import com.team2.webservice.sprint1.service.ChatServiceImpl;
 import com.team2.webservice.sprint1.vo.ChatRoom;
 import com.team2.webservice.sprint1.vo.Member;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -39,10 +37,6 @@ public class ChatController {
 
     @Autowired
     ChatServiceImpl chatService;
-
-    @Autowired
-    ChatRoomRepository chatRoomRepository;
-
 
     //-----------채팅 View를 리턴합니다..-----------
     @RequestMapping(value = "chat", method = RequestMethod.GET)
@@ -97,22 +91,13 @@ public class ChatController {
         else logger.info("Exit Failed");
         return null;
     }
-    //-----------채팅방 기록들을 모델에 담고 채팅방 화면을 리턴합니다.-----------
+
+    //-----------채팅방 기록들을 리턴합니다.-----------
     @ResponseBody // 객체를 json형식으로 변환하여 던져준다.
     @RequestMapping(value = "chatRoom", method = RequestMethod.POST)
     public ChatRoom enterRoom(Integer chatRoomId){
-        logger.info("EnterRoom");
         ChatRoom chatRoom = chatService.loadRoomInfo(chatRoomId);
         return chatRoom;
-    }
-
-    //-----------채팅방리스트를 리턴합니다.-----------
-    @ResponseBody // 객체를 json형식으로 변환하여 던져준다.
-    @RequestMapping(value = "chat_list", method = RequestMethod.POST)
-    public List<ChatRoom> loadList(Member member){
-        logger.info("loadList");
-        List<ChatRoom> chatRooms = chatService.loadChatList(member);
-        return chatRooms;
     }
 
     //-----------채팅 메시지를 저장하고, 구독중인 클라이언트들에게 뿌려줍니다.-----------
