@@ -89,7 +89,7 @@
             if((${likeRecordList.get(i).like_boolean}==false)){
                 //#.Class의 이름을 받아와서 이에 대한 class값의 target을 받아와서 classList를 변형시키면됨.
                 //document.getElementsByClassName("fa-2x"+${likeRecordList.get(i).board})[0].getAttribute("value");
-       
+                console.log("asdsadasdsad");
             }
 
         }
