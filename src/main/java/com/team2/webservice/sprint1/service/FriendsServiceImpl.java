@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
@@ -132,6 +134,9 @@ public class FriendsServiceImpl implements FriendsService{
                 recoI.add(all.get(i));
             }
         }
+
+        long seed = System.nanoTime();
+        Collections.shuffle(recoI, new Random(seed));
 
         return recoI;
     }
