@@ -55,17 +55,18 @@ public class TimeLineController {
     public String Post(ModelMap modelMap, Model model, HttpServletRequest request)
     {
 
-        //List<Image>
-        boardRecordList = boardRepository.findAll();
-
-        modelMap.addAttribute("postRecordlList", boardRecordList);
-        modelMap.addAttribute("postRecordList_Byte", boardRecordList);
-
-
         //about Friends controlling
         HttpSession session = request.getSession();
         System.out.println(session.getAttribute("login"));
         Member me = (Member)session.getAttribute("login");
+
+        //List<Image>
+//        boardRecordList = boardRepository.findAll();
+        List<Board> fBoardList = friendsService.showFBoard(me);
+
+        modelMap.addAttribute("postRecordlList", fBoardList);
+        modelMap.addAttribute("postRecordList_Byte", fBoardList);
+
 
         //show following
         List<Member> Friends = friendsService.showFriends(me);
