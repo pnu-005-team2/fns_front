@@ -28,7 +28,7 @@ public class JoinController {
     {
         System.out.println(member);
         System.out.println("Board");
-        member.setImg("no img");
+        member.setImg("https://s3.ap-northeast-2.amazonaws.com/fns-image/user_img.svg");
         memberService.register(member);
         return "redirect:/login";
     }
