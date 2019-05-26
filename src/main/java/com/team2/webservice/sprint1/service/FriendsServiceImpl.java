@@ -152,7 +152,7 @@ public class FriendsServiceImpl implements FriendsService{
 
         boolean check ;
 
-        for(int i = 0 ; i< all.size() ; ++i){
+        for(int i = all.size() -1 ; i >= 0 ; --i){
             check = false;
             for(int j = 0 ; j < myfri.size() ; ++j){
                 if(all.get(i).getMember().getUid() == me.getUid() ||
