@@ -71,6 +71,12 @@ public class ChatController {
         return chatRoom;
     }
 
+    @RequestMapping(value = "invite", method = RequestMethod.POST)
+    public ChatRoom invite(int cid, String[] memberNames){
+        logger.info("Invite");
+        return chatService.invite(cid,memberNames);
+    }
+
     //-----------채팅방 삭제합니다..-----------
     @MessageMapping(value = "exit_room/{roomId}")
     @SendTo("/topic/message/{roomId}")
