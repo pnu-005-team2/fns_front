@@ -1,9 +1,11 @@
 package com.team2.webservice.sprint1.service;
 
 import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.jpa.ProductLinkRepository;
 import com.team2.webservice.sprint1.vo.Board;
+import com.team2.webservice.sprint1.vo.LikeRecord;
 import com.team2.webservice.sprint1.vo.Member;
 import com.team2.webservice.sprint1.vo.ProductLink;
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +29,9 @@ public class BoardServiceImpl implements BoardService{
 
     @Autowired
     ProductLinkRepository productLinkRepository;
+
+    @Autowired
+    LikeRecordRepository likeRecordRepository;
 
     @Override
     public void write(Board board, String writer) {
@@ -53,6 +58,26 @@ public class BoardServiceImpl implements BoardService{
 //        board.setClothingTag("@ ");
         boardRepository.save(board);
         System.out.println("-------------------Write Complete---------------");
+
+
+
+     //   String like_Value= request.getParameter("like_Value");
+   //     String post_Pid = request.getParameter("post_Pid");
+
+        System.out.println("xxxxxxxxxxxxxxxxxx");
+
+        //Optional<Board> board_FInd= boardRepository.findByPid(Long.parseLong(post_Pid));
+       // System.out.println(board_FInd);
+        LikeRecord likeRecord =new LikeRecord();
+        likeRecord.setLike_boolean(false);
+        likeRecord.setBoard(board);
+        System.out.println("eeeeeeeeeeeeeeeeee");
+        //likeRecord.setPid(Long.parseLong(post_Pid));
+        System.out.println("pppppppppppppppppp");
+
+        likeRecordRepository.save(likeRecord);
+        System.out.println("iiiiiiiiiiiiiiiiii");
+
 
 
     }
