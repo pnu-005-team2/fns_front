@@ -106,6 +106,15 @@
         });
     });
 
+    window.onload = function () {
+        if (window.Notification) {
+            Notification.requestPermission();
+        }
+    }
+
+
+
+
     $(document).ready(function(){
         $('.ToActive').click(function(){
             WebSocket.close();

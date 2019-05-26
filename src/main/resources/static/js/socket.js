@@ -16,7 +16,7 @@ let WebSocket = (()=>{
     let roomId;
     let userNumber;
     let userName;
-    let socket;
+
     function init(_roomId, _userNumber, _userName) {
         console.log("Socket Init......");
         roomId = _roomId;
@@ -29,6 +29,23 @@ let WebSocket = (()=>{
         if(stompClient != null)
             stompClient.disconnect();
     }
+    function notify(message) {
+        if (Notification.permission !== 'granted') {
+            alert('notification is disabled');
+        }
+        else {
+            let notification = new Notification('New messages', {
+                icon: message.member.img,
+                body: message.content,
+            });
+
+            notification.onclick = function () {
+                window.open('http://localhost:8080/chat');
+            };
+        }
+    }
+
+
     //-------소켓을 연결한다 ------------
     function connect() {
 
@@ -48,6 +65,7 @@ let WebSocket = (()=>{
                console.log(msg);
                console.log(msg.readCnt);
                printMessage(msg);
+               notify(msg);
                //todo 스크롤 내리기
             });
         });
