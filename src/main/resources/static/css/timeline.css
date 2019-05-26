@@ -11,13 +11,6 @@
     margin-top: 1em;
     display: inline-block;
     vertical-align: top;
-    
-    border-top: 10px solid skyblue; 
-    border-bottom: 10px solid skyblue; 
-    border-left: 10px solid skyblue; 
-    border-right: 10px solid skyblue; 
-    border-radius: 10px;
-
 }
 
 .time-line{
@@ -30,11 +23,11 @@
     border: solid;
     margin-top: 1em;
     height: 50em;
-    
-    border-top: 10px solid skyblue; 
-    border-bottom: 10px solid skyblue; 
-    border-left: 10px solid skyblue; 
-    border-right: 10px solid skyblue; 
+
+    border-top: 10px solid skyblue;
+    border-bottom: 10px solid skyblue;
+    border-left: 10px solid skyblue;
+    border-right: 10px solid skyblue;
     border-radius: 10px;
 }
 
@@ -90,21 +83,39 @@
     width: 10%;
 }
 .following{
-	border: solid;
-    margin-top: 1em;
-	
-	
+    border: solid;
+
+    border-top: 10px solid skyblue;
+    border-bottom: 10px solid skyblue;
+    border-left: 10px solid skyblue;
+    border-right: 10px solid skyblue;
+    border-radius: 10px;
+
+
 }
 .follower{
-	border: solid;
+    border: solid;
     margin-top: 1em;
-	
-	
+    border-top: 10px solid skyblue;
+    border-bottom: 10px solid skyblue;
+    border-left: 10px solid skyblue;
+    border-right: 10px solid skyblue;
+    border-radius: 10px;
+
 }
 .friendRecommend{
-	border: solid;
+    border: solid;
     margin-top: 1em;
-	
-	
-}
+    border-top: 10px solid skyblue;
+    border-bottom: 10px solid skyblue;
+    border-left: 10px solid skyblue;
+    border-right: 10px solid skyblue;
+    border-radius: 10px;
 
+}
+.profile{
+    width: 30px; height: 30px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+}
