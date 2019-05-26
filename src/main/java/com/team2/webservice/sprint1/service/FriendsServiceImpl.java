@@ -27,21 +27,10 @@ public class FriendsServiceImpl implements FriendsService{
         //mem1 :(본인) mem2를 본인의 친구목록에 추가 하고자 하는사람
         //mem2 : 추가 당하는 사람
 
-        List<Member> member = memberRepository.findAll();
-        Member mem1 = null;
-        Member mem2 = null;
+        Member mem1 = setMember(uid1);
+        Member mem2 = setMember(uid2);
         boolean check = true;
 
-        for(int i = 0 ; i < member.size() ; ++i){
-            if(member.get(i).getUid() == uid1){
-                mem1 = member.get(i);
-                System.out.println("mem1 : " + mem1.getName());
-            }
-            if(member.get(i).getUid() == uid2){
-                mem2 = member.get(i);
-                System.out.println("mem2 : " + mem2.getName());
-            }
-        }
 
         List<Member> fList1 = showFList(mem1, mem1.getFriends());
         for(int i = 0 ; i < fList1.size() ; ++i){
@@ -84,6 +73,27 @@ public class FriendsServiceImpl implements FriendsService{
         else{
             System.out.println("already friends");
         }
+    }
+
+    @Override
+    public void deleteFriend(int uid1, int uid2){
+        //mem1 :(본인)
+        //mem2 : 삭제 당하는 사람
+
+        Member mem1 = setMember(uid1);
+        Member mem2 = setMember(uid2);
+        String delList = "";
+
+        List<Member> friList = showFList(mem1, mem1.getFriends());
+
+        for(int i = 0; i < friList.size() ; ++i){
+            if(uid2 != friList.get(i).getUid()){
+                delList += friList.get(i).getUid() + " ";
+            }
+        }
+
+        mem1.setFriends(delList);
+        memberRepository.save(mem1);
     }
 
     @Override
@@ -212,6 +222,17 @@ public class FriendsServiceImpl implements FriendsService{
         }
 
         return fListR;
+    }
+
+    protected Member setMember(int uid){
+        List<Member> all = memberRepository.findAll();
+        Member ret = null;
+        for(int i = 0 ; i < all.size() ; ++i){
+            if(all.get(i).getUid() == uid){
+                ret = all.get(i);
+            }
+        }
+        return ret;
     }
 }
 

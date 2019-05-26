@@ -107,6 +107,10 @@ public class TimeLineController {
         System.out.println("uid2 : " + uid2);
         friendsService.addFriends(uid1, uid2);
     }
+    @RequestMapping(value = "/friendDelete" , method = RequestMethod.POST)
+    public void friendDelete(int uid1, int uid2){
+        friendsService.deleteFriend(uid1, uid2);
+    }
 
     @RequestMapping("/logoShowForStudent/{pid}")
     public void imageView(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") Long pid) throws IOException {
