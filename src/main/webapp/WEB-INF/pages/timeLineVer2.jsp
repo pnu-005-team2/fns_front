@@ -31,8 +31,8 @@
                 <div class="board-img">
                     <img src="/logoShowForStudent/${item.pid}">
                 </div>
-                <div class="board-content">${item.content}</div>
-                <div class="board-hashtag">${item.hashtag}</div>
+                <div class="board-content" ><p>${item.content}</p></div>
+                <div class="board-hashtag" ><p>${item.hashtag}</p></div>
                 <div class="board-funtion">
                     <i id="like_btn${item.pid}" class="fa fa-thumbs-o-up fa-2x"
                        onclick="likeToggle(this), like_btn_clickevent(${item.pid})"></i>
