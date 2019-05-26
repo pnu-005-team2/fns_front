@@ -31,8 +31,11 @@ public class Member implements Serializable {
     // OneToMany는 기본적으로 패치전략이 LAZY, 우선적으로 Proxy가 채워지고 필요할 때 가져온다.
     // cascade = CascadeType.REMOVE는 회원정보 삭제시, 게시물도 같이 삭제함시킨다.
     // 외래키는 post에 있다.
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Board> boards;
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+//    private List<Board> boards;
+
+//    @OneToMany(mappedBy = "member")
+//    private List<LikeRecord> likeRecords;
 
     @OneToMany(mappedBy = "member")
     private List<LikeRecord> likeRecords;
