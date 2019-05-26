@@ -24,6 +24,7 @@
 <%
     Member user = (Member)session.getAttribute("login");
     String name = user.getName();
+    String img =user.getImg();
 %>
 <div class="container-fluid h-100">
     <div class="row justify-content-center h-100">
@@ -57,16 +58,16 @@
             <div class="card-footer"></div>
         </div></div>
         <div class="col-md-8 col-xl-6 chat">
-            <div class="card">
+            <div class="card" id="chat">
                 <div class="card-header msg_head">
                     <div class="d-flex bd-highlight">
                         <div class="img_cont">
-                            <img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img" id ='user_img'>
+                            <img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img" id ='chatroom_img'>
                             <span class="online_icon"></span>
                         </div>
                         <div id="user_info">
-                            <span id = 'user_name'>hw</span>
-                            <p>1767 Messages</p>
+                            <span id = 'chatroom_name'>hw</span>
+                            <p id ="messages_cnt">1767 Messages</p>
                         </div>
                     </div>
                     <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
@@ -99,46 +100,16 @@
 <script>
     var userName = "<%=name%>";
 
-
-
     $(document).ready(function(){
         $('#action_menu_btn').click(function(){
             $('.action_menu').toggle();
         });
     });
 
-    window.addEventListener("load", ()=>{
-        console.log(WebSocket)
-        console.log("${chatRoom.messages}")
-        <c:forEach var="item" items="${chatRoom.messages}" >
-        if ("${item.member.name}"==userName){
-            $(".msg_card_body").append('<div class="d-flex justify-content-end mb-4">'+
-                                            '<div class="msg_cotainer_send">"${item.content}"'+
-                                                //'<span class="msg_time_send">8:55 AM, Today</span>'+
-                                            '</div>'+
-                                            '<div class="img_cont_msg">'+
-                                                '<img src="${user.img}" class="rounded-circle user_img_msg">'+
-                                            '</div>'+
-                                        '</div>');
-        }
-        else{
-            $(".msg_card_body").append('<div class="d-flex justify-content-start mb-4">\n' +
-                '            <div class="img_cont_msg">\n' +
-                '            <img src="${item.member.img}" class="rounded-circle user_img_msg">\n' +
-                '            </div>\n' +
-                '            <div class="msg_cotainer">\n' +
-                '            ${item.content}\n' +
-                //'            <span class="msg_time">8:40 AM, Today</span>\n' +
-                '        </div>\n' +
-                '        </div>');
-        }
-        </c:forEach>
-        // Todo 채팅방 입장시 화면 다시생감
-        $("#chatOutput").scrollTop($("#chatOutput")[0].scrollHeight);
-        WebSocket.init(${chatRoom.cid}, ${chatRoom.members.size()-1}, userName);
-    });
     $(document).ready(function(){
         $('.ToActive').click(function(){
+            WebSocket.close();
+            $('#chat').css("visibility","visible");
             $("#chatOutput").empty();
             $('.active').removeClass('active').addClass('ToActive');
             $(this).removeClass('ToActive').addClass('active');
@@ -147,11 +118,11 @@
                 url : "/chatRoom",
                 data : {"chatRoomId":$(this).attr('id')},
                 success: function (data) {
-                    for(var i = 0 ; i<data.messages.length ; ++i){
+                    for(let i = 0 ; i<data.messages.length ; ++i){
                         if(data.messages[i].member.name === userName){
                             $("#chatOutput").append('<div class="d-flex justify-content-end mb-4">'+
                                 '<div class="msg_cotainer_send">'+ data.messages[i].content+
-                                '<span class="msg_time_send">8:55 AM, Today</span>'+
+                                //'<span class="msg_time_send">8:55 AM, Today</span>'+  todo 추후 추가 예정
                                 '</div>'+
                                 '<div class="img_cont_msg">'+
                                 '<img src="'+data.messages[i].member.img+'"class="rounded-circle user_img_msg">'+
@@ -165,16 +136,27 @@
                                 '</div>' +
                                 '<div class="msg_cotainer">' +
                                 data.messages[i].content +
-                                '<span class="msg_time">8:40 AM, Today</span>' +
+                                //'<span class="msg_time">8:40 AM, Today</span>' +      todo 추후 추가 예정
                                 '</div>' +
                                 '</div>')
                         }
                     }
                     $("#chatOutput").scrollTop($("#chatOutput")[0].scrollHeight);
+
+                    $("#chatroom_name").empty();
+                    $("#chatroom_name").append(data.name);
+
+                    $("#messages_cnt").empty();
+                    $("#messages_cnt").append(data.messages.length);
+                    $("#messages_cnt").append(" Messages");
+
+                    $("#chatroom_img").attr("src",data.messages[data.messages.length-1].member.img);
+                    WebSocket.init(data.cid,data.members.length-1, userName);
+
                 }
-                });
             });
         });
+    });
 
 </script>
 </body>

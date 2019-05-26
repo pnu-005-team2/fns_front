@@ -24,7 +24,7 @@
 %>
     <div class="page-container">
         <div class="left">
-            <button onclick="chatClick()">채팅하기</button>
+            <a href="chat">채팅하기</a><br/>
             <button onclick="createChatRoom()">채팅방만들기</button>
             <div id = "chat-area"></div>
         </div>
