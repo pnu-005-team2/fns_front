@@ -73,10 +73,8 @@
                     <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
                     <div class="action_menu">
                         <ul>
-                            <li><i class="fas fa-user-circle"></i> View profile</li>
-                            <li><i class="fas fa-users"></i> Add to close friends</li>
-                            <li><i class="fas fa-plus"></i> Add to group</li>
-                            <li><i class="fas fa-ban"></i> Block</li>
+                            <li onclick="createChatRoom()"><i class="fas fa-plus" ></i> Create Chat Room</li>
+                            <%--<li><i class="fas fa-ban"></i> Block</li>--%>
                         </ul>
                     </div>
                 </div>
@@ -131,7 +129,6 @@
                         if(data.messages[i].member.name === userName){
                             $("#chatOutput").append('<div class="d-flex justify-content-end mb-4">'+
                                 '<div class="msg_cotainer_send">'+ data.messages[i].content+
-                                //'<span class="msg_time_send">8:55 AM, Today</span>'+  todo 추후 추가 예정
                                 '</div>'+
                                 '<div class="img_cont_msg">'+
                                 '<img src="'+data.messages[i].member.img+'"class="rounded-circle user_img_msg">'+
@@ -145,7 +142,6 @@
                                 '</div>' +
                                 '<div class="msg_cotainer">' +
                                 data.messages[i].content +
-                                //'<span class="msg_time">8:40 AM, Today</span>' +      todo 추후 추가 예정
                                 '</div>' +
                                 '</div>')
                         }
@@ -166,6 +162,23 @@
             });
         });
     });
+    // --------- 채팅방을 만듭니다. ---------
+    function createChatRoom() {
+        var users = [userName,"Mr.Park"];
+        var title_room = prompt("Enter the chat room's name");
+        console.log(title_room);
+        $.ajax({
+            type : "POST",
+            url  : "/create_room",
+            data : {memberNames : users, roomName : title_room},
+            success: response => {
+                console.log("Success")
+                console.log(response);
+            }
+        })
+    }
+
+
 
 </script>
 </body>
