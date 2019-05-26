@@ -10,12 +10,13 @@ let WebSocket = (()=>{
     const SERVER_SOCKET_API = "room"; // endpoint
     const ENTER_KEY = 13;
     let stompClient;
+    let foo;
     let textArea = document.getElementById( "chatOutput");
     let inputEle = document.getElementById("chatInput");
     let roomId;
     let userNumber;
     let userName;
-
+    let socket;
     function init(_roomId, _userNumber, _userName) {
         console.log("Socket Init......");
         roomId = _roomId;
@@ -24,7 +25,10 @@ let WebSocket = (()=>{
         connect();
         inputEle.addEventListener("keydown", chatKeyDownHandler);
     }
-
+    function close(){
+        if(stompClient != null)
+            stompClient.disconnect();
+    }
     //-------소켓을 연결한다 ------------
     function connect() {
 
@@ -39,17 +43,10 @@ let WebSocket = (()=>{
 
         // /topic/message로 구독을 신청한다. 해당 url로 메시지가 올 경우 콜백함수가 호출
         // 주로 일대다 채팅은 /topic, 일대일 통신은 /queue를 사용한다.
-           stompClient.subscribe('/topic/message/' + roomId , (msg)=>{
+           foo = stompClient.subscribe('/topic/message/' + roomId , (msg)=>{
                msg = JSON.parse(msg.body);
                console.log(msg);
                console.log(msg.readCnt);
-               //sendMsg = '';
-                /*
-               if(msg.readCnt == -1)
-                    sendMsg = msg.content;
-               else
-                    sendMsg = msg.member.name +" : " +  msg.content;
-                */
                printMessage(msg);
                //todo 스크롤 내리기
             });
@@ -69,7 +66,7 @@ let WebSocket = (()=>{
         if(message.member.name === userName)
             appendHtml(textArea,'<div class="d-flex justify-content-end mb-4">'+
                 '<div class="msg_cotainer_send">'+message.content+
-                '<span class="msg_time_send">8:55 AM, Today</span>'+
+                //'<span class="msg_time_send">8:55 AM, Today</span>'+
                 '</div>'+
                 '<div class="img_cont_msg">'+
                 '<img src=" ' + message.member.img + ' " class="rounded-circle user_img_msg">'+
@@ -82,7 +79,7 @@ let WebSocket = (()=>{
                             '</div>\n' +
                             '<div class="msg_cotainer">\n' +
                             message.content+
-                            '<span class="msg_time">8:40 AM, Today</span>\n' +
+                            //'<span class="msg_time">8:40 AM, Today</span>\n' +
                         '</div>\n' +
                         '</div>');
         // TODO ( " 가 제대로 안찍힘 ..)
@@ -116,6 +113,7 @@ let WebSocket = (()=>{
 
     return {
         init : init,
-        sendEixt : sendEixt
+        sendEixt : sendEixt,
+        close : close
     }
 })();

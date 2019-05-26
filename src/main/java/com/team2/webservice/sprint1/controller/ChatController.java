@@ -53,9 +53,8 @@ public class ChatController {
             logger.info("로그인 계정이 존재하지 않습니다.");
             return null;
         }
+
         Member member = (Member)httpSession.getAttribute(LOGIN);
-        ChatRoom chatRoom = chatService.loadRoomInfo(16);
-        model.addAttribute("chatRoom", chatRoom);
         List<ChatRoom> chatRoomlist = chatService.loadChatList(member);
         model.addAttribute("RoomList",chatRoomlist);
         return "chat";
@@ -100,10 +99,9 @@ public class ChatController {
     }
     //-----------채팅방 기록들을 모델에 담고 채팅방 화면을 리턴합니다.-----------
     @ResponseBody // 객체를 json형식으로 변환하여 던져준다.
-    @RequestMapping(value = "chatRoom", method = RequestMethod.POST)  // Todo 맵핑수정 필요
+    @RequestMapping(value = "chatRoom", method = RequestMethod.POST)
     public ChatRoom enterRoom(Integer chatRoomId){
         logger.info("EnterRoom");
-        System.out.println(chatRoomId);
         ChatRoom chatRoom = chatService.loadRoomInfo(chatRoomId);
         return chatRoom;
     }
