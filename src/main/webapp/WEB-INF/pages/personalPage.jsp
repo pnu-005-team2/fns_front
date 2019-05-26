@@ -6,12 +6,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
 </head>
 <body>
 <link rel="stylesheet" href="/resources/css/personalPageCSS.css" type="text/css"/>
 <div class="container">
   <div class="innerwrap">
+  <div class="card">
     <section class="section1 clearfix">
       <div>
         <div class="row grid clearfix">
@@ -43,15 +44,16 @@
 
           </ul>
         </div>
-      </div>
-
-       
+      </div> 
       <i class="fa fa-star"></i>
       </span>
     </section>
+    </div>
     <section class="section2 clearfix">
       <div class="grid">
+      
         <div class="col3 first">
+        
           <div class="postcont"><img src="https://www.larutadelsorigens.cat/filelook/full/2/22881/best-iphone-wallpapers.jpg" alt="">
           </div>
           <div class="profileinfo">
@@ -60,6 +62,9 @@
 
           </div>
         </div>
+        
+        
+        
         <div class="col3 center">
           <div class="postcont"><img src="https://www.praqma.com/images/stories/jenkins-concourse/swissknife.jpg" alt="">
           </div>
@@ -69,6 +74,9 @@
           <!--   <span>Read more <i class="fa fa-angle-right"></i></span> -->
           </div>
         </div>
+        
+        
+       
         <div class="col3 last">
           <div class="postcont"><img src="https://i.pinimg.com/236x/af/74/6e/af746ed7d4872b31f37292a5b716205b.jpg" alt="">
           </div>
@@ -78,6 +86,7 @@
            
           </div>
         </div>
+        
       </div>
     </section>
   </div>
