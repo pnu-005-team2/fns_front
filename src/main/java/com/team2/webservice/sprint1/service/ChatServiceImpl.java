@@ -44,6 +44,20 @@ public class ChatServiceImpl  implements ChatService{
         return chatRoom;
     }
 
+    //-----------------친구를 초대합니다.-------------------
+    public ChatRoom invite(int cid, String[] memberNames){
+        logger.info("Invite Member" + memberNames.toString());
+        saveChatMember(memberNames, cid);
+        Optional<ChatRoom> chatRoom= chatRoomRepository.findById(cid);
+
+        if(!chatRoom.isPresent()){
+            logger.info("채팅방이 존재하지 않습니다");
+            return null;
+        }
+
+        return chatRoom.get();
+    }
+
     //-----------------채팅방에서 나갑니다.-------------------
     @Override
     public boolean exitRoom(int cid, String memberName){
