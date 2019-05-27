@@ -85,6 +85,11 @@ public class MemberServiceImpl implements MemberService {
 
         Optional<List<Board>> boards = boardRepository.findByMemberId(email);
 
+        if(!boards.isPresent()){
+            logger.error("게시글이 존재하지 않습니다.");
+            return null;
+        }
+
         for (int i = 0; i < boards.get().size(); i++) {
             System.out.println(boards.get().get(i).getContent());
         }

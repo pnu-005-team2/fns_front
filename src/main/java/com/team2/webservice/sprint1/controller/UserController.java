@@ -1,8 +1,9 @@
 package com.team2.webservice.sprint1.controller;
 
-import com.team2.webservice.common.S3Uploader;
 import com.team2.webservice.sprint1.dto.ProfileDTO;
+import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.service.MemberServiceImpl;
+import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -27,6 +30,9 @@ public class UserController {
 
     @Autowired
     MemberServiceImpl memberService;
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String view(){
@@ -45,10 +51,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "mypage", method = RequestMethod.GET)
-    public String mypage(String email, Model model){
+    public String mypage(String email, Model model, HttpSession session){
         logger.info("Entry Mypage : " + email);
-        memberService.loadMyBoards(email);
-        return "";
+        List<Board> boards = memberService.loadMyBoards(email);
+        //Todo Test 용 member
+        Optional<Member> member = memberRepository.findByEmail(email);
+        session.setAttribute("login", member.get());
+        model.addAttribute("boardList", boards);
+        return "personalPage";
     }
 
 }

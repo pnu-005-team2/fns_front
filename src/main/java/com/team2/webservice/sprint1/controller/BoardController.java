@@ -6,9 +6,7 @@ import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.ProductLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -80,5 +78,14 @@ public class BoardController {
         boardService.tagCloth(productLink, board, x, y, linkText, writer);
 
         return "tagClothingFin";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "find", method = RequestMethod.POST)
+    public Board findBoard(int pid){
+        System.out.println("FindBoard : " + pid);
+        Board board = boardService.read((long)pid);
+        return boardService.read((long)pid);
+
     }
 }
