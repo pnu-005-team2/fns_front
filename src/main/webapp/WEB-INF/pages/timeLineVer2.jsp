@@ -71,6 +71,7 @@
 <script>
 
     var text_number=0;
+    var text_number_For_Hashtag=0;
     var text_For_Search_User = document.getElementById("search_User_text");
     var search_UserText=text_For_Search_User.value;
     var temp_value= document.getElementsByClassName("fa");
@@ -86,18 +87,12 @@
 
     $(function(){
         for(var i=0;i<${likeRecordList.size()};i++){
-            if((${likeRecordList.get(i).like_boolean}==false)){
-                //#.Class의 이름을 받아와서 이에 대한 class값의 target을 받아와서 classList를 변형시키면됨.
-                //document.getElementsByClassName("fa-2x"+${likeRecordList.get(i).board})[0].getAttribute("value");
-                console.log("asdsadasdsad");
-            }
+
 
         }
        /* for(var i=0;i<${likeRecordList.size()};i++){
             console.log("sadasdsadsadsadasdsad");
-            if((${likeRecordList.get(i).like_boolean})==false){
-                console.log(${likeRecordList.get(i).like_boolean});
-            }
+
         }*/
 
         /*$.ajax({
@@ -117,6 +112,7 @@
     var input1 = document.getElementById('search_User_text');
     input1.onkeydown = function(event) {
         text_number=0;
+        text_number_For_Hashtag=0;
 
         var temp=   document.getElementById("search_Result_div");
 
@@ -155,28 +151,65 @@
                 url : "/text_Check",
                 data : sendData,
                 success: function (data) {
-                    if(data!="null"){
-                        text_number=1;
-                        var search_Result_text= document.getElementById("search_Result_div");
-                        var comment_text_area_value = search_UserText;
-                        //#.시도
-                        var comment_text_area_post_p = document.createElement("p");
-                        comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
-                            "<img class=\"btnclass-img\" width=\"5%\"height=\"5%\""+
-                            "src="+ data+ ">" +"&nbsp;"+ comment_text_area_value + "</div>" +
-                            "<br></div>";
-                        search_Result_text.appendChild(comment_text_area_post_p);
 
-                        //#.답
-                     /*   var comment_text_area_post_p = document.createElement("p");
+                    if(data.substr(0,1)=="#"){
+                        //fa-2x${item.pid}
+                        if(data.substr(1)!=""){
 
-                        var comment_text_area_value = search_UserText;
 
-                        var comment_textNode=document.createTextNode(comment_text_area_value);
-                        comment_text_area_post_p.appendChild(comment_textNode);
-                        search_Result_text.appendChild(comment_text_area_post_p);*/
 
+                            var jbsplit =data.substr(1).split(',');
+                            if(text_number_For_Hashtag==0){
+                                text_number_For_Hashtag=1;
+                                for( var i in jbsplit){
+                                    var temp_Data_data = { "temp_data" : jbsplit[i]
+                                    }
+                                    //  alert(temp_Data_data);
+                                    $.ajax({
+                                        type : "POST",
+                                        url : "/getImage_url",
+                                        data : temp_Data_data,
+                                        success: function (data) {
+                                            // alert(data);
+                                            var search_Result_text= document.getElementById("search_Result_div");
+                                            //  var comment_text_area_value = search_UserText;
+                                            //#.시도
+                                            var comment_text_area_post_p = document.createElement("p");
+
+                                            var comment_textNode=document.createTextNode(data);
+                                            comment_text_area_post_p.appendChild(comment_textNode);
+
+
+                                            search_Result_text.appendChild(comment_text_area_post_p);
+
+                                        }
+                                    });
+                                }
+                            }
+
+
+                        }
                     }
+                    else{
+                        if(data!="null"){
+
+                            text_number=1;
+                            var search_Result_text= document.getElementById("search_Result_div");
+                            var comment_text_area_value = search_UserText;
+                            //#.시도
+                            var comment_text_area_post_p = document.createElement("p");
+                            comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
+                                "<img class=\"btnclass-img\" width=\"5%\"height=\"5%\""+
+                                "src="+ data+ ">" +"&nbsp;"+ comment_text_area_value + "</div>" +
+                                "<br></div>";
+                            search_Result_text.appendChild(comment_text_area_post_p);
+
+                        }
+                    }
+
+
+
+
 
 
                 }
