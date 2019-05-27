@@ -59,7 +59,12 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public Board read(Long pid) {
-        return null;
+        Optional<Board> board = boardRepository.findById(pid);
+        if(!board.isPresent()){
+            System.out.println("게시글이 존재하지 않습니다");
+            return null;
+        }
+        return board.get();
     }
 
     @Override
