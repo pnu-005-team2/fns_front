@@ -111,16 +111,113 @@ public class TimeLineController {
     {
 
 
+
         String name_Search= request.getParameter("For_Search_User_Text");
-        Optional<Member> member_o = memberRepository.findByName(name_Search);
-        if(member_o.isPresent()){
-            Member member = member_o.get();
-            return member.getImg();
+
+        if(name_Search!=""){
+            if(name_Search.substring(0,1).equals("#")){
+                String Drop_String ="#";
+                System.out.println("pppppppppppppppppppppppppppppppppp");
+                if(boardRecordList!=null){
+                    for(int i=0;i<boardRecordList.size();i++){
+                        if(boardRecordList.get(i).getHashtag()!=null){
+                            String temp_HashTag=boardRecordList.get(i).getHashtag();
+                            String[] temp_HashTag_Array=temp_HashTag.split(",");
+                            System.out.println("888888888888888888888888888888");
+                            for(int j=0;j<temp_HashTag_Array.length;j++){
+                                System.out.println(temp_HashTag_Array[j]);
+                                if(temp_HashTag_Array[j].equals(name_Search.substring(1))){
+                                    System.out.println("이게뭐야");
+                                    Drop_String+=String.valueOf(boardRecordList.get(i).getPid());
+                                    Drop_String+=" ";
+                                }
+                            }
+                            System.out.println("7777777777777777777777777777777");
+
+                        }
+
+                    }
+                }
+
+                return Drop_String;
+
+            }
+            else{
+                Optional<Member> member_o = memberRepository.findByName(name_Search);
+                if(member_o.isPresent()){
+                    Member member = member_o.get();
+                    return member.getImg();
+                }
+            }
         }
+
         return "null";
 
 
     }
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/getImage_url")
+    public String GetImageUrl_For_Hash(HttpServletRequest request)
+    {
+
+        String temp_data= request.getParameter("temp_data");
+        Optional<Board> temp__board= boardRepository.findByPid(Long.parseLong(temp_data.trim()));
+        if(temp__board.isPresent()){
+            return temp__board.get().getMember().toString();
+        }
+      //  String[] pid_Array = temp_data.split(" ");
+       // for(int i=0;i<pid_Array.length;i++){
+          /*  Optional<Board> tempboard= boardRepository.findByPid(Long.parseLong(pid_Array[i]));
+            if(tempboard.isPresent()){
+                return tempboard.get().getMember().toString();
+            }*/
+       // }
+
+        /*if(name_Search!=""){
+            if(name_Search.substring(0,1).equals("#")){
+                String Drop_String ="#";
+                System.out.println("pppppppppppppppppppppppppppppppppp");
+                if(boardRecordList.size()>0){
+                    for(int i=0;i<boardRecordList.size();i++){
+                        if(boardRecordList.get(i).getHashtag()!=null){
+                            String temp_HashTag=boardRecordList.get(i).getHashtag();
+                            String[] temp_HashTag_Array=temp_HashTag.split(",");
+                            System.out.println("888888888888888888888888888888");
+                            for(int j=0;j<temp_HashTag_Array.length;j++){
+                                System.out.println(temp_HashTag_Array[j]);
+                                if(temp_HashTag_Array[j].equals(name_Search.substring(1))){
+                                    System.out.println("이게뭐야");
+                                    Drop_String+=String.valueOf(boardRecordList.get(i).getPid());
+                                    Drop_String+=" ";
+                                }
+                            }
+                            System.out.println("7777777777777777777777777777777");
+
+                        }
+
+                    }
+                }
+
+                return Drop_String;
+
+            }
+            else{
+                Optional<Member> member_o = memberRepository.findByName(name_Search);
+                if(member_o.isPresent()){
+                    Member member = member_o.get();
+                    return member.getImg();
+                }
+            }
+        }*/
+
+        return "null";
+
+
+    }
+
+
 
     @ResponseBody
     @PostMapping
