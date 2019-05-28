@@ -55,10 +55,12 @@ public class TimeLineController {
     public String Post(ModelMap modelMap, Model model, HttpServletRequest request)
     {
 
-        //about Friends controlling
-        HttpSession session = request.getSession();
-        System.out.println(session.getAttribute("login"));
-        Member me = (Member)session.getAttribute("login");
+        //about Friends controlling, http session
+//        HttpSession session = request.getSession();
+//        System.out.println(session.getAttribute("login"));
+//        Member me = (Member)session.getAttribute("login");
+
+        Member me = showFriendsList(model, request);
 
         //List<Image>
 //        boardRecordList = boardRepository.findAll();
@@ -68,23 +70,24 @@ public class TimeLineController {
         modelMap.addAttribute("postRecordList_Byte", fBoardList);
 
 
-        //show following
-        List<Member> Friends = friendsService.showFriends(me);
 
-        model.addAttribute("friendsRecordList", Friends);
-        model.addAttribute("friendsRecordList_Byte", Friends);
-
-        //show follower
-        List<Member> Friended = friendsService.showFriended(me);
-
-        model.addAttribute("friendedRecordList", Friended);
-        model.addAttribute("friendedRecordList_Byte", Friended);
-
-        //show recomend
-        List<Member> recommend = friendsService.recommendFriends(me);
-
-        model.addAttribute("friendRecommendList", recommend);
-        model.addAttribute("friendRecommendList_Byte", recommend);
+//        //show following
+//        List<Member> Friends = friendsService.showFriends(me);
+//
+//        model.addAttribute("friendsRecordList", Friends);
+//        model.addAttribute("friendsRecordList_Byte", Friends);
+//
+//        //show follower
+//        List<Member> Friended = friendsService.showFriended(me);
+//
+//        model.addAttribute("friendedRecordList", Friended);
+//        model.addAttribute("friendedRecordList_Byte", Friended);
+//
+//        //show recomend
+//        List<Member> recommend = friendsService.recommendFriends(me);
+//
+//        model.addAttribute("friendRecommendList", recommend);
+//        model.addAttribute("friendRecommendList_Byte", recommend);
 
 
         //확인
@@ -100,16 +103,17 @@ public class TimeLineController {
     }
 
     @RequestMapping(value = "/friendAdd" , method = RequestMethod.POST)
-    public void friendAdd(int uid1, int uid2){
+    public void friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
         //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
-        System.out.println("##### Entry Friend Add #######");
-        System.out.println("uid1 : " + uid1);
-        System.out.println("uid2 : " + uid2);
         friendsService.addFriends(uid1, uid2);
+        showFriendsList(model, request);
+
     }
     @RequestMapping(value = "/friendDelete" , method = RequestMethod.POST)
-    public void friendDelete(int uid1, int uid2){
+    public void friendDelete(int uid1, int uid2, Model model, HttpServletRequest request){
+        //1: 삭제행위를 하는사람, 2: 삭제 당하는사람
         friendsService.deleteFriend(uid1, uid2);
+        showFriendsList(model, request);
     }
 
     @RequestMapping("/logoShowForStudent/{pid}")
@@ -139,6 +143,33 @@ public class TimeLineController {
 
 
 
+    //중복코드라서,
+    public Member showFriendsList( Model model, HttpServletRequest request){
+        //about Friends controlling, http session
+        HttpSession session = request.getSession();
+        System.out.println(session.getAttribute("login"));
+        Member me = (Member)session.getAttribute("login");
+
+        //show following
+        List<Member> Friends = friendsService.showFriends(me);
+
+        model.addAttribute("friendsRecordList", Friends);
+        model.addAttribute("friendsRecordList_Byte", Friends);
+
+        //show follower
+        List<Member> Friended = friendsService.showFriended(me);
+
+        model.addAttribute("friendedRecordList", Friended);
+        model.addAttribute("friendedRecordList_Byte", Friended);
+
+        //show recomend
+        List<Member> recommend = friendsService.recommendFriends(me);
+
+        model.addAttribute("friendRecommendList", recommend);
+        model.addAttribute("friendRecommendList_Byte", recommend);
+
+        return me;
+    }
 
    /* @ResponseBody
     @PostMapping
