@@ -40,35 +40,24 @@ public class FriendsServiceImpl implements FriendsService{
         }
 
         if(check){
-            String temp1 = mem1.getFriends();
+            String temp1;
             String temp2;
             String newFriends ;
-            if(temp1 == null){
-                temp2 = "" + mem2.getUid();
-                newFriends = temp2;
-            }
-            else{
-                temp2 = " " + mem2.getUid();
-                newFriends = temp1 + temp2;
-            }
 
+            temp1 = mem1.getFriends();
+            temp2 = mem2.getUid() + " ";
+            newFriends = temp1 + temp2;
             mem1.setFriends(newFriends);
             memberRepository.save(mem1);
 
 
             temp1 = mem2.getFriended();
             String newFriended ;
-            if(temp1 == null){
-                temp2 = "" + mem1.getUid();
-                newFriended = temp2;
-            }
-            else{
-                temp2 = " " + mem1.getUid();
-                newFriended = temp1 + temp2;
-            }
+            temp2 = mem1.getUid() + " ";
+            newFriended = temp1 + temp2;
 
             mem2.setFriended(newFriended);
-            memberRepository.save(mem1);
+            memberRepository.save(mem2);
         }
         else{
             System.out.println("already friends");
@@ -189,25 +178,16 @@ public class FriendsServiceImpl implements FriendsService{
         String temp = "";
         for(int i = 0 ; i < fList.length() ; ++i){
 
-            if(fList.charAt(i) == ' ' ||
-                    (i == fList.length()-1 && fList.charAt(i) < 30 && fList.charAt(i) > 39)) {
-                System.out.println("index : " + i);
+            if(fList.charAt(i) >= 48 && fList.charAt(i) <= 57) {
+                char cTemp = fList.charAt(i);
+                temp += cTemp;
+            }else if(temp != "" || temp != " "){
                 int iTemp = Integer.parseInt(temp);
                 fIList.add(iTemp);
                 temp = "";
-                continue;
-            }
-            char cTemp = fList.charAt(i);
-            temp += cTemp;
-            System.out.println("test----------------" + temp);
-
-            if(i == fList.length()-1){
-                int iTemp = Integer.parseInt(temp);
-                fIList.add(iTemp);
             }
 
         }
-
 
         List<Member> member = memberRepository.findAll();
         ArrayList<Member> fListR = new ArrayList<>();
