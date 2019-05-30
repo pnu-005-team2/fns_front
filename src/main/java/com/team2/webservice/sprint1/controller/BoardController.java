@@ -1,5 +1,6 @@
 package com.team2.webservice.sprint1.controller;
 
+import com.team2.webservice.sprint1.dto.BoardDTO;
 import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.service.BoardServiceImpl;
 import com.team2.webservice.sprint1.vo.Board;
@@ -82,10 +83,11 @@ public class BoardController {
 
     @ResponseBody
     @RequestMapping(value = "find", method = RequestMethod.POST)
-    public Board findBoard(int pid){
+    public BoardDTO findBoard(int pid){
         System.out.println("FindBoard : " + pid);
         Board board = boardService.read((long)pid);
-        return boardService.read((long)pid);
+        // Board 의 img가 blob형식이라 json 형태로 전달되지 않는다....
+        return boardService.transDTO(board);
 
     }
 }
