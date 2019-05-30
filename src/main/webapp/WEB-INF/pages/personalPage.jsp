@@ -81,7 +81,8 @@
                 </c:when>
             </c:choose>
             <div class="col3 ${place}">
-            <div class="card board-item" data-toggle = "normal" data-pid = "${board.pid}">
+            <div class="card board-item" data-toggle="modal" data-target="#myModal"
+                 data-mode = "normal" data-pid = "${board.pid}">
               <div class="postcont"><img src="/logoShowForStudent/${board.pid}" alt="">
               </div>
               <div class="profileinfo">
@@ -97,6 +98,28 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <span class="board-img"><img src="" alt=""> </span>
+                <div class="content">
+                    <div class="board-profile">
+                        <img>
+                        <strong></strong>
+                    </div>
+                    <span class="board-content"></span>
+                    <span class="board-comment"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
@@ -106,14 +129,40 @@
         for(let item of boards) item.addEventListener('click', boardClickHandler);
     };
 
+
     function boardClickHandler(e) {
+        let pid = e.currentTarget.getAttribute('data-pid');
+        let img_position = document.querySelector(".modal-body .board-img img");
+        let writer_img = document.querySelector(".board-profile img");
+        let writer_name = document.querySelector(".board-profile strong");
+        let content = document.querySelector(".board-content");
+        let comment = document.querySelector(".board-comment");
+
+
+        $.ajax({
+            type: "POST",
+            url : "/board/find",
+            data : {pid : pid},
+            success: function (data) {
+                console.log(data);
+                img_position.setAttribute("src", "/logoShowForStudent/" + data.pid);
+                writer_img.setAttribute("src", data.member.img);
+                writer_name.innerHTML = data.member.name;
+                content.innerHTML = data.content;
+                comment.innerHTML = data.comment;
+            }
+        });
+    }
+
+    function test(e) {
         console.log(e.currentTarget); // e.target은 이벤트가 발생된 요소를, e.currentTarget은 이벤트가 바인딩 된 요소를 반환
         let target = e.currentTarget;
-        let toggle = target.getAttribute("data-toggle");
+        let toggle = target.getAttribute("data-mode");
 
         //Todo Resize시 변경되도록 구현 필요
         if(toggle === "normal") {
             let section1 = document.getElementsByClassName("section1")[0];
+            let top_postion = document.getElementsByClassName("first")[0].style.top;
             let container = $('.container')
             console.log(container.left);
             target.style.width = section1.clientWidth + "px";
