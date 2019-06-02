@@ -21,19 +21,7 @@ public class CommentController {
     @Autowired
     private CommentRepository commentRepository;
 
-  /*  @RequestMapping("/timeline")
-    @ResponseBody
-    public Map<String,Object> ajax(HttpServletRequest request) throws Exception {
-            String firstArg = request.getParameter("test1");
-            String secondArg = request.getParameter("test2");
 
-            System.out.println(firstArg + " / "+ secondArg);
-            Map<String,Object>  map = new HashMap<String,Object>();
-            map.put("test1", firstArg);
-            map.put("test2", secondArg);
-
-            return map;
-    }*/
 
 
     @RequestMapping("/comment_print")
@@ -68,49 +56,15 @@ public class CommentController {
         copy_comment.setContent(comment_content);
         copy_comment.setDate(comment_date);
 
-//        copy_comment.setPid(Long.parseLong(comment_pid));
         copy_comment.setWriter(comment_writer);
 
         commentRepository.save(copy_comment);
 
 
 
-        //System.out.printf(rkrkrk);
-
-        //comment.setContent(request.getParameter("comment"));
-        //System.out.println("+++"+comment.getContent());
-        //String content = httpServletRequest.getParameter("")
-        //String content =request.getParameter("content");
-        //       Board client = new Board();
-
-        //List<Comment> commentsRecordList = commentRepository.findAll();
-        //model.addAttribute("_commentList",commentsRecordList);
-
 
 
         return "Timeline";
-
-        /*
-
-          System.out.println("In LikeRecord");
-        List<LikeRecord> likeRecordList = likeRecordRepository.findAll(); // select * from LikeRecord
-        model.addAttribute("LikeList", likeRecordList);
-        System.out.println(likeRecordList.get(0).getLid());
-        return "LikeTest";
-         */
-
-//        client.setPid((long)2);
-     /*   client.setContent(content);
-        client.setWriter("KIM");
-        client.setHashtag("안녕, 안녕하세요");
-        client.setImg("1234");
-//        Board client = new Board((long) 1, content, "Lee", ",,,,", "부산대");
-//        boardRepository.save(client);
-        List<Board> test = boardRepository.findAll();
-        for(int i = 0 ; i < test.size() ; ++i){
-            System.out.println("TEST : " + test.get(i).getContent());
-        }
-*/
 
     }
 
