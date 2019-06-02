@@ -23,22 +23,22 @@
     String name = user.getName();
     long uid = user.getUid();
 %>
-    <div class="page-container">
-        <div class="left">
-            <a href="chat">채팅하기</a><br/>
-        </div>
-        <div class="time-line">
-            <c:forEach var="item" items="${postRecordlList}" step="1">
-                <div class="board-item">
-                    <div class="writer" >
-                        <img src="${item.member.img}">
-                        <strong>${item.member.name}</strong>
-                    </div>
-                    <div id="comment-list${item.pid}"></div>
+<div class="page-container">
+    <div class="left">
+        <a href="chat">채팅하기</a><br/>
+    </div>
+    <div class="time-line">
+        <c:forEach var="item" items="${postRecordlList}" step="1">
+            <div class="board-item">
+                <div class="writer" >
+                    <img src="${item.member.img}">
+                    <strong>${item.member.name}</strong>
                 </div>
+                <div id="comment-list${item.pid}"></div>
             </div>
         </c:forEach>
     </div>
+
     <div class="friendshow">
         <div class = "following" id = "following">
             <strong>Following </strong>
@@ -74,7 +74,6 @@
             </c:forEach>
         </div>
     </div>
-
 </div>
 <script>
 
@@ -249,16 +248,16 @@
 
         //document.getElementsByClassName("fa-thumbs-o-up")[0].setAttribute("value")="true";
         //target.classList.toggle("fa-thumbs-up",false);
-    //    target.classList.toggle("fa-thumbs-up",true);
+        //    target.classList.toggle("fa-thumbs-up",true);
 
-      //  target.classList.toggle("fa-thumbs-o-up",false);
-/*1. 현재, 좋아요 테이블에서 받아오는 작업을 해야함
- -> 기존에 있던 부분에서 Table에서 미리 boolean 값을 받아와서 이를 확인하여
-  현재의 toggle 버튼을 넣야함
- -> 첫번째로, Function을 이용해서 controller에서 처리를 다한 뒤에
- ->  이 값을 받아서 각 값에 맞게 이를 출력하면 된다.
+        //  target.classList.toggle("fa-thumbs-o-up",false);
+        /*1. 현재, 좋아요 테이블에서 받아오는 작업을 해야함
+         -> 기존에 있던 부분에서 Table에서 미리 boolean 값을 받아와서 이를 확인하여
+          현재의 toggle 버튼을 넣야함
+         -> 첫번째로, Function을 이용해서 controller에서 처리를 다한 뒤에
+         ->  이 값을 받아서 각 값에 맞게 이를 출력하면 된다.
 
-*/
+        */
 
 
     }
@@ -296,7 +295,7 @@
     function like_btn_clickevent(temppid) {
         var like_button = document.getElementById("like_btn"+temppid);
 
-       // alert(like_button.getElementsByClassName());
+        // alert(like_button.getElementsByClassName());
 
 
         console.log("ClickEvent");
