@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class editUserTest {
 	
-	@RequestMapping(value = "/edit",  method = RequestMethod.GET)
+	@RequestMapping(value = "/personalpage",  method = RequestMethod.GET)
 	public String editTestView() {
-		return "editprofile";
+		return "personalPage";
 	}
 
 }
