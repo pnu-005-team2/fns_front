@@ -23,6 +23,7 @@
 <jsp:include page="body.jsp"/>
 <%
     Member user = (Member)session.getAttribute("login");
+    int uid = user.getUid();
     String name = user.getName();
     String img =user.getImg();
 %>
@@ -33,7 +34,7 @@
                 <div class="input-group">
                     <input type="text" placeholder="Search..." name="" class="form-control search">
                     <div class="input-group-prepend">
-                        <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+                        <span class="input-group-text search_btn"><i class="fas fa-search">   </i><i class ="fas fa-user" data-toggle="modal" data-target="#myModal"> </i></span>
                     </div>
                 </div>
             </div>
@@ -74,7 +75,7 @@
                     <div class="action_menu">
                         <ul>
                             <li onclick="createChatRoom()"><i class="fas fa-plus" ></i> Create Chat Room</li>
-                            <li onclick = "exitChatRoom()"><i class="fas fa-ban"></i> Exit Chat Room</li>
+                            <li onclick ="exitChatRoom()"><i class="fas fa-ban"></i> Exit Chat Room</li>
                         </ul>
                     </div>
                 </div>
@@ -89,6 +90,24 @@
                             <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -109,9 +128,6 @@
             Notification.requestPermission();
         }
     };
-
-
-
 
     $(document).ready(function(){
         $('.ToActive').click(function(){
@@ -158,7 +174,6 @@
 
                     $("#chatroom_img").attr("src",data.messages[data.messages.length-1].member.img);
                     WebSocket.init(data.cid,data.members.length-1, userName);
-
                 }
             });
         });
@@ -181,7 +196,20 @@
     function exitChatRoom() {
         WebSocket.sendExit(location.reload());
     }
+    function searchFriends() {
+        $.ajax({
+            type : "POST",
+            url  : "/load/friend",
+            data : {uid : <%=uid%>},
+            success: response => {
+                for (let i = 0; i < response.length ; i++) {
 
+                }
+                console.log("Success");
+                console.log(response);
+            }
+        })
+    }
 
 
 </script>
