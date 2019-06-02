@@ -186,11 +186,13 @@ public class TimeLineController {
         //Optional<Member> member_Optional =  memberRepository.findByUid()
        // Optional<LikeRecord> likeRecordsdasdsd = likeRecordRepository.findBy
         Optional<LikeRecord> likeRecord_Optional= likeRecordRepository.findByBoard(board_Optional.get());
+        //Optional<Board> board_MemberWriter= boardRepository.findByMember()
         System.out.println(likeRecord_Optional);
         if(likeRecord_Optional.isPresent()){
             LikeRecord likeRecord = likeRecord_Optional.get();
             Boolean temp_Boolean =Boolean.parseBoolean(like_Value);
             likeRecord.setLike_boolean(temp_Boolean);
+
             likeRecord.getMember();
             likeRecordRepository.save(likeRecord);
             return "success";

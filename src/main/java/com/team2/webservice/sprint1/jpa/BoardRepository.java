@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface BoardRepository extends JpaRepository<Board,Long> {
     List<Board> findByHashtag(String hashtag);
     Optional<Board> findByPid(Long pid);
+    Optional<Board> findByMember(String email);
 }
 
