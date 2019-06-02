@@ -17,33 +17,22 @@
 <jsp:include page="Post.jsp" />
 <link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
 <%
+    request.setAttribute("member", (Member)session.getAttribute("login"));
     Member user = (Member)session.getAttribute("login");
-    int uid = user.getUid();
+    String email = user.getEmail();
+    String name = user.getName();
+    long uid = user.getUid();
 %>
-<div class="page-container">
-    <div class="left"></div>
-    <div class="time-line">
-        <c:forEach var="item" items="${postRecordlList}" step="1">
-            <div class="board-item">
-                <div class="writer">
-                    <img class='profile' src="${item.member.img}"> <strong>${item.member.name}</strong>
-                </div>
-                <div class="board-img">
-                    <img src="/logoShowForStudent/${item.pid}">
-                </div>
-                <div class="board-content">${item.content}</div>
-                <div class="board-hashtag">${item.hashtag}</div>
-                <div class="board-funtion">
-                    <i id="like_btn${item.pid}" class="fa fa-thumbs-o-up fa-2x"
-                       onclick="likeToggle(this), like_btn_clickevent(${item.pid})"></i>
-                    <i class="comment-icon fa-comments-o fa-2x"></i>
-                </div>
-                <div class="comment-box" id="btn_group_div_group${item.pid}">
-                    <div class="comment-input-box">
-                        <input type="text" class="comment-input" onfocus="this.value=''"
-                               id="comment${item.pid}" placeholder="re"> <input
-                            type="button" class="enter-key" id="comment_confirm${item.pid}"
-                            onclick="comment_regist(${item.pid});" value="enter" />
+    <div class="page-container">
+        <div class="left">
+            <a href="chat">채팅하기</a><br/>
+        </div>
+        <div class="time-line">
+            <c:forEach var="item" items="${postRecordlList}" step="1">
+                <div class="board-item">
+                    <div class="writer" >
+                        <img src="${item.member.img}">
+                        <strong>${item.member.name}</strong>
                     </div>
                     <div id="comment-list${item.pid}"></div>
                 </div>

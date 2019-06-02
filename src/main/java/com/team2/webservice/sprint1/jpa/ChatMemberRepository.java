@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ChatMemberRepository extends JpaRepository<ChatMember,Integer> {
-    Optional<List<ChatMember>> findByMember(Member member);
-    Optional<ChatMember> findByMemberAndCid(Member member, int cid);
+//    Optional<List<ChatMember>> findByMember(Member member);
+    Optional<List<ChatMember>> findByUid(int uid);
+    Optional<ChatMember> findByUidAndCid(int uid, int cid);
 }

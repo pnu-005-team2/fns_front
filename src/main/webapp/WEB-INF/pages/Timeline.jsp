@@ -199,7 +199,7 @@
 					<table class="table" id="timelineTable">
 						<thead>
 						<tr>
-							<%--<th>${item.writer}</th>--%>
+							<th>${1item.writer}</th>
 						</tr>
 						</thead>
 						<tbody>

@@ -78,8 +78,6 @@ public class BoardController {
         y = parseInt(httpServletRequest.getParameter("Y"));
         linkText = httpServletRequest.getParameter("linktext");
 
-
-
         boardService.tagCloth(productLink, board, x, y, linkText, writer);
 
         return "tagClothingFin";

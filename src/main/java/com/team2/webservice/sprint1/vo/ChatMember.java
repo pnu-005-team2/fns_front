@@ -16,9 +16,9 @@ public class ChatMember implements Serializable {
     private int cmid;
     private int cid;
     private String role;
-
-    @OneToOne
-    @JoinColumn(name = "uid")
-    private Member member;
+    private int uid;
+//    @OneToOne
+//    @JoinColumn(name = "uid")
+//    private Member member;
 
 }

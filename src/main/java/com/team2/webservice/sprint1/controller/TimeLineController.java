@@ -23,6 +23,8 @@ import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.messaging.simp.stomp.StompHeaders.LOGIN;
+
 @Controller
 public class TimeLineController {
 
@@ -58,6 +60,7 @@ public class TimeLineController {
 
         model.addAttribute("postRecordlList", boardRecordList);
         model.addAttribute("postRecordList_Byte", boardRecordList);
+
         return "Timeline";
 
     }
@@ -66,6 +69,8 @@ public class TimeLineController {
     @RequestMapping("/timeline")
     public String Post(ModelMap modelMap, Model model, HttpServletRequest request)
     {
+//        String content =request.getParameter("content");
+ //       Board client = new Board();
 
         //about Friends controlling, http session
 //        HttpSession session = request.getSession();

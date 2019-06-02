@@ -4,6 +4,7 @@
     width: 25%;
     display: inline-block;
     background-color: #FF5733;
+    vertical-align: top;
 }
 
 .friendshow{
