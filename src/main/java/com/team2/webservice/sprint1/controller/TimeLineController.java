@@ -122,6 +122,17 @@ public class TimeLineController {
 
     }
 
+    @RequestMapping(value = "/load/friend", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Member> loadFriends(int uid){
+        Optional<Member> me = memberRepository.findById(uid);
+        if(!me.isPresent()){
+            System.out.println("올바르지 않은 계정입니다.");
+            return null;
+        }
+        return friendsService.showFriends(me.get());
+
+    }
 
 
     //중복코드라서,
