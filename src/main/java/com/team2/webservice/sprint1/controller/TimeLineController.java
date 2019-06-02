@@ -46,13 +46,9 @@ public class TimeLineController {
     {
         System.out.println("Origin");
         boardRecordList = boardRepository.findAll();
-
-
-
         model.addAttribute("postRecordlList", boardRecordList);
         model.addAttribute("postRecordList_Byte", boardRecordList);
         return "Timeline";
-
     }
 
     @PostMapping
@@ -60,14 +56,16 @@ public class TimeLineController {
     public String Post(ModelMap modelMap)
     {
 
-
-
-        //List<Image>
+       //List<Image>
         boardRecordList = boardRepository.findAll();
        likeRecordList= likeRecordRepository.findAll();
 
+       System.out.println("-------------------------------------------------검색");
         modelMap.addAttribute("postRecordlList", boardRecordList);
         modelMap.addAttribute("likeRecordList",likeRecordList);
+        for (int i = 0; i < likeRecordList.size(); i++) {
+            System.out.println(likeRecordList.get(i).getLike_boolean() );
+        };
         return "timeLineVer2";
     }
 
@@ -92,8 +90,6 @@ public class TimeLineController {
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -152,8 +148,6 @@ public class TimeLineController {
         }
 
         return "null";
-
-
     }
 
     @ResponseBody
@@ -167,50 +161,6 @@ public class TimeLineController {
         if(temp__board.isPresent()){
             return temp__board.get().getMember().toString();
         }
-      //  String[] pid_Array = temp_data.split(" ");
-       // for(int i=0;i<pid_Array.length;i++){
-          /*  Optional<Board> tempboard= boardRepository.findByPid(Long.parseLong(pid_Array[i]));
-            if(tempboard.isPresent()){
-                return tempboard.get().getMember().toString();
-            }*/
-       // }
-
-        /*if(name_Search!=""){
-            if(name_Search.substring(0,1).equals("#")){
-                String Drop_String ="#";
-                System.out.println("pppppppppppppppppppppppppppppppppp");
-                if(boardRecordList.size()>0){
-                    for(int i=0;i<boardRecordList.size();i++){
-                        if(boardRecordList.get(i).getHashtag()!=null){
-                            String temp_HashTag=boardRecordList.get(i).getHashtag();
-                            String[] temp_HashTag_Array=temp_HashTag.split(",");
-                            System.out.println("888888888888888888888888888888");
-                            for(int j=0;j<temp_HashTag_Array.length;j++){
-                                System.out.println(temp_HashTag_Array[j]);
-                                if(temp_HashTag_Array[j].equals(name_Search.substring(1))){
-                                    System.out.println("이게뭐야");
-                                    Drop_String+=String.valueOf(boardRecordList.get(i).getPid());
-                                    Drop_String+=" ";
-                                }
-                            }
-                            System.out.println("7777777777777777777777777777777");
-
-                        }
-
-                    }
-                }
-
-                return Drop_String;
-
-            }
-            else{
-                Optional<Member> member_o = memberRepository.findByName(name_Search);
-                if(member_o.isPresent()){
-                    Member member = member_o.get();
-                    return member.getImg();
-                }
-            }
-        }*/
 
         return "null";
 
@@ -232,18 +182,16 @@ public class TimeLineController {
 
 
         Optional<Board> board_Optional = boardRepository.findByPid(Long.parseLong(post_Pid));
+        
+        //Optional<Member> member_Optional =  memberRepository.findByUid()
+       // Optional<LikeRecord> likeRecordsdasdsd = likeRecordRepository.findBy
         Optional<LikeRecord> likeRecord_Optional= likeRecordRepository.findByBoard(board_Optional.get());
         System.out.println(likeRecord_Optional);
         if(likeRecord_Optional.isPresent()){
             LikeRecord likeRecord = likeRecord_Optional.get();
-            if(like_Value.equals("false")){
-                like_Value="true";
-            }
-            else{
-                like_Value="false";
-            }
             Boolean temp_Boolean =Boolean.parseBoolean(like_Value);
             likeRecord.setLike_boolean(temp_Boolean);
+            likeRecord.getMember();
             likeRecordRepository.save(likeRecord);
             return "success";
         }

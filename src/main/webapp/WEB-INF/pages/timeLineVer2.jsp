@@ -44,10 +44,8 @@
                     <div class="board-funtion" >
                         <i id="like_btn${item.pid}"
                                 class = "fa fa-thumbs-o-up fa-2x${item.pid}"
-                                value = false
+                                value="false"
                                 onclick="likeToggle(this,${item.pid}), like_btn_clickevent(${item.pid})"></i>
-
-
                     </div>
                     <div class="comment-box"
                          id="btn_group_div_group${item.pid}">
@@ -77,32 +75,31 @@
     var temp_value= document.getElementsByClassName("fa");
 
     $(document).ready(function (e) {
-
-
-
         setInterval(text_Check,1000);
-
     });
 
 
     $(function(){
-        for(var i=0;i<${likeRecordList.size()};i++){
 
 
+        ////////////////////////////////LikeRecord 전부 표시///////////////////////////////
+        <c:forEach var="item" items="${likeRecordList}" step="1">
+        var temp_pid = ${item.board.pid};
+        var temp_value=  document.getElementById("like_btn"+temp_pid).value;
+       // alert(${item.like_boolean} + "dddddd");
+        if("${item.like_boolean}"=="true"){
+            document.getElementById("like_btn"+temp_pid).className="fa fa-thumbs-up fa-2x"+temp_pid;
+            temp_value="true";
         }
-       /* for(var i=0;i<${likeRecordList.size()};i++){
-            console.log("sadasdsadsadsadasdsad");
+        else{
+            document.getElementById("like_btn"+temp_pid).className="fa fa-thumbs-o-up fa-2x"+temp_pid;
+            temp_value="false";
+        }
+        document.getElementById("like_btn"+temp_pid).value = temp_value;
+        </c:forEach >
 
-        }*/
+        ////////////////////////////////LikeRecord 전부 표시///////////////////////////////
 
-        /*$.ajax({
-            type:"POST",
-            url: "/like_btn_Value_Url",
-            data : "null",
-            success: function(data){
-
-            }
-        });*/
 
 
     });
@@ -155,9 +152,6 @@
                     if(data.substr(0,1)=="#"){
                         //fa-2x${item.pid}
                         if(data.substr(1)!=""){
-
-
-
                             var jbsplit =data.substr(1).split(',');
                             if(text_number_For_Hashtag==0){
                                 text_number_For_Hashtag=1;
@@ -192,11 +186,10 @@
                     }
                     else{
                         if(data!="null"){
-
                             text_number=1;
                             var search_Result_text= document.getElementById("search_Result_div");
                             var comment_text_area_value = search_UserText;
-                            //#.시도
+
                             var comment_text_area_post_p = document.createElement("p");
                             comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
                                 "<img class=\"btnclass-img\" width=\"5%\"height=\"5%\""+
@@ -206,11 +199,6 @@
 
                         }
                     }
-
-
-
-
-
 
                 }
             });
@@ -236,13 +224,14 @@
 
         console.log(temp_value.value);
         console.log("xxxxxxxx_____"+temp_value);
-        if(temp_value=="true"){
-            temp_value="false";
-            document.getElementsByClassName("fa-2x"+temp_pid)[0].setAttribute("value","false");
+        if(temp_value=="false"){
+            temp_value="true";
+            document.getElementsByClassName("fa-2x"+temp_pid)[0].setAttribute("value",temp_value);
+
         }
         else{
-            temp_value="true";
-            document.getElementsByClassName("fa-2x"+temp_pid)[0].setAttribute("value","true");
+            temp_value="false";
+            document.getElementsByClassName("fa-2x"+temp_pid)[0].setAttribute("value",temp_value);
 
         }
 
@@ -263,9 +252,6 @@
         });
 
 
-        //document.getElementsByClassName("fa-thumbs-o-up")[0].setAttribute("value")="true";
-        //target.classList.toggle("fa-thumbs-up",false);
-    //    target.classList.toggle("fa-thumbs-up",true);
 
       //  target.classList.toggle("fa-thumbs-o-up",false);
 /*1. 현재, 좋아요 테이블에서 받아오는 작업을 해야함
