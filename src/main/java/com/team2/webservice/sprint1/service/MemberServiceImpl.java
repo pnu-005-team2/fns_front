@@ -3,7 +3,9 @@ package com.team2.webservice.sprint1.service;
 import com.team2.webservice.common.S3Uploader;
 import com.team2.webservice.sprint1.dto.LoginDTO;
 import com.team2.webservice.sprint1.dto.ProfileDTO;
+import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
+import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.Member;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -23,6 +25,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    BoardRepository boardRepository;
 
     @Autowired
     S3Uploader s3Uploader;
@@ -74,4 +79,22 @@ public class MemberServiceImpl implements MemberService {
         logger.info(member.getImg());
         return Optional.of(member);
     }
+
+    public List<Board> loadMyBoards(String email){
+        logger.info("Entry Load My Boards");
+
+        Optional<List<Board>> boards = boardRepository.findByMemberId(email);
+
+        if(!boards.isPresent()){
+            logger.error("게시글이 존재하지 않습니다.");
+            return null;
+        }
+
+        for (int i = 0; i < boards.get().size(); i++) {
+            System.out.println(boards.get().get(i).getContent());
+        }
+
+        return boards.get();
+    }
+
 }

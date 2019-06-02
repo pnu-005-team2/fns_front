@@ -1,5 +1,6 @@
 package com.team2.webservice.sprint1.service;
 
+import com.team2.webservice.sprint1.dto.BoardDTO;
 import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
@@ -84,7 +85,12 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public Board read(Long pid) {
-        return null;
+        Optional<Board> board = boardRepository.findById(pid);
+        if(!board.isPresent()){
+            System.out.println("게시글이 존재하지 않습니다");
+            return null;
+        }
+        return board.get();
     }
 
     @Override
@@ -141,6 +147,12 @@ public class BoardServiceImpl implements BoardService{
         else
             System.out.println("해당 계정이 존재하지 않습니다.");
         return member;
+    }
+
+    //---------- BoardDTO로 변환해줍니다..---------------
+    public BoardDTO transDTO(Board board){
+        BoardDTO boardDTO = new BoardDTO(board);
+        return boardDTO;
     }
 
     protected Optional<Board> setPid(ProductLink productLink, long pid){

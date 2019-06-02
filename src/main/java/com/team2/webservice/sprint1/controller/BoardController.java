@@ -1,5 +1,6 @@
 package com.team2.webservice.sprint1.controller;
 
+import com.team2.webservice.sprint1.dto.BoardDTO;
 import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
 import com.team2.webservice.sprint1.service.BoardServiceImpl;
@@ -84,16 +85,13 @@ public class BoardController {
         return "tagClothingFin";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "find", method = RequestMethod.POST)
+    public BoardDTO findBoard(int pid){
+        System.out.println("FindBoard : " + pid);
+        Board board = boardService.read((long)pid);
+        // Board 의 img가 blob형식이라 json 형태로 전달되지 않는다....
+        return boardService.transDTO(board);
 
-   /* @ResponseBody
-    @PostMapping
-    @RequestMapping("/hashTag")
-    public String Check_HashTagSearch(HttpServletRequest request)
-    {
-
-
-
-
-
-    }*/
+    }
 }
