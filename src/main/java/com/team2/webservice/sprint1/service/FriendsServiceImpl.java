@@ -26,7 +26,7 @@ public class FriendsServiceImpl implements FriendsService{
     public void addFriends(int uid1, int uid2) {
         //mem1 :(본인) mem2를 본인의 친구목록에 추가 하고자 하는사람
         //mem2 : 추가 당하는 사람
-
+        System.out.println("Service add Friends");
         Member mem1 = setMember(uid1);
         Member mem2 = setMember(uid2);
         boolean check = true;

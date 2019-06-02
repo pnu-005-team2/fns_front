@@ -5,6 +5,7 @@ import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.service.FriendsServiceImpl;
 import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
 import com.team2.webservice.sprint1.vo.Board;
+import com.team2.webservice.sprint1.vo.LikeRecord;
 import com.team2.webservice.sprint1.vo.Member;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,6 @@ public class TimeLineController {
     @Autowired
     private BoardRepository boardRepository;
 
-    @Autowired
-    MemberRepository memberRepository;
 
     @Autowired
     FriendsServiceImpl friendsService;
@@ -117,6 +116,7 @@ public class TimeLineController {
     @RequestMapping(value = "/friendAdd" , method = RequestMethod.POST)
     public void friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
         //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
+        System.out.println("FriendAdd");
         friendsService.addFriends(uid1, uid2);
         showFriendsList(model, request);
 
@@ -228,7 +228,6 @@ public class TimeLineController {
     }*/
 
 
-    }
 
     @ResponseBody
     @PostMapping
