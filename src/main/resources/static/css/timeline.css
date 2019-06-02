@@ -6,11 +6,11 @@
     background-color: #FF5733;
 }
 
-.right{
-    width: 25%;
+.friendshow{
+    width: 23%;
+    margin-top: 1em;
     display: inline-block;
-    background-color: #2c6ed5;
-
+    vertical-align: top;
 }
 
 .time-line{
@@ -23,6 +23,12 @@
     border: solid;
     margin-top: 1em;
     height: 50em;
+
+    border-top: 10px solid skyblue;
+    border-bottom: 10px solid skyblue;
+    border-left: 10px solid skyblue;
+    border-right: 10px solid skyblue;
+    border-radius: 10px;
 }
 
 .board-item div {
@@ -76,4 +82,40 @@
 .enter-key {
     width: 10%;
 }
+.following{
+    border: solid;
 
+    border-top: 10px solid skyblue;
+    border-bottom: 10px solid skyblue;
+    border-left: 10px solid skyblue;
+    border-right: 10px solid skyblue;
+    border-radius: 10px;
+
+
+}
+.follower{
+    border: solid;
+    margin-top: 1em;
+    border-top: 10px solid skyblue;
+    border-bottom: 10px solid skyblue;
+    border-left: 10px solid skyblue;
+    border-right: 10px solid skyblue;
+    border-radius: 10px;
+
+}
+.friendRecommend{
+    border: solid;
+    margin-top: 1em;
+    border-top: 10px solid skyblue;
+    border-bottom: 10px solid skyblue;
+    border-left: 10px solid skyblue;
+    border-right: 10px solid skyblue;
+    border-radius: 10px;
+
+}
+.profile{
+    width: 30px; height: 30px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+}
