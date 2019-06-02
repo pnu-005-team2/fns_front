@@ -5,6 +5,7 @@ import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.service.FriendsServiceImpl;
 import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
 import com.team2.webservice.sprint1.vo.Board;
+import com.team2.webservice.sprint1.vo.LikeRecord;
 import com.team2.webservice.sprint1.vo.Member;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,6 @@ public class TimeLineController {
     @Autowired
     private BoardRepository boardRepository;
 
-    @Autowired
-    MemberRepository memberRepository;
 
     @Autowired
     FriendsServiceImpl friendsService;
@@ -72,49 +71,13 @@ public class TimeLineController {
 //        String content =request.getParameter("content");
  //       Board client = new Board();
 
-        //about Friends controlling, http session
-//        HttpSession session = request.getSession();
-//        System.out.println(session.getAttribute("login"));
-//        Member me = (Member)session.getAttribute("login");
-
+        System.out.println("TimeLine Post ");
         Member me = showFriendsList(model, request);
 
-        //List<Image>
-//        boardRecordList = boardRepository.findAll();
         List<Board> fBoardList = friendsService.showFBoard(me);
 
         modelMap.addAttribute("postRecordlList", fBoardList);
         modelMap.addAttribute("postRecordList_Byte", fBoardList);
-
-
-
-//        //show following
-//        List<Member> Friends = friendsService.showFriends(me);
-//
-//        model.addAttribute("friendsRecordList", Friends);
-//        model.addAttribute("friendsRecordList_Byte", Friends);
-//
-//        //show follower
-//        List<Member> Friended = friendsService.showFriended(me);
-//
-//        model.addAttribute("friendedRecordList", Friended);
-//        model.addAttribute("friendedRecordList_Byte", Friended);
-//
-//        //show recomend
-//        List<Member> recommend = friendsService.recommendFriends(me);
-//
-//        model.addAttribute("friendRecommendList", recommend);
-//        model.addAttribute("friendRecommendList_Byte", recommend);
-
-
-        //확인
-//        System.out.println(Friends.size());
-//        for(int i = 0 ; i < Friends.size() ; i++){
-//            System.out.println(Friends.get(i).getName());
-//        }
-//        for(int i = 0; i< Friended.size() ; i++){
-//            System.out.println(Friended.get(i).getName());
-//        }
 
         return "timeLineVer2";
     }
@@ -122,6 +85,7 @@ public class TimeLineController {
     @RequestMapping(value = "/friendAdd" , method = RequestMethod.POST)
     public void friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
         //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
+        System.out.println("FriendAdd");
         friendsService.addFriends(uid1, uid2);
         showFriendsList(model, request);
 
@@ -185,10 +149,24 @@ public class TimeLineController {
         model.addAttribute("friendRecommendList", recommend);
         model.addAttribute("friendRecommendList_Byte", recommend);
 
-        return me;
+        return updateLoginSession(me.getEmail(), session);
     }
 
-   /* @ResponseBody
+
+    // ----------- Sesssion에 들어있는 Login 객체를 업데이트합니다. -------------
+    private Member updateLoginSession(String email, HttpSession session) {
+        Optional<Member> update_me = memberRepository.findByEmail(email);
+
+        if(!update_me.isPresent()){
+            System.out.println("세션갱신에 오류가 발생했습니다.");
+            return null;
+        }
+
+        session.setAttribute("login", update_me.get());
+        return update_me.get();
+    }
+
+    @ResponseBody
     @PostMapping
     @RequestMapping("/text_Check")
     public String Check_Search_Name(HttpServletRequest request)
@@ -201,22 +179,22 @@ public class TimeLineController {
 
         String name_Search= request.getParameter("For_Search_User_Text");
 
-        if(name_Search!=""){
-            if(name_Search.substring(0,1).equals("#")){
-                String Drop_String ="#";
+        if(name_Search!="") {
+            if (name_Search.substring(0, 1).equals("#")) {
+                String Drop_String = "#";
                 System.out.println("pppppppppppppppppppppppppppppppppp");
-                if(boardRecordList!=null){
-                    for(int i=0;i<boardRecordList.size();i++){
-                        if(boardRecordList.get(i).getHashtag()!=null){
-                            String temp_HashTag=boardRecordList.get(i).getHashtag();
-                            String[] temp_HashTag_Array=temp_HashTag.split(",");
+                if (boardRecordList != null) {
+                    for (int i = 0; i < boardRecordList.size(); i++) {
+                        if (boardRecordList.get(i).getHashtag() != null) {
+                            String temp_HashTag = boardRecordList.get(i).getHashtag();
+                            String[] temp_HashTag_Array = temp_HashTag.split(",");
                             System.out.println("888888888888888888888888888888");
-                            for(int j=0;j<temp_HashTag_Array.length;j++){
+                            for (int j = 0; j < temp_HashTag_Array.length; j++) {
                                 System.out.println(temp_HashTag_Array[j]);
-                                if(temp_HashTag_Array[j].equals(name_Search.substring(1))){
+                                if (temp_HashTag_Array[j].equals(name_Search.substring(1))) {
                                     System.out.println("이게뭐야");
-                                    Drop_String+=String.valueOf(boardRecordList.get(i).getPid());
-                                    Drop_String+=" ";
+                                    Drop_String += String.valueOf(boardRecordList.get(i).getPid());
+                                    Drop_String += " ";
                                 }
                             }
                             System.out.println("7777777777777777777777777777777");
@@ -225,77 +203,12 @@ public class TimeLineController {
 
                     }
                 }
-
-                return Drop_String;
-
-
-
-    }*/
-
-
-    }
-
-    @ResponseBody
-    @PostMapping
-    @RequestMapping("/getImage_url")
-    public String GetImageUrl_For_Hash(HttpServletRequest request)
-    {
-
-        String temp_data= request.getParameter("temp_data");
-        Optional<Board> temp__board= boardRepository.findByPid(Long.parseLong(temp_data.trim()));
-        if(temp__board.isPresent()){
-            return temp__board.get().getMember().toString();
+            }
         }
-      //  String[] pid_Array = temp_data.split(" ");
-       // for(int i=0;i<pid_Array.length;i++){
-          /*  Optional<Board> tempboard= boardRepository.findByPid(Long.parseLong(pid_Array[i]));
-            if(tempboard.isPresent()){
-                return tempboard.get().getMember().toString();
-            }*/
-       // }
 
-        /*if(name_Search!=""){
-            if(name_Search.substring(0,1).equals("#")){
-                String Drop_String ="#";
-                System.out.println("pppppppppppppppppppppppppppppppppp");
-                if(boardRecordList.size()>0){
-                    for(int i=0;i<boardRecordList.size();i++){
-                        if(boardRecordList.get(i).getHashtag()!=null){
-                            String temp_HashTag=boardRecordList.get(i).getHashtag();
-                            String[] temp_HashTag_Array=temp_HashTag.split(",");
-                            System.out.println("888888888888888888888888888888");
-                            for(int j=0;j<temp_HashTag_Array.length;j++){
-                                System.out.println(temp_HashTag_Array[j]);
-                                if(temp_HashTag_Array[j].equals(name_Search.substring(1))){
-                                    System.out.println("이게뭐야");
-                                    Drop_String+=String.valueOf(boardRecordList.get(i).getPid());
-                                    Drop_String+=" ";
-                                }
-                            }
-                            System.out.println("7777777777777777777777777777777");
-
-                        }
-
-                    }
-                }
-
-                return Drop_String;
-
-            }
-            else{
-                Optional<Member> member_o = memberRepository.findByName(name_Search);
-                if(member_o.isPresent()){
-                    Member member = member_o.get();
-                    return member.getImg();
-                }
-            }
-        }*/
-
-        return "null";
-
+                return "Drop_String";
 
     }
-
 
 
     @ResponseBody
