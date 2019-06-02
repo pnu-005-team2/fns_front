@@ -1,7 +1,11 @@
 package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
+import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.vo.Board;
+import com.team2.webservice.sprint1.vo.LikeRecord;
+import com.team2.webservice.sprint1.vo.Member;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,11 +25,20 @@ import java.util.Optional;
 @Controller
 public class TimeLineController {
 
+
+    @Autowired
+    private LikeRecordRepository likeRecordRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
     @Autowired
     private BoardRepository boardRepository;
 
 
     List<Board> boardRecordList;
+    List<Member> memberList;
+    List<LikeRecord> likeRecordList;
 
 
     @RequestMapping(value = "/timeline/origin", method = RequestMethod.GET)
@@ -33,6 +46,8 @@ public class TimeLineController {
     {
         System.out.println("Origin");
         boardRecordList = boardRepository.findAll();
+
+
 
         model.addAttribute("postRecordlList", boardRecordList);
         model.addAttribute("postRecordList_Byte", boardRecordList);
@@ -44,97 +59,16 @@ public class TimeLineController {
     @RequestMapping("/timeline")
     public String Post(ModelMap modelMap)
     {
-//        String content =request.getParameter("content");
- //       Board client = new Board();
 
-
-
-//        System.out.println(boardRecordList);
-//       int byte_num=boardRecordList.size();
-
-//ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//    byte[] buf = new byte[1024];
-//    Blob blob = profile.getContent();
-//    InputStream in =  blob.getBinaryStream();
-//    System.out.println("id content" +in);
-//    int n = 0;
-//    while ((n=in.read(buf))>=0)
-//    {
-//        baos.write(buf, 0, n);
-//
-//    }
-//
-//    in.close();
-//    byte[] bytes = baos.toByteArray();
-//    System.out.println("bytes" +bytes);
-//    byte[] encodeBase64 = Base64.encodeBase64(buf);
-//    String base64Encoded = new String(encodeBase64, "UTF-8");
-//
-//
-//    customer.setEmailId(customerName);
-//    profile.setCustomer(customer);
-//    //profile.setContent(blob);
-//    System.out.println();
-//    profile = profileService.findProfileById(customer);
-//    model.addAttribute("content",base64Encoded);
-//    model.addAttribute("profile", profile);
-//    return "myProfile";
-//
-
-//        for(int i=0;i<boardRecordList.size();i++){
-//
-//            try{
-//                byte[] imgByteArray= boardRecordList.get(i).getImg().getBytes();
-//
-//                //byte[] imgByteArray = Base64.getDecoder().decode(temp_img_String.getBytes());
-//
-//                postresults_List.get(i).content_result= boardRecordList.get(i).getContent();
-//                postresults_List.get(i).hashtag_result= boardRecordList.get(i).getHashtag();
-//                postresults_List.get(i).pid_result= boardRecordList.get(i).getPid();
-//                postresults_List.get(i).writer_result= boardRecordList.get(i).getWriter();
-//                postresults_List.get(i).img_result= imgByteArray;
-//            }catch (Exception ex){
-//                ex.printStackTrace();
-//            }
-//
-//        }
-
- //     Board board;
 
 
         //List<Image>
         boardRecordList = boardRepository.findAll();
+       likeRecordList= likeRecordRepository.findAll();
 
         modelMap.addAttribute("postRecordlList", boardRecordList);
-        modelMap.addAttribute("postRecordList_Byte", boardRecordList);
-      //  model.addAttribute("postResult_ArrayList",postresults_List);
-       // model.addAttribute("postImageList",)
-
-//        return "Timeline";
+        modelMap.addAttribute("likeRecordList",likeRecordList);
         return "timeLineVer2";
-
-
-//
-//          System.out.println("In LikeRecord");
-//        List<LikeRecord> likeRecordList = likeRecordRepository.findAll(); // select * from LikeRecord
-//        model.addAttribute("LikeList", likeRecordList);
-//        System.out.println(likeRecordList.get(0).getLid());
-//        return "LikeTest";
-
-
-//        client.setPid((long)2);
-     /*   client.setContent(content);
-        client.setWriter("KIM");
-        client.setHashtag("안녕, 안녕하세요");
-        client.setImg("1234");
-//        Board client = new Board((long) 1, content, "Lee", ",,,,", "부산대");
-//        boardRepository.save(client);
-        List<Board> test = boardRepository.findAll();
-        for(int i = 0 ; i < test.size() ; ++i){
-            System.out.println("TEST : " + test.get(i).getContent());
-        }
-*/
-
     }
 
     @RequestMapping("/logoShowForStudent/{pid}")
@@ -161,41 +95,183 @@ public class TimeLineController {
 
 
     }
-    
-    
-    
-    
-   /* @ResponseBody
+
+
+
+
+
+
+
+
+
+    @ResponseBody
     @PostMapping
-    @RequestMapping("/like_boolean_check")
-    public String Comment(HttpServletRequest request)
+    @RequestMapping("/text_Check")
+    public String Check_Search_Name(HttpServletRequest request)
     {
-    	
-    	
-        System.out.printf("In Timeline");
 
 
-        String comment_content= request.getParameter("comment");
-        String comment_pid =request.getParameter("pid");
-        String comment_writer= request.getParameter("writer");
-        String comment_date = request.getParameter("date");
+
+        String name_Search= request.getParameter("For_Search_User_Text");
+
+        if(name_Search!=""){
+            if(name_Search.substring(0,1).equals("#")){
+                String Drop_String ="#";
+                System.out.println("pppppppppppppppppppppppppppppppppp");
+                if(boardRecordList!=null){
+                    for(int i=0;i<boardRecordList.size();i++){
+                        if(boardRecordList.get(i).getHashtag()!=null){
+                            String temp_HashTag=boardRecordList.get(i).getHashtag();
+                            String[] temp_HashTag_Array=temp_HashTag.split(",");
+                            System.out.println("888888888888888888888888888888");
+                            for(int j=0;j<temp_HashTag_Array.length;j++){
+                                System.out.println(temp_HashTag_Array[j]);
+                                if(temp_HashTag_Array[j].equals(name_Search.substring(1))){
+                                    System.out.println("이게뭐야");
+                                    Drop_String+=String.valueOf(boardRecordList.get(i).getPid());
+                                    Drop_String+=" ";
+                                }
+                            }
+                            System.out.println("7777777777777777777777777777777");
+
+                        }
+
+                    }
+                }
+
+                return Drop_String;
+
+            }
+            else{
+                Optional<Member> member_o = memberRepository.findByName(name_Search);
+                if(member_o.isPresent()){
+                    Member member = member_o.get();
+                    return member.getImg();
+                }
+            }
+        }
+
+        return "null";
 
 
-        System.out.print(comment_content+"\n"+comment_pid+"\n"+comment_writer+"\n"+comment_date+"\n");
+    }
 
-        Comment copy_comment = new Comment();
-        copy_comment.setContent(comment_content);
-        copy_comment.setDate(comment_date);
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/getImage_url")
+    public String GetImageUrl_For_Hash(HttpServletRequest request)
+    {
 
-        copy_comment.setPid(Long.parseLong(comment_pid));
-        copy_comment.setWriter(comment_writer);
+        String temp_data= request.getParameter("temp_data");
+        Optional<Board> temp__board= boardRepository.findByPid(Long.parseLong(temp_data.trim()));
+        if(temp__board.isPresent()){
+            return temp__board.get().getMember().toString();
+        }
+      //  String[] pid_Array = temp_data.split(" ");
+       // for(int i=0;i<pid_Array.length;i++){
+          /*  Optional<Board> tempboard= boardRepository.findByPid(Long.parseLong(pid_Array[i]));
+            if(tempboard.isPresent()){
+                return tempboard.get().getMember().toString();
+            }*/
+       // }
 
-        commentRepository.save(copy_comment);
-        return "Timeline";
+        /*if(name_Search!=""){
+            if(name_Search.substring(0,1).equals("#")){
+                String Drop_String ="#";
+                System.out.println("pppppppppppppppppppppppppppppppppp");
+                if(boardRecordList.size()>0){
+                    for(int i=0;i<boardRecordList.size();i++){
+                        if(boardRecordList.get(i).getHashtag()!=null){
+                            String temp_HashTag=boardRecordList.get(i).getHashtag();
+                            String[] temp_HashTag_Array=temp_HashTag.split(",");
+                            System.out.println("888888888888888888888888888888");
+                            for(int j=0;j<temp_HashTag_Array.length;j++){
+                                System.out.println(temp_HashTag_Array[j]);
+                                if(temp_HashTag_Array[j].equals(name_Search.substring(1))){
+                                    System.out.println("이게뭐야");
+                                    Drop_String+=String.valueOf(boardRecordList.get(i).getPid());
+                                    Drop_String+=" ";
+                                }
+                            }
+                            System.out.println("7777777777777777777777777777777");
 
-   
+                        }
 
-    }*/
+                    }
+                }
+
+                return Drop_String;
+
+            }
+            else{
+                Optional<Member> member_o = memberRepository.findByName(name_Search);
+                if(member_o.isPresent()){
+                    Member member = member_o.get();
+                    return member.getImg();
+                }
+            }
+        }*/
+
+        return "null";
+
+
+    }
+
+
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/like_btn_Value_Url")
+    public String Like_Board_Check_And_Change(HttpServletRequest request)
+    {
+
+
+
+        String like_Value= request.getParameter("like_Value");
+        String post_Pid = request.getParameter("post_Pid");
+
+
+        Optional<Board> board_Optional = boardRepository.findByPid(Long.parseLong(post_Pid));
+        Optional<LikeRecord> likeRecord_Optional= likeRecordRepository.findByBoard(board_Optional.get());
+        System.out.println(likeRecord_Optional);
+        if(likeRecord_Optional.isPresent()){
+            LikeRecord likeRecord = likeRecord_Optional.get();
+            if(like_Value.equals("false")){
+                like_Value="true";
+            }
+            else{
+                like_Value="false";
+            }
+            Boolean temp_Boolean =Boolean.parseBoolean(like_Value);
+            likeRecord.setLike_boolean(temp_Boolean);
+            likeRecordRepository.save(likeRecord);
+            return "success";
+        }
+        return "null";
+
+
+
+
+
+    }
+
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/likeBoolean_FirstCheck")
+    public String Like_Record_BooleanValue_Check(HttpServletRequest request)
+    {
+
+        return "success";
+
+
+    }
+
+
+
+    
+    
+
 
 
 }
