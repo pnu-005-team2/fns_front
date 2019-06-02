@@ -84,18 +84,22 @@
 
         ////////////////////////////////LikeRecord 전부 표시///////////////////////////////
         <c:forEach var="item" items="${likeRecordList}" step="1">
-        var temp_pid = ${item.board.pid};
-        var temp_value=  document.getElementById("like_btn"+temp_pid).value;
+        var temp_pid = "${item.board.pid}";
+        var temp_value_boolean=  document.getElementById("like_btn"+temp_pid).innerHTML;
        // alert(${item.like_boolean} + "dddddd");
         if("${item.like_boolean}"=="true"){
             document.getElementById("like_btn"+temp_pid).className="fa fa-thumbs-up fa-2x"+temp_pid;
-            temp_value="true";
+
+            temp_value_boolean="true";
+
         }
         else{
             document.getElementById("like_btn"+temp_pid).className="fa fa-thumbs-o-up fa-2x"+temp_pid;
-            temp_value="false";
+            temp_value_boolean="false";
         }
-        document.getElementById("like_btn"+temp_pid).value = temp_value;
+
+        document.getElementById("like_btn"+temp_pid).setAttribute('value',temp_value_boolean);
+
         </c:forEach >
 
         ////////////////////////////////LikeRecord 전부 표시///////////////////////////////
@@ -215,15 +219,36 @@
     // --------- 좋아요 클릭시 아이콘 Toggle ---------
     function likeToggle(target,temp_pid) {
         console.log("LikeToggle");
-        target.classList.toggle("fa-thumbs-up");
+        if(target.classList.contains("fa-thumbs-up")){
+            target.classList.remove("fa-thumbs-up");
+            target.classList.toggle("fa-thumbs-o-up");
+        }
+        else{
+            target.classList.remove("fa-thumbs-o-up");
+            target.classList.toggle("fa-thumbs-up");
+        }
+        //arget.classList.toggle("fa-thumbs-up");
+       // target.classList.toggle("fa-thumbs-o-up");
+        /*if(target.classList.contains("fa-thumbs-up")){
+            alert("className : fa-thumbs-up");
+
+        }
+        else{
+            target.classList.toggle("fa-thumbs-o-up");
+            alert("className : fa-thumbs-o-up");
+
+        }*/
+
 
 
 
 
         temp_value= document.getElementsByClassName("fa-2x"+temp_pid)[0].getAttribute("value");
 
-        console.log(temp_value.value);
-        console.log("xxxxxxxx_____"+temp_value);
+
+
+        //console.log(temp_value.value);
+       // console.log("xxxxxxxx_____"+temp_value);
         if(temp_value=="false"){
             temp_value="true";
             document.getElementsByClassName("fa-2x"+temp_pid)[0].setAttribute("value",temp_value);
@@ -235,7 +260,7 @@
 
         }
 
-
+        console.log(temp_value);
 
         alert("temp pid "+ temp_pid);
         var sendData = { "like_Value" : temp_value,

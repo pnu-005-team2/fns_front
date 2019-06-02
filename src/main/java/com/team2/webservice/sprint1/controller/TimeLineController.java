@@ -192,7 +192,6 @@ public class TimeLineController {
             LikeRecord likeRecord = likeRecord_Optional.get();
             Boolean temp_Boolean =Boolean.parseBoolean(like_Value);
             likeRecord.setLike_boolean(temp_Boolean);
-
             likeRecord.getMember();
             likeRecordRepository.save(likeRecord);
             return "success";
