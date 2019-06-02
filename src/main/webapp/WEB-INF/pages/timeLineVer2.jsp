@@ -93,30 +93,6 @@
     });
 
 
-    $(function(){
-        for(var i=0;i<${likeRecordList.size()};i++){
-
-
-        }
-       /* for(var i=0;i<${likeRecordList.size()};i++){
-            console.log("sadasdsadsadsadasdsad");
-
-        }*/
-
-        /*$.ajax({
-            type:"POST",
-            url: "/like_btn_Value_Url",
-            data : "null",
-            success: function(data){
-
-            }
-        });*/
-
-
-    });
-
-
-
     var input1 = document.getElementById('search_User_text');
     input1.onkeydown = function(event) {
         text_number=0;
