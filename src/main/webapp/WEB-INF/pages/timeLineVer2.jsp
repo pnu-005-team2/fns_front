@@ -1,4 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.team2.webservice.sprint1.vo.Member" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%--
   Created by IntelliJ IDEA.
   User: iseungcheon
@@ -6,68 +7,86 @@
   Time: PM 6:44
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
     <title>FNS</title>
 </head>
-<body onbeforeunload="moveCheckYn();">
+<body>
 
-
-<div style="position:relative; z-index: 1;">
-    <input type="text" class="comment-input"
-           onfocus="this.value=''" id="search_User_text"
-           placeholder="검색"  >
-    <div style="position: relative; z-index: 2; left:10px; top:20px;" id="search_Result_div">
-
-    </div>
-</div>
-
-<jsp:include page="Post.jsp"/>
+<jsp:include page="Post.jsp" />
 <link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
-
-    <div class="page-container">
-        <div class="left"></div>
-        <div class="time-line">
-            <c:forEach var="item" items="${postRecordlList}" step="1">
-                <div class="board-item">
-                    <div class="writer" >
-                        <img src="${item.member.img}">
-                        <strong>${item.member.name}</strong>
+<%
+    Member user = (Member)session.getAttribute("login");
+    int uid = user.getUid();
+%>
+<div class="page-container">
+    <div class="left"></div>
+    <div class="time-line">
+        <c:forEach var="item" items="${postRecordlList}" step="1">
+            <div class="board-item">
+                <div class="writer">
+                    <img class='profile' src="${item.member.img}"> <strong>${item.member.name}</strong>
+                </div>
+                <div class="board-img">
+                    <img src="/logoShowForStudent/${item.pid}">
+                </div>
+                <div class="board-content">${item.content}</div>
+                <div class="board-hashtag">${item.hashtag}</div>
+                <div class="board-funtion">
+                    <i id="like_btn${item.pid}" class="fa fa-thumbs-o-up fa-2x"
+                       onclick="likeToggle(this), like_btn_clickevent(${item.pid})"></i>
+                    <i class="comment-icon fa-comments-o fa-2x"></i>
+                </div>
+                <div class="comment-box" id="btn_group_div_group${item.pid}">
+                    <div class="comment-input-box">
+                        <input type="text" class="comment-input" onfocus="this.value=''"
+                               id="comment${item.pid}" placeholder="re"> <input
+                            type="button" class="enter-key" id="comment_confirm${item.pid}"
+                            onclick="comment_regist(${item.pid});" value="enter" />
                     </div>
-                    <div class="board-img" >
-                     <img
-                        src="/logoShowForStudent/${item.pid}">
-                    </div>
-                    <div class="board-content" >${item.content}</div>
-                    <div class="board-hashtag" >${item.hashtag}</div>
-                    <div class="board-funtion" >
-                        <i id="like_btn${item.pid}"
-                                class = "fa fa-thumbs-o-up fa-2x${item.pid}"
-                                value = false
-                                onclick="likeToggle(this,${item.pid}), like_btn_clickevent(${item.pid})"></i>
-
-
-                    </div>
-                    <div class="comment-box"
-                         id="btn_group_div_group${item.pid}">
-                        <div class="comment-input-box">
-                        <input type="text" class="comment-input"
-                               onfocus="this.value=''" id="comment${item.pid}"
-                               placeholder="re">
-                        <input type="button"
-                               class="enter-key"
-                               id="comment_confirm${item.pid}"
-                               onclick="comment_regist(${item.pid});" value="enter" />
-                        </div>
-                        <div id="comment-list${item.pid}"></div>
+                    <div id="comment-list${item.pid}"></div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+    <div class="friendshow">
+        <div class = "following" id = "following">
+            <strong>Following </strong>
+            <c:forEach var="item" items="${friendsRecordList}">
+                <div>
+                    <img class='profile' src="${item.img}" width="12%" height="15">
+                    <strong style="width:58%">${item.name}</strong>
+                    <div style="text-align:right" style="width:39%">
+                        <input type="button" onclick="deletefriend(<%=uid%>,${item.uid});" value="unfollow" height="15"/>
                     </div>
                 </div>
             </c:forEach>
         </div>
-        <div class="right"></div>
+
+        <div class = "follower">
+            <strong>Follower </strong>
+            <c:forEach var="item" items="${friendedRecordList}">
+                <div>
+                    <img class='profile' src="${item.img}" width="12%" height="15">
+                    <strong>${item.name}</strong>
+                </div>
+            </c:forEach>
+        </div>
+
+        <div class="friendRecommend" id="friendRecommend">
+            <strong>Friend Recommend </strong>
+            <c:forEach var="item" items="${friendRecommendList}">
+                <div>
+                    <img class='profile' src="${item.img}" width="12%" height="15">
+                    <strong style="width:58%">${item.name}</strong>
+                    <input type="button" onclick="addfriend(<%=uid%>,${item.uid});" value="follow" height="15"/>
+                </div>
+            </c:forEach>
+        </div>
     </div>
 
+</div>
 <script>
 
     var text_number=0;
@@ -279,16 +298,34 @@
 
     }
 
-
-    function moveCheckYn()
-    {
-
-
-        event.returnValue = "창을 닫으시겠습니까?";
-
+    function addfriend(mypid,fripid){
+        var sendData = {
+            "uid1" : mypid,
+            "uid2" : fripid
+        }
+        $.ajax({
+            type : "POST",
+            url : "/friendAdd",
+            data : sendData,
+            success: function (response) {
+                alert(response);
+            }
+        });
     }
-
-
+    function deletefriend(mypid,fripid){
+        var sendData = {
+            "uid1" : mypid,
+            "uid2" : fripid
+        }
+        $.ajax({
+            type : "POST",
+            url : "/friendDelete",
+            data : sendData,
+            success: function (response) {
+                alert(response);
+            }
+        });
+    }
     // --------- 좋아요 클릭시 Event 처리 ---------
     //Todo 세부구현 필요
     function like_btn_clickevent(temppid) {
@@ -339,7 +376,7 @@
 
         document.getElementById("comment-list"+temppid).innerHTML +=
             "<div><div class=\"in-line\">"+
-            "<img class=\"btn-img\" id=\"btn_img_like_img_id\" width=\"10%\"height=\"15\""+
+            "<img class=\"profile\" id=\"btn_img_like_img_id\" width=\"10%\"height=\"15\""+
             "src=\"https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg\">" +
             comment_text_area.value + "</div>" +
             "<br></div>";
