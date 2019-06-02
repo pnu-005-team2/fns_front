@@ -74,7 +74,7 @@
                     <div class="action_menu">
                         <ul>
                             <li onclick="createChatRoom()"><i class="fas fa-plus" ></i> Create Chat Room</li>
-                            <%--<li><i class="fas fa-ban"></i> Block</li>--%>
+                            <li onclick = "exitChatRoom()"><i class="fas fa-ban"></i> Exit Chat Room</li>
                         </ul>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
 <script src="/resources/js/socket.js"></script>
 <script>
     var userName = "<%=name%>";
-
+    var activeChatroom;
     $(document).ready(function(){
         $('#action_menu_btn').click(function(){
             $('.action_menu').toggle();
@@ -108,7 +108,7 @@
         if (window.Notification) {
             Notification.requestPermission();
         }
-    }
+    };
 
 
 
@@ -120,6 +120,7 @@
             $("#chatOutput").empty();
             $('.active').removeClass('active').addClass('ToActive');
             $(this).removeClass('ToActive').addClass('active');
+            activeChatroom = $(this).attr('id');
             $.ajax({
                 type : "POST",
                 url : "/chatRoom",
@@ -170,12 +171,15 @@
         $.ajax({
             type : "POST",
             url  : "/create_room",
-            data : {memberNames : users, roomName : title_room},
+            data : {roomId : users, memberName : user},
             success: response => {
                 console.log("Success")
                 console.log(response);
             }
         })
+    }
+    function exitChatRoom() {
+        WebSocket.sendExit(location.reload());
     }
 
 

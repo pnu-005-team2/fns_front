@@ -110,10 +110,11 @@ let WebSocket = (()=>{
             JSON.stringify({"content" : text, "cid": roomId, "readCnt": userNumber, "userName": userName}));
     }
 
-    function sendEixt() {
+    function sendExit(callback) {
         stompClient.send("/app/exit_room/"+ roomId, {},
             // JSON.stringify({"memberName" : userName}));
             userName);
+        callback();
     }
     
     function clear(input) {
@@ -131,7 +132,7 @@ let WebSocket = (()=>{
 
     return {
         init : init,
-        sendEixt : sendEixt,
+        sendExit : sendExit,
         close : close
     }
 })();
