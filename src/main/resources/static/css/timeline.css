@@ -120,3 +120,11 @@
     object-position: top;
     border-radius: 50%;
 }
+
+.friend-item strong {
+    width: 58%;
+}
+
+.friend-item button {
+    float: right;
+}

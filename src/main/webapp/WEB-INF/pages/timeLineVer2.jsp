@@ -17,11 +17,11 @@
 <jsp:include page="Post.jsp" />
 <link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
 <%
-    request.setAttribute("member", (Member)session.getAttribute("login"));
+    request.setAttribute("member", session.getAttribute("login"));
     Member user = (Member)session.getAttribute("login");
     String email = user.getEmail();
     String name = user.getName();
-    long uid = user.getUid();
+    int uid = user.getUid();
 %>
 <div class="page-container">
     <div class="left">
@@ -62,12 +62,13 @@
         <div class = "following" id = "following">
             <strong>Following </strong>
             <c:forEach var="item" items="${friendsRecordList}">
-                <div>
+                <div class="friend-item" data-friend-index="${item.uid}">
                     <img class='profile' src="${item.img}" width="12%" height="15">
                     <strong style="width:58%">${item.name}</strong>
-                    <div style="text-align:right" style="width:39%">
-                        <input type="button" onclick="deletefriend(<%=uid%>,${item.uid});" value="unfollow" height="15"/>
-                    </div>
+                    <%--<div style="text-align:right" style="width:39%">--%>
+                        <%--<input type="button" onclick="deletefriend(<%=uid%>,${item.uid});" value="unfollow" height="15"/>--%>
+                    <%--</div>--%>
+                    <button data-friend-btn-idx="${item.uid}">unofllow</button>
                 </div>
             </c:forEach>
         </div>
@@ -85,7 +86,7 @@
         <div class="friendRecommend" id="friendRecommend">
             <strong>Friend Recommend </strong>
             <c:forEach var="item" items="${friendRecommendList}">
-                <div>
+                <div class="recommend-friend-item" data-recommend-index ="${item.uid}">
                     <img class='profile' src="${item.img}" width="12%" height="15">
                     <strong style="width:58%">${item.name}</strong>
                     <input type="button" onclick="addfriend(<%=uid%>,${item.uid});" value="follow" height="15"/>
@@ -94,22 +95,23 @@
         </div>
     </div>
 </div>
+<script src="/resources/js/timeline.js"></script>
 <script>
 
-    var text_number=0;
-    var text_number_For_Hashtag=0;
-    var text_For_Search_User = document.getElementById("search_User_text");
-    var search_UserText=text_For_Search_User.value;
-    var temp_value= document.getElementsByClassName("fa");
+    let text_number=0;
+    let text_number_For_Hashtag=0;
+    let text_For_Search_User = document.getElementById("search_User_text");
+    // let search_UserText=text_For_Search_User.value;
+    let temp_value= document.getElementsByClassName("fa");
 
     $(document).ready(function (e) {
-
-
-
-        setInterval(text_Check,1000);
-
+        console.log("Ready");
+        let unfollow_btns = document.querySelectorAll("button[data-friend-btn-idx]");
+        for(let item of unfollow_btns)
+            item.onclick = deletefriend;
+        console.log(unfollow_btns);
+        // setInterval(text_Check,1000);
     });
-
 
     var input1 = document.getElementById('search_User_text');
     input1.onkeydown = function(event) {
@@ -119,7 +121,7 @@
         var temp=   document.getElementById("search_Result_div");
 
 
-        if(temp.getElementsByTagName("p").length!=0){
+        if(temp.getElementsByTagName("p").length!==0){
 
 
 
@@ -131,7 +133,7 @@
         }
 
 
-    }
+    };
 
 
     var text_Check_flag=false;
@@ -144,7 +146,7 @@
 
 
         var sendData = { "For_Search_User_Text" : search_UserText
-        }
+        };
 
 
         if(text_number==0){
@@ -165,7 +167,7 @@
                                 text_number_For_Hashtag=1;
                                 for( var i in jbsplit){
                                     var temp_Data_data = { "temp_data" : jbsplit[i]
-                                    }
+                                    };
                                     //  alert(temp_Data_data);
                                     $.ajax({
                                         type : "POST",
@@ -221,18 +223,10 @@
     }
 
 
-
-
-
-
-
     // --------- 좋아요 클릭시 아이콘 Toggle ---------
     function likeToggle(target,temp_pid) {
         console.log("LikeToggle");
         target.classList.toggle("fa-thumbs-up");
-
-
-
 
         temp_value= document.getElementsByClassName("fa-2x"+temp_pid)[0].getAttribute("value");
 
@@ -253,7 +247,7 @@
         alert("temp pid "+ temp_pid);
         var sendData = { "like_Value" : temp_value,
             "post_Pid": temp_pid
-        }
+        };
 
         $.ajax({
             type : "POST",
@@ -282,30 +276,37 @@
     }
 
     function addfriend(mypid,fripid){
-        var sendData = {
+        let sendData = {
             "uid1" : mypid,
             "uid2" : fripid
-        }
+        };
         $.ajax({
             type : "POST",
-            url : "/friendAdd",
+            url : "/friend/add",
             data : sendData,
             success: function (response) {
-                alert(response);
+                console.log(response);
+                removeRow("data-recommend-index", response.uid);
+                createFriendItem(response);
             }
         });
     }
-    function deletefriend(mypid,fripid){
-        var sendData = {
-            "uid1" : mypid,
-            "uid2" : fripid
-        }
+
+    function deletefriend(e){
+        console.log(e.target);
+        let target_uid = e.target.getAttribute("data-friend-btn-idx");
+        let source_uid = <%=uid%>
+        console.log("delete Click" + target_uid + ", " + source_uid);
+        let sendData = {
+            "uid1" : source_uid,
+            "uid2" : target_uid
+        };
         $.ajax({
             type : "POST",
-            url : "/friendDelete",
+            url : "/fried/delete",
             data : sendData,
             success: function (response) {
-                alert(response);
+                removeRow("data-friend-index", response);
             }
         });
     }
@@ -355,7 +356,7 @@
             "pid" : temppid,
             "writer" : temppid,
             "date": today
-        }
+        };
 
         document.getElementById("comment-list"+temppid).innerHTML +=
             "<div><div class=\"in-line\">"+

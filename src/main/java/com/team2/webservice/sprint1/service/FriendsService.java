@@ -8,7 +8,7 @@ import java.util.List;
 public interface FriendsService {
 
     //친구추가 (memFrom이 memTo를 친구 추가함)
-    public void addFriends(int uid1, int uid2);
+    public Member addFriends(int uid1, int uid2);
     public void deleteFriend(int uid1, int uid2);
     //친구목록 보기
     public List<Member> showFriends(Member me);

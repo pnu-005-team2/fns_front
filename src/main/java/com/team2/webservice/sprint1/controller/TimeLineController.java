@@ -34,9 +34,6 @@ public class TimeLineController {
     private LikeRecordRepository likeRecordRepository;
 
     @Autowired
-    private MemberRepository memberRepository;
-
-    @Autowired
     private BoardRepository boardRepository;
 
 
@@ -45,7 +42,6 @@ public class TimeLineController {
 
 
     List<Board> boardRecordList;
-    List<Member> memberList;
     List<LikeRecord> likeRecordList;
 
 
@@ -54,25 +50,19 @@ public class TimeLineController {
     {
         System.out.println("Origin");
         boardRecordList = boardRepository.findAll();
-
-
-
         model.addAttribute("postRecordlList", boardRecordList);
         model.addAttribute("postRecordList_Byte", boardRecordList);
-
         return "Timeline";
 
     }
 
     @PostMapping
-    @RequestMapping("/timeline")
+    @RequestMapping(value = "/timeline", method = RequestMethod.GET)
     public String Post(ModelMap modelMap, Model model, HttpServletRequest request)
     {
-//        String content =request.getParameter("content");
- //       Board client = new Board();
 
         System.out.println("TimeLine Post ");
-        Member me = showFriendsList(model, request);
+        Member me = friendsService.setFriendListToModel(model, request);
 
         List<Board> fBoardList = friendsService.showFBoard(me);
 
@@ -82,20 +72,6 @@ public class TimeLineController {
         return "timeLineVer2";
     }
 
-    @RequestMapping(value = "/friendAdd" , method = RequestMethod.POST)
-    public void friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
-        //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
-        System.out.println("FriendAdd");
-        friendsService.addFriends(uid1, uid2);
-        showFriendsList(model, request);
-
-    }
-    @RequestMapping(value = "/friendDelete" , method = RequestMethod.POST)
-    public void friendDelete(int uid1, int uid2, Model model, HttpServletRequest request){
-        //1: 삭제행위를 하는사람, 2: 삭제 당하는사람
-        friendsService.deleteFriend(uid1, uid2);
-        showFriendsList(model, request);
-    }
 
     @RequestMapping("/logoShowForStudent/{pid}")
     public void imageView(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") Long pid) throws IOException {
@@ -122,60 +98,6 @@ public class TimeLineController {
 
     }
 
-    @RequestMapping(value = "/load/friend", method = RequestMethod.POST)
-    @ResponseBody
-    public List<Member> loadFriends(int uid){
-        Optional<Member> me = memberRepository.findById(uid);
-        if(!me.isPresent()){
-            System.out.println("올바르지 않은 계정입니다.");
-            return null;
-        }
-        return friendsService.showFriends(me.get());
-
-    }
-
-
-    //중복코드라서,
-    public Member showFriendsList( Model model, HttpServletRequest request){
-        //about Friends controlling, http session
-        HttpSession session = request.getSession();
-        System.out.println(session.getAttribute("login"));
-        Member me = (Member)session.getAttribute("login");
-
-        //show following
-        List<Member> Friends = friendsService.showFriends(me);
-
-        model.addAttribute("friendsRecordList", Friends);
-        model.addAttribute("friendsRecordList_Byte", Friends);
-
-        //show follower
-        List<Member> Friended = friendsService.showFriended(me);
-
-        model.addAttribute("friendedRecordList", Friended);
-        model.addAttribute("friendedRecordList_Byte", Friended);
-
-        //show recomend
-        List<Member> recommend = friendsService.recommendFriends(me);
-
-        model.addAttribute("friendRecommendList", recommend);
-        model.addAttribute("friendRecommendList_Byte", recommend);
-
-        return updateLoginSession(me.getEmail(), session);
-    }
-
-
-    // ----------- Sesssion에 들어있는 Login 객체를 업데이트합니다. -------------
-    private Member updateLoginSession(String email, HttpSession session) {
-        Optional<Member> update_me = memberRepository.findByEmail(email);
-
-        if(!update_me.isPresent()){
-            System.out.println("세션갱신에 오류가 발생했습니다.");
-            return null;
-        }
-
-        session.setAttribute("login", update_me.get());
-        return update_me.get();
-    }
 
     @ResponseBody
     @PostMapping
