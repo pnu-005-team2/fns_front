@@ -28,7 +28,8 @@ public class Board implements Serializable {
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<LikeRecord> likeRecords;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "pid")
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)

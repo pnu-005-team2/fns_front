@@ -128,3 +128,14 @@
 .friend-item button {
     float: right;
 }
+
+.comment-list {
+    overflow: auto;
+    height: 70%;
+    width: 100%;
+}
+
+
+.comment-item .writer {
+    color: blue;
+}

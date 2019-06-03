@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         //---------------로그인 권한이 필요한 페이지-----------
         registry.addInterceptor(authInterceptor)
-//                .addPathPatterns("/board/*")
+                .addPathPatterns("/timeline")
                 .addPathPatterns("/user/edit")
                 .excludePathPatterns("/login");
 

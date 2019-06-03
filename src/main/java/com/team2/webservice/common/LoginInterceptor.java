@@ -1,4 +1,5 @@
 package com.team2.webservice.common;
+import com.team2.webservice.sprint1.vo.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -34,12 +35,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                            Object handler, ModelAndView modelAndView) throws IOException {
         HttpSession httpSession = request.getSession();
         ModelMap modelMap = modelAndView.getModelMap();
-        Object member = modelMap.get("user");
+        Member member = (Member)modelMap.get("user");
 
         if(member != null){
             logger.info("New Login Success");
             httpSession.setAttribute(LOGIN, member); // 세션에 로그인정보 저장
-            logger.info("New Session : " + member.toString());
+            logger.info("New Session : " + member.getEmail());
             response.sendRedirect("/timeline");
         }
 
