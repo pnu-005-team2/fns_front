@@ -6,24 +6,26 @@ import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
 @Service
 public class FriendsServiceImpl implements FriendsService{
+
     @Autowired
     MemberRepository memberRepository;
+
     @Autowired
     BoardRepository boardRepository;
 
     @Override
-    public void addFriends(int uid1, int uid2) {
+    public Member addFriends(int uid1, int uid2) {
         //mem1 :(본인) mem2를 본인의 친구목록에 추가 하고자 하는사람
         //mem2 : 추가 당하는 사람
         System.out.println("Service add Friends");
@@ -57,11 +59,13 @@ public class FriendsServiceImpl implements FriendsService{
             newFriended = temp1 + temp2;
 
             mem2.setFriended(newFriended);
-            memberRepository.save(mem2);
+            mem2 = memberRepository.save(mem2);
         }
         else{
             System.out.println("already friends");
         }
+
+        return mem2;
     }
 
     @Override
@@ -81,8 +85,11 @@ public class FriendsServiceImpl implements FriendsService{
             }
         }
 
+        //Todo 언팔로워 계정에서 팔로잉 삭제작업 필요
+
         mem1.setFriends(delList);
         memberRepository.save(mem1);
+
     }
 
     @Override
@@ -170,7 +177,6 @@ public class FriendsServiceImpl implements FriendsService{
         return fbList;
     }
 
-
     protected List<Member> showFList(Member me, String fList) {
 
         ArrayList<Integer> fIList = new ArrayList<>();
@@ -204,6 +210,48 @@ public class FriendsServiceImpl implements FriendsService{
         return fListR;
     }
 
+    //중복코드라서,
+    public Member setFriendListToModel(Model model, HttpServletRequest request){
+        //about Friends controlling, http session
+        HttpSession session = request.getSession();
+        System.out.println(session.getAttribute("login"));
+        Member me = (Member)session.getAttribute("login");
+
+        //show following
+        List<Member> Friends = this.showFriends(me);
+
+        model.addAttribute("friendsRecordList", Friends);
+        model.addAttribute("friendsRecordList_Byte", Friends);
+
+        //show follower
+        List<Member> Friended = this.showFriended(me);
+
+        model.addAttribute("friendedRecordList", Friended);
+        model.addAttribute("friendedRecordList_Byte", Friended);
+
+        //show recomend
+        List<Member> recommend = this.recommendFriends(me);
+
+        model.addAttribute("friendRecommendList", recommend);
+        model.addAttribute("friendRecommendList_Byte", recommend);
+
+        return updateLoginSession(me.getEmail(), session);
+    }
+
+
+    // ----------- Sesssion에 들어있는 Login 객체를 업데이트합니다. -------------
+    private Member updateLoginSession(String email, HttpSession session) {
+        Optional<Member> update_me = memberRepository.findByEmail(email);
+
+        if(!update_me.isPresent()){
+            System.out.println("세션갱신에 오류가 발생했습니다.");
+            return null;
+        }
+
+        session.setAttribute("login", update_me.get());
+        return update_me.get();
+    }
+
     protected Member setMember(int uid){
         List<Member> all = memberRepository.findAll();
         Member ret = null;
@@ -214,5 +262,6 @@ public class FriendsServiceImpl implements FriendsService{
         }
         return ret;
     }
+
 }
 
