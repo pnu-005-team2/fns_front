@@ -56,9 +56,10 @@
                         <input type="button"
                                class="enter-key"
                                id="comment_confirm${item.pid}"
-                               onclick="comment_regist(${item.pid});" value="enter" />
+                               onclick="comment_regist(${item.pid})" value="enter" />
                         </div>
                         <div id="comment-list${item.pid}"></div>
+                        <div id="js-btn-wrap" class="btn-wrap"> <a href="javascript:;" class="button">더보기</a> </div>
                     </div>
                 </div>
             </c:forEach>
@@ -300,37 +301,10 @@
     }
 
 
-    // --------- 좋아요 클릭시 Event 처리 ---------
-    //Todo 세부구현 필요
-    function like_btn_clickevent(temppid) {
-        var like_button = document.getElementById("like_btn"+temppid);
-
-       // alert(like_button.getElementsByClassName());
-
-
-        console.log("ClickEvent");
-        if(like_button.style.display=="none"){
-            var sendData = { "lid" : temppid ,
-                "uid" : temppid ,
-                "pid" : temppid,
-                "like_boolean" : "false"
-            }
-        }
-        else{
-            var sendData = { "lid" : temppid ,
-                "uid" : temppid ,
-                "pid" : temppid,
-                "like_boolean" : "true"
-            }
-        }
-
-
-    }
-
 
     // --------- 댓글등록 ---------
-    function comment_regist(temppid){
-        var comment_text_area = document.getElementById("comment"+temppid);
+    function comment_regist(temp_Pid_comment){
+        var comment_text_area = document.getElementById("comment"+temp_Pid_comment);
 
         var comment_text_area_post_p = document.createElement("p");
 
@@ -341,17 +315,18 @@
 
 
         var today= new Date();
-        var sendData = { "comment" : comment_text_area_value ,
-            "cid" : temppid ,
-            "pid" : temppid,
-            "writer" : temppid,
+        var sendData_ = { "comment" : comment_text_area_value ,
+            "cid" : temp_Pid_comment ,
+            "pid" : temp_Pid_comment,
+            "writer" : temp_Pid_comment,
             "date": today
         }
 
-        document.getElementById("comment-list"+temppid).innerHTML +=
+
+        document.getElementById("comment-list"+temp_Pid_comment).innerHTML +=
             "<div><div class=\"in-line\">"+
             "<img class=\"btn-img\" id=\"btn_img_like_img_id\" width=\"10%\"height=\"15\""+
-            "src=\"https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg\">" +
+            "src=\"/logoShowForStudent/" + temp_Pid_comment + "\">" +
             comment_text_area.value + "</div>" +
             "<br></div>";
 
@@ -359,7 +334,7 @@
             type : "POST",
             url : "/comment",
             datatype : "text",
-            data : sendData,
+            data : sendData_,
             success: function (data) {
                 alert(data);
             }

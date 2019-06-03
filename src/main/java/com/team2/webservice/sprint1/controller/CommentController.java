@@ -2,6 +2,8 @@ package com.team2.webservice.sprint1.controller;
 
 
 
+import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.Comment;
 import com.team2.webservice.sprint1.jpa.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -23,6 +26,8 @@ public class CommentController {
 
 
 
+    @Autowired
+    private BoardRepository boardRepository;
 
     @RequestMapping("/comment_print")
     public String view(Model model)
@@ -50,6 +55,8 @@ public class CommentController {
         String comment_date = request.getParameter("date");
 
 
+        Optional<Board> boardOptional = boardRepository.findByPid(Long.parseLong(comment_pid));
+
         System.out.print(comment_content+"\n"+comment_pid+"\n"+comment_writer+"\n"+comment_date+"\n");
 
         Comment copy_comment = new Comment();
@@ -57,6 +64,7 @@ public class CommentController {
         copy_comment.setDate(comment_date);
 
         copy_comment.setWriter(comment_writer);
+        copy_comment.setBoard(boardOptional.get());
 
         commentRepository.save(copy_comment);
 

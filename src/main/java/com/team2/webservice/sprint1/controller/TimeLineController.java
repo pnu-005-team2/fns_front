@@ -84,13 +84,38 @@ public class TimeLineController {
                 InputStream in1 = new ByteArrayInputStream(imagefile1);
                 IOUtils.copy(in1, res.getOutputStream());
             }catch (Exception e){
-             e.printStackTrace();
+                e.printStackTrace();
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
+
+/*
+    @RequestMapping("/comment_url/{pid}")
+    public void Comment_User_Image(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") Long pid) throws IOException {
+        res.setContentType("image/png");
+
+        try{
+            Optional<Board> oBoard = boardRepository.findById(pid);
+            Board board = oBoard.get();
+            Blob blob = board.getImg();
+            int blob_length =(int)blob.length();
+            try{
+                byte[] imagefile1 = board.getImg().getBytes(1,blob_length);
+                InputStream in1 = new ByteArrayInputStream(imagefile1);
+                IOUtils.copy(in1, res.getOutputStream());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }*/
 
 
 

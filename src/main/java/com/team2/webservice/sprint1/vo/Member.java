@@ -37,4 +37,6 @@ public class Member implements Serializable {
     @OneToMany(mappedBy = "member")
     private List<LikeRecord> likeRecords;
 
+
+
 }
