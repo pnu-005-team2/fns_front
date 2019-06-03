@@ -19,8 +19,8 @@
 <%
     request.setAttribute("member", session.getAttribute("login"));
     Member user = (Member)session.getAttribute("login");
-    String email = user.getEmail();
     String name = user.getName();
+    String email = user.getEmail();
     int uid = user.getUid();
 %>
 <div class="page-container">
@@ -44,16 +44,24 @@
                        onclick="likeToggle(this), like_btn_clickevent(${item.pid})"></i>
                     <i class="comment-icon fa-comments-o fa-2x"></i>
                 </div>
-                <div class="comment-box" id="btn_group_div_group${item.pid}">
+                <div class="comment-box">
                     <div class="comment-input-box">
-                        <input type="text" class="comment-input" onfocus="this.value=''"
-                               id="comment${item.pid}" placeholder="re">
-                        <input
-                            type="button" class="enter-key" id="comment_confirm${item.pid}"
-                            onclick="comment_regist(${item.pid});" value="enter" />
+                        <input type="text" class="comment-input" data-board-idx="${item.pid}"
+                               data-uid= "<%=uid%>"
+                               placeholder="re">
+                        <button class="comment-btn" data-writer="<%=name%>">Enter</button>
+                    </div>
+                    <div class="comment-list"
+                         data-board-idx="${item.pid}">
+                        <c:forEach var="comment" items="${item.comments}">
+                            <div class="comment-item" data-comment-idx="${comment.cid}">
+                                <a class="writer" href="/user/mypage?email=<%=email%>">${comment.member.name}</a>
+                                <button class="delete-btn">&times</button>
+                                <p>${comment.content}</p>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
-                <div id="comment-list${item.pid}"></div>
             </div>
         </c:forEach>
     </div>
@@ -65,10 +73,7 @@
                 <div class="friend-item" data-friend-index="${item.uid}">
                     <img class='profile' src="${item.img}" width="12%" height="15">
                     <strong style="width:58%">${item.name}</strong>
-                    <%--<div style="text-align:right" style="width:39%">--%>
-                        <%--<input type="button" onclick="deletefriend(<%=uid%>,${item.uid});" value="unfollow" height="15"/>--%>
-                    <%--</div>--%>
-                    <button data-friend-btn-idx="${item.uid}">unofllow</button>
+                    <button data-friend-btn-idx="${item.uid}">unfllow</button>
                 </div>
             </c:forEach>
         </div>
@@ -107,9 +112,13 @@
     $(document).ready(function (e) {
         console.log("Ready");
         let unfollow_btns = document.querySelectorAll("button[data-friend-btn-idx]");
-        for(let item of unfollow_btns)
-            item.onclick = deletefriend;
-        console.log(unfollow_btns);
+        let comment_btns = document.querySelectorAll(".comment-btn");
+        let comment_del_btns = document.querySelectorAll(".comment-item .delete-btn");
+
+        // -------- Event를 바인딩합니다. ----------
+        for(let item of unfollow_btns) item.onclick = deletefriend;
+        for(let item of comment_btns) item.onclick = comment_regist;
+        for(let item of comment_del_btns) item.onclick = commentDelete;
         // setInterval(text_Check,1000);
     });
 
@@ -310,6 +319,7 @@
             }
         });
     }
+
     // --------- 좋아요 클릭시 Event 처리 ---------
     //Todo 세부구현 필요
     function like_btn_clickevent(temppid) {
@@ -339,39 +349,27 @@
 
 
     // --------- 댓글등록 ---------
-    function comment_regist(temppid){
-        var comment_text_area = document.getElementById("comment"+temppid);
+    function comment_regist(e){
+        let input_box = e.target.previousElementSibling;
+        let pid = input_box.getAttribute("data-board-idx");
+        let writer = input_box.getAttribute("data-uid");
+        let writer_name = e.target.getAttribute("data-writer");
+        let content = input_box.value;
 
-        var comment_text_area_post_p = document.createElement("p");
-
-        var comment_text_area_value = comment_text_area.value;
-
-        var comment_textNode=document.createTextNode(comment_text_area_value);
-        comment_text_area_post_p.appendChild(comment_textNode);
-
-
-        var today= new Date();
-        var sendData = { "comment" : comment_text_area_value ,
-            "cid" : temppid ,
-            "pid" : temppid,
-            "writer" : temppid,
-            "date": today
+        let sendData = {
+            "pid" : pid,
+            "uid" : writer,
+            "content": content
         };
-
-        document.getElementById("comment-list"+temppid).innerHTML +=
-            "<div><div class=\"in-line\">"+
-            "<img class=\"profile\" id=\"btn_img_like_img_id\" width=\"10%\"height=\"15\""+
-            "src=\"https://pbs.twimg.com/profile_images/896261392340107266/Woo6s49S_400x400.jpg\">" +
-            comment_text_area.value + "</div>" +
-            "<br></div>";
 
         $.ajax({
             type : "POST",
             url : "/comment",
-            datatype : "text",
+            datatype : "json",
             data : sendData,
-            success: function (data) {
-                alert(data);
+            success: function (response) {
+                console.log(response, writer_name);
+                createComment(response, writer_name);
             }
         });
 

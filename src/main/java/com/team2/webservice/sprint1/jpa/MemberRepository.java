@@ -17,5 +17,4 @@ public interface MemberRepository extends JpaRepository<Member,Integer> {
 
     @Query("select m.id from Member m where m.name in (:names)")
     List<Object> getUidByName(@Param("names") Set<String> names);
-
 }

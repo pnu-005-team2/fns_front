@@ -20,13 +20,12 @@ import java.util.Optional;
 // 모델은 수명이 딱 그 페이지만임!
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 
     @Autowired
     MemberServiceImpl memberService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.GET)
     public String view(Model model)
     {
         System.out.println("login");
@@ -34,7 +33,7 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(LoginDTO loginDTO, HttpServletRequest request, HttpSession session, Model model)
     {
         String return_page = "login";

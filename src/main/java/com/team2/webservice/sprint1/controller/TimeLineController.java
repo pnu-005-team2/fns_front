@@ -8,6 +8,8 @@ import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.LikeRecord;
 import com.team2.webservice.sprint1.vo.Member;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +38,8 @@ public class TimeLineController {
     @Autowired
     private BoardRepository boardRepository;
 
+    private static final Logger logger =LoggerFactory.getLogger(TimeLineController.class);
+
 
     @Autowired
     FriendsServiceImpl friendsService;
@@ -61,13 +65,15 @@ public class TimeLineController {
     public String Post(ModelMap modelMap, Model model, HttpServletRequest request)
     {
 
-        System.out.println("TimeLine Post ");
+        logger.info("Entry TimeLine");
         Member me = friendsService.setFriendListToModel(model, request);
-
+        logger.info(me.getName());
         List<Board> fBoardList = friendsService.showFBoard(me);
 
         modelMap.addAttribute("postRecordlList", fBoardList);
         modelMap.addAttribute("postRecordList_Byte", fBoardList);
+
+        logger.info("Exit TimeLine");
 
         return "timeLineVer2";
     }
