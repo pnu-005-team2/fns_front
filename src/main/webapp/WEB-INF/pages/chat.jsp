@@ -34,7 +34,7 @@
                 <div class="input-group">
                     <input type="text" placeholder="Search..." name="" class="form-control search">
                     <div class="input-group-prepend">
-                        <span class="input-group-text search_btn"><i class="fas fa-search">   </i><i class ="fas fa-user" data-toggle="modal" data-target="#myModal"> </i></span>
+                        <span class="input-group-text search_btn"><i class="fas fa-search">   </i><i onclick="searchFriends()" class ="fas fa-user" data-toggle="modal" data-target="#myModal"> </i></span>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                 <div class="card-header msg_head">
                     <div class="d-flex bd-highlight">
                         <div class="img_cont">
-                            <img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img" id ='chatroom_img'>
+                            <img src="" class="rounded-circle user_img" id ='chatroom_img'>
                             <span class="online_icon"></span>
                         </div>
                         <div id="user_info">
@@ -99,15 +99,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                    <input type ="text" name = "roomName" value ="input roomname" />
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
-                <div class="modal-body">
-                    ...
+                <div class="modal-body" id="modal_body">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button onclick="createChatRoom()" type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -180,16 +179,22 @@
     });
     // --------- 채팅방을 만듭니다. ---------
     function createChatRoom() {
-        var users = [userName,"Mr.Park"];
-        var title_room = prompt("Enter the chat room's name");
+        let user = [];
+        user.push(userName);
+        $("input[name='friends']:checked").each(function(i) {
+            user.push($(this).val());
+        });
+        console.log(user);
+        let title_room = $("input[name='roomName']").val();
         console.log(title_room);
         $.ajax({
             type : "POST",
             url  : "/create_room",
-            data : {roomId : users, memberName : user},
+            data : {roomName : title_room, memberNames : user},
             success: response => {
                 console.log("Success")
                 console.log(response);
+                location.reload();
             }
         })
     }
@@ -202,8 +207,11 @@
             url  : "/load/friend",
             data : {uid : <%=uid%>},
             success: response => {
+                $('.modal-body').empty();
                 for (let i = 0; i < response.length ; i++) {
-
+                    console.log(response[i].name);
+                    $('#modal_body').append('<input type ="checkbox" name ="friends" value ="'+response[i].name + '"/><img src ="'+response[i].img + '" class="rounded-circle user_img_msg" >'
+                    + response[i].name + '<br>');
                 }
                 console.log("Success");
                 console.log(response);
