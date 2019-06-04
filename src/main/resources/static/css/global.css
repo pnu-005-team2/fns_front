@@ -1,0 +1,9 @@
+.page-container {
+    background-color: red;
+    color: white;
+}
+
+.board-item {
+    border: 0.2em solid black;
+    margin-bottom: 0.3em;
+}

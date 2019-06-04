@@ -1,11 +1,16 @@
 package com.team2.webservice.sprint1.vo;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="comment")
 public class Comment {
@@ -14,6 +19,9 @@ public class Comment {
     private int cid;
     private int pid;
     private String content;
+
+    @CreationTimestamp
+    @Column(name = "created_date")
     private LocalDateTime created_date;
 
 //    @ManyToOne

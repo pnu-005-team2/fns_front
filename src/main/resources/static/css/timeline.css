@@ -1,10 +1,31 @@
+.header-wrapper{
+    width: 100%;
+    height: 7%;
+}
 
+.header-content {
+    width: 100%;
+    height: 7%;
+    background-color: red;
+    padding: 0.4em;
+    z-index: 1;
+    position: fixed;
+}
 
-.left{
-    width: 25%;
+.header-content button{
+    color: white;
+}
+
+.left-wrapper{
     display: inline-block;
-    background-color: #FF5733;
     vertical-align: top;
+    width: 25%;
+}
+
+.left-content{
+    position: fixed;
+    width: 25%;
+    background-color: #FF5733;
 }
 
 .friendshow{
@@ -12,24 +33,41 @@
     margin-top: 1em;
     display: inline-block;
     vertical-align: top;
+    position: fixed;
+    margin-left: 1em;
+}
+
+.friendshow .following{
+    margin-bottom: 1em;
+}
+
+.friendshow .follower{
+    margin-bottom: 1em;
 }
 
 .time-line{
     width: 50%;
     display: inline-block;
+    background-color: white;
+    color: black;
+    padding: 0.2em;
 }
+
+/*.board-item {*/
+    /*border: solid;*/
+    /*margin-top: 1em;*/
+    /*height: 50em;*/
+
+    /*border-top: 10px solid skyblue;*/
+    /*border-bottom: 10px solid skyblue;*/
+    /*border-left: 10px solid skyblue;*/
+    /*border-right: 10px solid skyblue;*/
+    /*border-radius: 10px;*/
+/*}*/
 
 
 .board-item {
-    border: solid;
-    margin-top: 1em;
-    height: 50em;
-
-    border-top: 10px solid skyblue;
-    border-bottom: 10px solid skyblue;
-    border-left: 10px solid skyblue;
-    border-right: 10px solid skyblue;
-    border-radius: 10px;
+    min-height: 40em;
 }
 
 .board-item div {
@@ -49,13 +87,13 @@
 
 .board-content {
     padding-left: 1em;
-    font-size: 2em;
+    font-size: 1.2em;
 }
 
 .board-hashtag {
     color: #2c6ed5;
     padding-left: 1em;
-    font-size: 1.2em;
+    font-size: 0.7em;
 }
 
 .board-funtion {
@@ -67,10 +105,12 @@
     margin-right: 1em;
 }
 
+.function-item {
+
+}
+
 .comment-box {
-    height: 10em;
-    overflow: hidden;
-    padding: 1em;
+    min-height: 0;
 }
 
 .comment-input-box{
@@ -83,37 +123,37 @@
 .enter-key {
     width: 10%;
 }
-.following{
-    border: solid;
 
-    border-top: 10px solid skyblue;
-    border-bottom: 10px solid skyblue;
-    border-left: 10px solid skyblue;
-    border-right: 10px solid skyblue;
-    border-radius: 10px;
+/*.following{*/
+    /*border: solid;*/
 
+    /*border-top: 10px solid skyblue;*/
+    /*border-bottom: 10px solid skyblue;*/
+    /*border-left: 10px solid skyblue;*/
+    /*border-right: 10px solid skyblue;*/
+    /*border-radius: 10px;*/
 
-}
-.follower{
-    border: solid;
-    margin-top: 1em;
-    border-top: 10px solid skyblue;
-    border-bottom: 10px solid skyblue;
-    border-left: 10px solid skyblue;
-    border-right: 10px solid skyblue;
-    border-radius: 10px;
+/*}*/
+/*.follower{*/
+    /*border: solid;*/
+    /*margin-top: 1em;*/
+    /*border-top: 10px solid skyblue;*/
+    /*border-bottom: 10px solid skyblue;*/
+    /*border-left: 10px solid skyblue;*/
+    /*border-right: 10px solid skyblue;*/
+    /*border-radius: 10px;*/
 
-}
-.friendRecommend{
-    border: solid;
-    margin-top: 1em;
-    border-top: 10px solid skyblue;
-    border-bottom: 10px solid skyblue;
-    border-left: 10px solid skyblue;
-    border-right: 10px solid skyblue;
-    border-radius: 10px;
+/*}*/
+/*.friendRecommend{*/
+    /*border: solid;*/
+    /*margin-top: 1em;*/
+    /*border-top: 10px solid skyblue;*/
+    /*border-bottom: 10px solid skyblue;*/
+    /*border-left: 10px solid skyblue;*/
+    /*border-right: 10px solid skyblue;*/
+    /*border-radius: 10px;*/
 
-}
+/*}*/
 .profile{
     width: 30px; height: 30px;
     object-fit: cover;
@@ -129,13 +169,98 @@
     float: right;
 }
 
+.recommend-friend-item button{
+    float: right;
+}
+
 .comment-list {
     overflow: auto;
-    height: 70%;
+    min-height: 0;
     width: 100%;
+    padding-left: 1em;
 }
 
 
 .comment-item .writer {
     color: blue;
+}
+
+.comment-item p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.header-btn{
+    background:red;
+    color:#fff;
+    border:none;
+    position:relative;
+    /*height:60px;*/
+    /*font-size:1.6em;*/
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+}
+
+
+.header-btn:hover{
+    background:red;
+    color:black;
+}
+
+.header-btn:before,.header-btn:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: white;
+    transition:400ms ease all;
+}
+.header-btn:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+.header-btn:hover:before,.header-btn:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
+
+.follow-btn {
+    background: none;
+    border: 0.2em solid #fff;
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-size: 0.7em;
+    font-weight: bold;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.follow-btn::before,
+.follow-btn::after {
+    background: #fff;
+    content: '';
+    position: absolute;
+    z-index: -1;
+}
+
+.follow-btn:hover {
+    color: #2ecc71;
+}
+
+.follow-btn::after {
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 0;
+}
+
+.follow-btn:hover:after {
+    width: 100%;
 }

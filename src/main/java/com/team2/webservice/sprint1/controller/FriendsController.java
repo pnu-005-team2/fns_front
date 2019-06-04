@@ -32,7 +32,6 @@ public class FriendsController {
         //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
         System.out.println("FriendAdd");
         Member friend = friendsService.addFriends(uid1, uid2);
-//        friendsService.setFriendListToModel(model, request);
         return friend;
 
     }

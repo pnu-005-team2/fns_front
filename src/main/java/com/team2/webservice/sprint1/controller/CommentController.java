@@ -8,6 +8,7 @@ import com.team2.webservice.sprint1.jpa.CommentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,7 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value="", method = RequestMethod.POST)
-    public Comment comment(Comment comment, int uid)
+    public Comment commentSave(Comment comment, int uid)
     {
         logger.info("Entry Comment");
         Comment rst_comment = commentService.saveComment(comment, uid);
@@ -46,6 +47,12 @@ public class CommentController {
         return commentService.deleteComment(cid);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/load", method = RequestMethod.POST)
+    public List<Comment> commentLoad(int pid, Pageable pageable) {
+        logger.info("Entry Comment Load" + pageable);
+        return commentService.loadComment(pid, pageable);
+    }
 
 
 }

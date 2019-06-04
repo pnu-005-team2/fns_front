@@ -8,6 +8,7 @@
     <title>Edit My Profile</title>
 </head>
 <body>
+    <link rel="stylesheet" type="text/css" href="/resources/css/global.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/editprofile.css">
     <script src="//code.jquery.com/jquery.min.js"></script>
 
@@ -19,6 +20,7 @@
     String intro = user.getIntro();
     String img = user.getImg();
 %>
+<div class="page-container">
 <div class="secondform">
     <br />
     <h2> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Edit profile</h2>
