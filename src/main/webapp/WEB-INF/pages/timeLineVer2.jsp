@@ -1,5 +1,6 @@
 <%@ page import="com.team2.webservice.sprint1.vo.Member" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: iseungcheon
@@ -13,9 +14,8 @@
     <title>FNS</title>
 </head>
 <body>
-
-<jsp:include page="Post.jsp" />
 <link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
+<link rel="stylesheet" href="/resources/css/global.css" type="text/css"/>
 <%
     request.setAttribute("member", session.getAttribute("login"));
     Member user = (Member)session.getAttribute("login");
@@ -24,12 +24,23 @@
     int uid = user.getUid();
 %>
 <div class="page-container">
-    <div class="left">
-        <a href="chat">채팅하기</a><br/>
+    <div class="header-wrapper">
+        <div class="header-content">
+            <Strong style="color: yellow">Fashion Network Service</Strong>
+            <button class="header-btn" onclick="location.href='/user/edit'">정보수정</button>
+            <button class="header-btn" onclick="location.href='/user/mypage?email=<%=email%>'">마이피드</button>
+            <button class="header-btn" onclick="location.href='/logout'">로그아웃</button>
+        </div>
+    </div>
+    <div class="left-wrapper">
+        <div class="left-content">
+            <a href="chat">채팅하기</a><br/>
+        </div>
     </div>
     <div class="time-line">
+        <jsp:include page="Post.jsp" />
         <c:forEach var="item" items="${postRecordlList}" step="1">
-            <div class="board-item">
+            <div class="board-item" name="board/${item.pid}">
                 <div class="writer" >
                     <img src="${item.member.img}">
                     <strong>${item.member.name}</strong>
@@ -40,26 +51,31 @@
                 <div class="board-content">${item.content}</div>
                 <div class="board-hashtag">${item.hashtag}</div>
                 <div class="board-funtion">
+                    <span class="function-item">
                     <i id="like_btn${item.pid}" class="fa fa-thumbs-o-up fa-2x"
                        onclick="likeToggle(this), like_btn_clickevent(${item.pid})"></i>
-                    <i class="comment-icon fa-comments-o fa-2x"></i>
+                    </span>
+                    <span class="function-item">
+                        <i class="comment-icon fa fa-comments-o fa-2x" onclick="loadComment(event)" data-board-idx="${item.pid}" ></i>
+                    </span>
                 </div>
-                <div class="comment-box">
+                <%--Todo data-board-idx를 name으로 바꾸고 /단위로 잘라서 정보를 담을 수 있게 해보자--%>
+                <div class="comment-box" name="comment/${item.pid}">
                     <div class="comment-input-box">
                         <input type="text" class="comment-input" data-board-idx="${item.pid}"
-                               data-uid= "<%=uid%>"
+                               data-uid= "<%=uid%>" page-idx = "0"
                                placeholder="re">
                         <button class="comment-btn" data-writer="<%=name%>">Enter</button>
                     </div>
                     <div class="comment-list"
                          data-board-idx="${item.pid}">
-                        <c:forEach var="comment" items="${item.comments}">
-                            <div class="comment-item" data-comment-idx="${comment.cid}">
-                                <a class="writer" href="/user/mypage?email=<%=email%>">${comment.member.name}</a>
-                                <button class="delete-btn">&times</button>
-                                <p>${comment.content}</p>
-                            </div>
-                        </c:forEach>
+                        <%--<c:forEach var="comment" items="${item.comments}">--%>
+                            <%--<div class="comment-item" data-comment-idx="${comment.cid}">--%>
+                                <%--<a class="writer" href="/user/mypage?email=<%=email%>">${comment.member.name}</a>--%>
+                                <%--<button class="delete-btn">&times</button>--%>
+                                <%--<p>${comment.content}</p>--%>
+                            <%--</div>--%>
+                        <%--</c:forEach>--%>
                     </div>
                 </div>
             </div>
@@ -73,7 +89,7 @@
                 <div class="friend-item" data-friend-index="${item.uid}">
                     <img class='profile' src="${item.img}" width="12%" height="15">
                     <strong style="width:58%">${item.name}</strong>
-                    <button data-friend-btn-idx="${item.uid}">unfllow</button>
+                    <button class="follow-btn" data-friend-btn-idx="${item.uid}">unfollow</button>
                 </div>
             </c:forEach>
         </div>
@@ -94,7 +110,7 @@
                 <div class="recommend-friend-item" data-recommend-index ="${item.uid}">
                     <img class='profile' src="${item.img}" width="12%" height="15">
                     <strong style="width:58%">${item.name}</strong>
-                    <input type="button" onclick="addfriend(<%=uid%>,${item.uid});" value="follow" height="15"/>
+                    <button class="follow-btn" onclick="addfriend(<%=uid%>,${item.uid});" height="15">follow</button>
                 </div>
             </c:forEach>
         </div>
@@ -114,11 +130,19 @@
         let unfollow_btns = document.querySelectorAll("button[data-friend-btn-idx]");
         let comment_btns = document.querySelectorAll(".comment-btn");
         let comment_del_btns = document.querySelectorAll(".comment-item .delete-btn");
-
+        let hashtags = document.getElementsByClassName("board-hashtag");
+        console.log(hashtags);
         // -------- Event를 바인딩합니다. ----------
         for(let item of unfollow_btns) item.onclick = deletefriend;
         for(let item of comment_btns) item.onclick = comment_regist;
         for(let item of comment_del_btns) item.onclick = commentDelete;
+        for(let item of hashtags) {
+            console.log(item.textContent);
+            item.textContent = item.textContent.replace(/,/g, "#");
+        }
+
+
+
         // setInterval(text_Check,1000);
     });
 
@@ -347,35 +371,6 @@
 
     }
 
-
-    // --------- 댓글등록 ---------
-    function comment_regist(e){
-        let input_box = e.target.previousElementSibling;
-        let pid = input_box.getAttribute("data-board-idx");
-        let writer = input_box.getAttribute("data-uid");
-        let writer_name = e.target.getAttribute("data-writer");
-        let content = input_box.value;
-
-        let sendData = {
-            "pid" : pid,
-            "uid" : writer,
-            "content": content
-        };
-
-        $.ajax({
-            type : "POST",
-            url : "/comment",
-            datatype : "json",
-            data : sendData,
-            success: function (response) {
-                console.log(response, writer_name);
-                createComment(response, writer_name);
-            }
-        });
-
-        comment_text_area.value='';
-
-    }
 </script>
 </body>
 </html>

@@ -37,9 +37,6 @@
                     </div>
                     <div class="btn-group">
                         <button type="submit" class="btn btn-primary">글쓰기</button> &nbsp;
-                        <button type="button" class="btn btn-default" onclick="location.href='/user/edit'">정보수정</button>
-                        <button type="button" class="btn btn-default" onclick="location.href='/user/mypage?email=<%=email%>'">마이피드</button>
-                        <button type="button" class="btn btn-default" onclick="location.href='/logout'">로그아웃</button>
                     </div>
                 </div>
             </div>

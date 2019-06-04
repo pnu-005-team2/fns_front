@@ -54,7 +54,6 @@ public class UserController {
     public String mypage(String email, Model model, HttpSession session){
         logger.info("Entry Mypage : " + email);
         List<Board> boards = memberService.loadMyBoards(email);
-        //Todo Test 용 member
         Optional<Member> member = memberRepository.findByEmail(email);
         session.setAttribute("login", member.get());
         model.addAttribute("boardList", boards);
