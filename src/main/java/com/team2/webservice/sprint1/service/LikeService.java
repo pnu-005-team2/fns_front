@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface LikeService {
 
     //종아요 등록
-    void registerLike(LikeRecord likeRecord, String name, Long pid) throws Exception;
+    void registerLike(LikeRecord likeRecord, String name, int pid) throws Exception;
 
     Optional<Member> setMember(LikeRecord likeRecord, String name);
-    Optional<Board> setPost(LikeRecord likeRecord, Long pid);
+    Optional<Board> setPost(LikeRecord likeRecord, int pid);
 
 }

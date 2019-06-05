@@ -51,12 +51,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "mypage", method = RequestMethod.GET)
-    public String mypage(String email, Model model, HttpSession session){
+    public String mypage(String email, Model model){
         logger.info("Entry Mypage : " + email);
         List<Board> boards = memberService.loadMyBoards(email);
         Optional<Member> member = memberRepository.findByEmail(email);
-        session.setAttribute("login", member.get());
+        if(!member.isPresent()) logger.error("계정이 존재하지 않습니다.");
         model.addAttribute("boardList", boards);
+        model.addAttribute("pageUser", memberService.transDTO(member.get()));
         return "personalPage";
     }
 

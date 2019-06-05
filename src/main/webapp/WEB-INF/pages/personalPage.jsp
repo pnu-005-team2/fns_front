@@ -14,6 +14,7 @@
 <%
   Member user = (Member)session.getAttribute("login");
   String name = user.getName();
+  int uid = user.getUid();
   String gender = user.getGender();
   String intro = user.getIntro();
   String img = user.getImg();
@@ -30,24 +31,24 @@
       <div>
         <div class="row grid clearfix">
           <div class="col2 first">
-            <img src="<%=img%>" alt="">
+            <img src="${pageUser.img}" alt="">
 
             <!-- name of the user. should be connected with server !!!-->
-            <h1><%=name%></h1>
+            <h1>${pageUser.name}</h1>
             
             <!-- about user. should be connected with server!!! -->
-            <p><%=intro%></p>
+            <p>${pageUser.intro}</p>
 
           </div>
           <div class="col2 last">
             <div class="grid clearfix">
               <div class="col3 first">
-                <h1>694</h1>
+                <h1>${pageUser.following_cnt}</h1>
                 <span>Following</span>
               </div>
-              <div class="col3"><h1>452</h1>
-              <span>Likes</span></div>
-              <div class="col3 last"><h1><%=gender%></h1>
+              <div class="col3"><h1>${pageUser.follower_cnt}</h1>
+              <span>Followe</span></div>
+              <div class="col3 last"><h1>${pageUser.gender}</h1>
               <span>Gender</span></div>
             </div>
           </div>
@@ -87,7 +88,7 @@
               </div>
               <div class="profileinfo">
                 <p>${board.content}</p>
-                <p style="color: #2c6ed5"># ${board.hashtag}</p>
+                <p class="board-hashtag" style="color: #2c6ed5">${board.hashtag}</p>
               </div>
             </div>
           </div>
@@ -114,19 +115,35 @@
                         <strong></strong>
                     </div>
                     <span class="board-content"></span>
-                    <span class="board-comment"></span>
+                    <span class="board-hashtag"></span>
+                    <div class="comment-box" name="comment/${item.pid}">
+                        <div class="comment-input-box">
+                            <input type="text" class="comment-input" data-board-idx=""
+                                   data-uid= "<%=uid%>" page-idx = "0"
+                                   placeholder="re">
+                            <button class="comment-btn" data-writer="<%=name%>">Enter</button>
+                        </div>
+                        <div class="comment-list"
+                             data-board-idx="">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
+<script src="/resources/js/comment.js"></script>
+<script src="/resources/js/board.js"></script>
 <script>
     window.onload = () => {
         console.log("onload");
         let boards = document.getElementsByClassName("board-item");
+        let comment_btns = document.querySelectorAll(".comment-btn");
+
         for(let item of boards) item.addEventListener('click', boardClickHandler);
+        for(let item of comment_btns) item.onclick = comment_regist;
+        tagInit();
     };
 
 
@@ -135,48 +152,46 @@
         let img_position = document.querySelector(".modal-body .board-img img");
         let writer_img = document.querySelector(".board-profile img");
         let writer_name = document.querySelector(".board-profile strong");
+        let board_hashtag = document.querySelector(".modal-body .board-hashtag");
         let content = document.querySelector(".board-content");
-        let comment = document.querySelector(".board-comment");
+        let comment_box = document.querySelector(".comment-box");
+        let comment_list = document.querySelector(".comment-list");
+        let comment_input = document.querySelector(".comment-input");
+        let page = comment_box.getAttribute("page-idx");
+        let size = 4;
+
+
+        comment_box.setAttribute("name", "comment/"+pid);
+        comment_list.setAttribute("data-board-idx", pid);
+        comment_input.setAttribute("data-board-idx", pid);
 
 
         $.ajax({
             type: "POST",
-            url : "/board/find",
+            url : "/board/find?size=" + size + "&page=" + page + "&sort=cid,desc",
             data : {pid : pid},
             success: function (data) {
                 console.log(data);
+                let more_show_btn = document.getElementsByClassName("more-show-btn");
                 img_position.setAttribute("src", "/logoShowForStudent/" + data.pid);
                 writer_img.setAttribute("src", data.member.img);
                 writer_name.innerHTML = data.member.name;
                 content.innerHTML = data.content;
-                comment.innerHTML = data.comment;
+                board_hashtag.innerHTML = data.hashtag;
+                tagInit();
+                initComment(pid);
+                data.comments.forEach((item) => {
+                    createComment(item);
+                });
+
+                if(data.comments.length === 0 && more_show_btn.length > 0)
+                    document.getElementsByClassName("more-show-btn")[0].remove();
+                else
+                    MoreShowBtnHandler(pid, page)
             }
         });
     }
 
-    function test(e) {
-        console.log(e.currentTarget); // e.target은 이벤트가 발생된 요소를, e.currentTarget은 이벤트가 바인딩 된 요소를 반환
-        let target = e.currentTarget;
-        let toggle = target.getAttribute("data-mode");
-
-        //Todo Resize시 변경되도록 구현 필요
-        if(toggle === "normal") {
-            let section1 = document.getElementsByClassName("section1")[0];
-            let top_postion = document.getElementsByClassName("first")[0].style.top;
-            let container = $('.container')
-            console.log(container.left);
-            target.style.width = section1.clientWidth + "px";
-            target.style.position = "absolute";
-            target.style.left = container.innerWidth() - container.width();
-            target.style.left += container.offset().left + "px";
-            target.setAttribute("data-toggle", "magnify");
-        } else{
-            target.style.width = "100%";
-            target.style.position = "static";
-            target.style.left = '';
-            target.setAttribute("data-toggle", "normal");
-        }
-    }
 </script>
 
 </body>

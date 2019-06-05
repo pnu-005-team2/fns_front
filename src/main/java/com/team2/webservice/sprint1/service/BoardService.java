@@ -8,7 +8,7 @@ public interface BoardService {
     void write(Board board, String writer);
 
     //게시물 상세보기
-    Board read(Long pid);
+    Board read(int pid);
 
     //게시물 수정
     void update(Board board);

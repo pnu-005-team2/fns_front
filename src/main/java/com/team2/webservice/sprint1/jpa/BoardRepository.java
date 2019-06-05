@@ -9,9 +9,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface BoardRepository extends JpaRepository<Board,Long> {
-    @Override
-    Optional<Board> findById(Long aLong);
+public interface BoardRepository extends JpaRepository<Board,Integer> {
+    Optional<Board> findById(int pid);
 
     @Query("select b from Board b where  b.member.email = (:email) ")
     Optional<List<Board>> findByMemberId(@Param("email") String email);

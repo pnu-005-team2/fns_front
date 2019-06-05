@@ -2,6 +2,7 @@ package com.team2.webservice.sprint1.service;
 
 import com.team2.webservice.common.S3Uploader;
 import com.team2.webservice.sprint1.dto.LoginDTO;
+import com.team2.webservice.sprint1.dto.MyPageDTO;
 import com.team2.webservice.sprint1.dto.ProfileDTO;
 import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
@@ -95,6 +96,11 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return boards.get();
+    }
+
+    public MyPageDTO transDTO(Member member){
+        MyPageDTO myPageDTO = new MyPageDTO(member);
+        return myPageDTO;
     }
 
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public class Board implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK의 생성규칙을 나타냄, 가본키 생성을 DB가 수행하도록 선언
-    private Long pid;
+    private int pid;
     private String content;
     private Blob img;
     private String hashtag;

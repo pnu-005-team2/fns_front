@@ -4,9 +4,13 @@ import com.team2.webservice.sprint1.dto.BoardDTO;
 import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
 import com.team2.webservice.sprint1.service.BoardServiceImpl;
+import com.team2.webservice.sprint1.service.CommentServiceImpl;
 import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.ProductLink;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,6 +40,9 @@ public class BoardController {
 
     @Autowired
     BoardRepository boardRepository;
+
+    private static final Logger logger =LoggerFactory.getLogger(BoardController.class);
+
 
 
 
@@ -85,11 +92,11 @@ public class BoardController {
 
     @ResponseBody
     @RequestMapping(value = "find", method = RequestMethod.POST)
-    public BoardDTO findBoard(int pid){
-        System.out.println("FindBoard : " + pid);
-        Board board = boardService.read((long)pid);
+    public BoardDTO findBoard(int pid, Pageable comment_pageable){
+        logger.info("FindBoard : " + pid);
+        logger.info("FindBoard : " + comment_pageable);
+        Board board = boardService.read(pid);
         // Board 의 img가 blob형식이라 json 형태로 전달되지 않는다....
-        return boardService.transDTO(board);
-
+        return boardService.transDTO(board, comment_pageable);
     }
 }

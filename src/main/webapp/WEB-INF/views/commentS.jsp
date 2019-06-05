@@ -23,7 +23,7 @@ function commentList(){
                 a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
                 a += '<div class="commentInfo'+value.cno+'">'+'댓글번호 : '+value.cno+' / 작성자 : '+value.writer;
                 a += '<a onclick="commentUpdate('+value.cno+',\''+value.content+'\');"> 수정 </a>';
-                a += '<a onclick="commentDelete('+value.cno+');"> 삭제 </a> </div>';
+                a += '<a onclick="deleteComment('+value.cno+');"> 삭제 </a> </div>';
                 a += '<div class="commentContent'+value.cno+'"> <p> 내용 : '+value.content +'</p>';
                 a += '</div></div>';
             });
