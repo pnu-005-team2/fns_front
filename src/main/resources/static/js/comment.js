@@ -117,6 +117,26 @@ function initComment(pid) {
     while(comment_list.hasChildNodes()) comment_list.lastChild.remove();
 }
 
+//----------- 댓글에서 친구를 태그합니다.---------------
+function tagFriend(e) {
+    let key_code = e.keyCode;
+    let uid = e.target.getAttribute("data-uid");
+    if(key_code !== 50 && e.target.value.indexOf("@") === -1) return;
+    let keyword = e.target.value.split("@")[1] + e.key;
+    console.log("Keyword : " + keyword);
+
+    $.ajax({
+        type : "POST",
+        url : "/load/friend",
+        data: {uid: uid, keyword: keyword},
+        success: response => {
+            console.log(response);
+            //Todo 친구리스트 뿌려주기
+        }
+    })
+
+}
+
 
 //----------- 더보기 버튼을 관리합니다.---------------
 function MoreShowBtnHandler(pid, idx=0) {

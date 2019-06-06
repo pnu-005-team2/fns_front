@@ -27,6 +27,17 @@
     <div class="header-wrapper">
         <div class="header-content">
             <Strong style="color: yellow">Fashion Network Service</Strong>
+            <div class="search-wrapper">
+                <input type="text" class="search-bar"
+                       onfocus="this.value=''" id="search-user-text"
+                       placeholder="검색"  >
+                <div style="position: relative; z-index: 2; left:10px; top:20px;" id="search-result-box">
+                   <div class="search-item">
+                       <span class="search-profile"></span>
+                       <span class="search-name"></span>
+                   </div>
+                </div>
+            </div>
             <button class="header-btn" onclick="location.href='/user/edit'">정보수정</button>
             <button class="header-btn" onclick="location.href='/user/mypage?email=<%=email%>'">마이피드</button>
             <button class="header-btn" onclick="location.href='/logout'">로그아웃</button>
@@ -63,7 +74,7 @@
                 <div class="comment-box" name="comment/${item.pid}">
                     <div class="comment-input-box">
                         <input type="text" class="comment-input" data-board-idx="${item.pid}"
-                               data-uid= "<%=uid%>" page-idx = "0"
+                               data-uid= "<%=uid%>" page-idx = "0" onkeydown="tagFriend(event)"
                                placeholder="re">
                         <button class="comment-btn" data-writer="<%=name%>">Enter</button>
                     </div>
@@ -113,10 +124,8 @@
 <script src="/resources/js/comment.js"></script>
 <script>
 
-    let text_number=0;
     let text_number_For_Hashtag=0;
-    let text_For_Search_User = document.getElementById("search_User_text");
-    // let search_UserText=text_For_Search_User.value;
+    let text_For_Search_User = document.getElementById("search-user-text");
     let temp_value= document.getElementsByClassName("fa");
 
     $(document).ready(function (e) {
@@ -125,6 +134,8 @@
         let comment_btns = document.querySelectorAll(".comment-btn");
         let comment_del_btns = document.querySelectorAll(".comment-item .delete-btn");
         let hashtags = document.getElementsByClassName("board-hashtag");
+        let search_bar = document.getElementById("search-user-text");
+        console.log(search_bar);
         console.log(hashtags);
         // -------- Event를 바인딩합니다. ----------
         for(let item of unfollow_btns) item.onclick = deletefriend;
@@ -134,18 +145,19 @@
             console.log(item.textContent);
             item.textContent = item.textContent.replace(/,/g, "#");
         }
+        search_bar.onkeydown = text_Check;
 
 
 
         // setInterval(text_Check,1000);
     });
 
-    var input1 = document.getElementById('search_User_text');
+    let input1 = document.getElementById('search-user-text');
     input1.onkeydown = function(event) {
         text_number=0;
         text_number_For_Hashtag=0;
 
-        var temp=   document.getElementById("search_Result_div");
+        let temp=   document.getElementById("search_Result_div");
 
 
         if(temp.getElementsByTagName("p").length!==0){
@@ -165,90 +177,75 @@
 
     var text_Check_flag=false;
 
-    function text_Check(){
-        var text_For_Search_User = document.getElementById("search_User_text");
+    function text_Check(e){
+        console.log("Text Check");
+        let text_value = e.target.value;
+        let sendData__ = { "keyword" : text_value};
 
-        search_UserText= text_For_Search_User.value;
+        if(text_value === '') return;
 
+        $.ajax({
+            type : "POST",
+            url : "/text_Check",
+            data : sendData__,
+            success: function (response) {
 
+                /*if(data.substr(0,1)=="#"){
 
-        var sendData = { "For_Search_User_Text" : search_UserText
-        };
-
-
-        if(text_number==0){
-            $.ajax({
-                type : "POST",
-                url : "/text_Check",
-                data : sendData,
-                success: function (data) {
-
-                    if(data.substr(0,1)=="#"){
-                        //fa-2x${item.pid}
-                        if(data.substr(1)!=""){
+                    if(data.substr(1)!=""){
 
 
 
-                            var jbsplit =data.substr(1).split(',');
-                            if(text_number_For_Hashtag==0){
-                                text_number_For_Hashtag=1;
-                                for( var i in jbsplit){
-                                    var temp_Data_data = { "temp_data" : jbsplit[i]
-                                    };
-                                    //  alert(temp_Data_data);
-                                    $.ajax({
-                                        type : "POST",
-                                        url : "/getImage_url",
-                                        data : temp_Data_data,
-                                        success: function (data) {
-                                            // alert(data);
-                                            var search_Result_text= document.getElementById("search_Result_div");
-                                            //  var comment_text_area_value = search_UserText;
-                                            //#.시도
-                                            var comment_text_area_post_p = document.createElement("p");
+                        var jbsplit =data.substr(1).split(',');
+                        if(text_number_For_Hashtag==0){
+                            text_number_For_Hashtag=1;
+                            for( var i in jbsplit){
+                                var temp_Data_data = { "temp_data" : jbsplit[i]
+                                };
+                                //  alert(temp_Data_data);
+                                $.ajax({
+                                    type : "POST",
+                                    url : "/getImage_url",
+                                    data : temp_Data_data,
+                                    success: function (data) {
+                                        // alert(data);
+                                        var search_Result_text= document.getElementById("search_Result_div");
+                                        //  var comment_text_area_value = search_UserText;
+                                        //#.시도
+                                        var comment_text_area_post_p = document.createElement("p");
 
-                                            var comment_textNode=document.createTextNode(data);
-                                            comment_text_area_post_p.appendChild(comment_textNode);
+                                        var comment_textNode=document.createTextNode(data);
+                                        comment_text_area_post_p.appendChild(comment_textNode);
 
 
-                                            search_Result_text.appendChild(comment_text_area_post_p);
+                                        search_Result_text.appendChild(comment_text_area_post_p);
 
-                                        }
-                                    });
-                                }
+                                    }
+                                });
                             }
-
-
                         }
+
+
                     }
-                    else{
-                        if(data!="null"){
-
-                            text_number=1;
-                            var search_Result_text= document.getElementById("search_Result_div");
-                            var comment_text_area_value = search_UserText;
-                            //#.시도
-                            var comment_text_area_post_p = document.createElement("p");
-                            comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
-                                "<img class=\"btnclass-img\" width=\"5%\"height=\"5%\""+
-                                "src="+ data+ ">" +"&nbsp;"+ comment_text_area_value + "</div>" +
-                                "<br></div>";
-                            search_Result_text.appendChild(comment_text_area_post_p);
-
-                        }
-                    }
-
-
-
-
-
+                }*/
+                console.log(response);
+                if(response){
+                    let search_Result_text= document.getElementById("search-result-box");
+                    let comment_text_area_value = search_UserText;
+                    //#.시도
+                    let search_item = document.createElement("div");
+                    comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
+                        "<img class=\"btnclass-img\" width=\"5%\"height=\"5%\""+
+                        "src="+ data+ ">" +"&nbsp;"+ comment_text_area_value + "</div>" +
+                        "<br></div>";
+                    search_Result_text.appendChild(comment_text_area_post_p);
 
                 }
-            });
+            }
+        });
 
-        }
+
     }
-
 
     // --------- 좋아요 클릭시 아이콘 Toggle ---------
     function likeToggle(target,temp_pid) {

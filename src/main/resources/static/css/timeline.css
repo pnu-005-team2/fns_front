@@ -16,6 +16,21 @@
     color: white;
 }
 
+
+.search-wrapper{
+    display: inline-block;
+    width: 25%;
+    margin-left: 1em;
+}
+
+.search-bar{
+    width: 100%;
+}
+
+#search-result{
+
+}
+
 .left-wrapper{
     display: inline-block;
     vertical-align: top;

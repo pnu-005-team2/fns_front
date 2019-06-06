@@ -46,8 +46,15 @@ public class FriendsController {
 
     @RequestMapping(value = "/load/friend", method = RequestMethod.POST)
     @ResponseBody
-    public List<Member> loadFriends(int uid){
+    public List<Member> loadFriends(int uid, String keyword){
+        //Todo keyword에 따라 일치하는 친구들 뿌려주기
         Optional<Member> me = memberRepository.findById(uid);
+        Optional<List<Member>> test = memberRepository.findByUidAndNameLike(uid, keyword);
+        for (int i = 0; i < test.get().size(); i++) {
+            System.out.println("Test");
+            System.out.println(test.get().get(i).getName());
+        }
+
         if(!me.isPresent()){
             System.out.println("올바르지 않은 계정입니다.");
             return null;

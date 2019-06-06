@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,14 +25,15 @@ import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.messaging.simp.stomp.StompHeaders.LOGIN;
-
 @Controller
 public class TimeLineController {
 
 
     @Autowired
     private LikeRecordRepository likeRecordRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Autowired
     private BoardRepository boardRepository;
@@ -107,47 +107,67 @@ public class TimeLineController {
 
     @ResponseBody
     @PostMapping
-    @RequestMapping("/text_Check")
-    public String Check_Search_Name(HttpServletRequest request)
+    @RequestMapping("/search/load")
+    public List<Member> checkSearchName(String keyword)
     {
+        logger.info("Entry checkSearchName" + keyword);
+//        if(keyword.substring(0,1).equals("#")) {
+//            String Drop_String = "#";
+//            System.out.println("pppppppppppppppppppppppppppppppppp");
+//            if (boardRecordList != null) {
+//                for (int i = 0; i < boardRecordList.size(); i++) {
+//                    if (boardRecordList.get(i).getHashtag() != null) {
+//                        String temp_HashTag = boardRecordList.get(i).getHashtag();
+//                        String[] temp_HashTag_Array = temp_HashTag.split(",");
+//                        System.out.println("888888888888888888888888888888");
+//                        for (int j = 0; j < temp_HashTag_Array.length; j++) {
+//                            System.out.println(temp_HashTag_Array[j]);
+//                            if (temp_HashTag_Array[j].equals(keyword.substring(1))) {
+//                                System.out.println("이게뭐야");
+//                                Drop_String += String.valueOf(boardRecordList.get(i).getPid());
+//                                Drop_String += " ";
+//                            }
+//                        }
+//                        System.out.println("7777777777777777777777777777777");
+//
+//                    }
+//
+//                }
+//            }
+//            return Drop_String;
+//        }
+        List<Member> member_list = memberRepository.findByNameLike(keyword+"%");
 
-
-        System.out.printf("In Timeline");
-
-
-
-        String name_Search= request.getParameter("For_Search_User_Text");
-
-        if(name_Search!="") {
-            if (name_Search.substring(0, 1).equals("#")) {
-                String Drop_String = "#";
-                System.out.println("pppppppppppppppppppppppppppppppppp");
-                if (boardRecordList != null) {
-                    for (int i = 0; i < boardRecordList.size(); i++) {
-                        if (boardRecordList.get(i).getHashtag() != null) {
-                            String temp_HashTag = boardRecordList.get(i).getHashtag();
-                            String[] temp_HashTag_Array = temp_HashTag.split(",");
-                            System.out.println("888888888888888888888888888888");
-                            for (int j = 0; j < temp_HashTag_Array.length; j++) {
-                                System.out.println(temp_HashTag_Array[j]);
-                                if (temp_HashTag_Array[j].equals(name_Search.substring(1))) {
-                                    System.out.println("이게뭐야");
-                                    Drop_String += String.valueOf(boardRecordList.get(i).getPid());
-                                    Drop_String += " ";
-                                }
-                            }
-                            System.out.println("7777777777777777777777777777777");
-
-                        }
-
-                    }
-                }
+        if(!member_list.isEmpty()) {
+            logger.info("No Empty");
+            for (int i = 0; i < member_list.size(); i++) {
+                logger.info(member_list.get(i).getName());
             }
         }
+        else
+            logger.info("계정이 존재하지 않습니다.");
 
-                return "Drop_String";
+        logger.info("Exit checkSearchName");
+        return member_list;
+    }
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/getImage_url")
+    public String GetImageUrl_For_Hash(HttpServletRequest request)
+    {
+
+        String temp_data= request.getParameter("temp_data");
+        Optional<Board> temp__board= boardRepository.findByPid(Long.parseLong(temp_data.trim()));
+        if(temp__board.isPresent()){
+            return temp__board.get().getMember().toString();
+        }
+
+        return "null";
+
 
     }
+
 
 
     @ResponseBody
@@ -163,18 +183,17 @@ public class TimeLineController {
 
 
         Optional<Board> board_Optional = boardRepository.findByPid(Long.parseLong(post_Pid));
+
+        //Optional<Member> member_Optional =  memberRepository.findByUid()
+        // Optional<LikeRecord> likeRecordsdasdsd = likeRecordRepository.findBy
         Optional<LikeRecord> likeRecord_Optional= likeRecordRepository.findByBoard(board_Optional.get());
+        //Optional<Board> board_MemberWriter= boardRepository.findByMember()
         System.out.println(likeRecord_Optional);
         if(likeRecord_Optional.isPresent()){
             LikeRecord likeRecord = likeRecord_Optional.get();
-            if(like_Value.equals("false")){
-                like_Value="true";
-            }
-            else{
-                like_Value="false";
-            }
             Boolean temp_Boolean =Boolean.parseBoolean(like_Value);
             likeRecord.setLike_boolean(temp_Boolean);
+            likeRecord.getMember();
             likeRecordRepository.save(likeRecord);
             return "success";
         }
@@ -200,8 +219,12 @@ public class TimeLineController {
 
 
 
-    
-    
+
+
+
+
+
+
 
 
 

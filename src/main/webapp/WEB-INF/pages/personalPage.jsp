@@ -109,7 +109,7 @@
             </div>
             <div class="modal-body">
                 <span class="board-img"><img src="" alt=""> </span>
-                <div class="content">
+                <div class="content" style="overflow: auto">
                     <div class="board-profile">
                         <img>
                         <strong></strong>
