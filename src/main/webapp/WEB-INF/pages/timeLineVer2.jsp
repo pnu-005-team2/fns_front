@@ -69,13 +69,6 @@
                     </div>
                     <div class="comment-list"
                          data-board-idx="${item.pid}">
-                        <%--<c:forEach var="comment" items="${item.comments}">--%>
-                            <%--<div class="comment-item" data-comment-idx="${comment.cid}">--%>
-                                <%--<a class="writer" href="/user/mypage?email=<%=email%>">${comment.member.name}</a>--%>
-                                <%--<button class="delete-btn">&times</button>--%>
-                                <%--<p>${comment.content}</p>--%>
-                            <%--</div>--%>
-                        <%--</c:forEach>--%>
                     </div>
                 </div>
             </div>
@@ -117,6 +110,7 @@
     </div>
 </div>
 <script src="/resources/js/timeline.js"></script>
+<script src="/resources/js/comment.js"></script>
 <script>
 
     let text_number=0;
@@ -135,7 +129,7 @@
         // -------- Event를 바인딩합니다. ----------
         for(let item of unfollow_btns) item.onclick = deletefriend;
         for(let item of comment_btns) item.onclick = comment_regist;
-        for(let item of comment_del_btns) item.onclick = commentDelete;
+        for(let item of comment_del_btns) item.onclick = deleteComment;
         for(let item of hashtags) {
             console.log(item.textContent);
             item.textContent = item.textContent.replace(/,/g, "#");

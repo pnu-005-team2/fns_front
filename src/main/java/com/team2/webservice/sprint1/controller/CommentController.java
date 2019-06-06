@@ -43,7 +43,7 @@ public class CommentController {
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public boolean commentDelete(int cid){
-        logger.info("Entry commentDelete");
+        logger.info("Entry deleteComment");
         return commentService.deleteComment(cid);
     }
 

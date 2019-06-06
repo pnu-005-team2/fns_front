@@ -80,7 +80,7 @@ public class TimeLineController {
 
 
     @RequestMapping("/logoShowForStudent/{pid}")
-    public void imageView(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") Long pid) throws IOException {
+    public void imageView(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") int pid) throws IOException {
         res.setContentType("image/png");
 
 

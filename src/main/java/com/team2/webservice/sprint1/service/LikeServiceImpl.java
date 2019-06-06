@@ -23,7 +23,7 @@ public class LikeServiceImpl implements LikeService {
     LikeRecordRepository likeRecordRepository;
 
     @Override
-    public void registerLike(LikeRecord likeRecord, String name, Long pid){
+    public void registerLike(LikeRecord likeRecord, String name, int pid){
         System.out.println("------Register Like--------");
         this.setMember(likeRecord, name);
         this.setPost(likeRecord, pid);
@@ -45,7 +45,7 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public Optional<Board> setPost(LikeRecord likeRecord, Long pid) {
+    public Optional<Board> setPost(LikeRecord likeRecord, int pid) {
         Optional<Board> post = boardRepository.findById(pid);
         if(post.isPresent())
             likeRecord.setBoard(post.get());
