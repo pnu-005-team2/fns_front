@@ -113,6 +113,7 @@
 <script src="/resources/js/comment.js"></script>
 <script>
 
+    var uid = <%=uid%>;
     let text_number=0;
     let text_number_For_Hashtag=0;
     let text_For_Search_User = document.getElementById("search_User_text");
