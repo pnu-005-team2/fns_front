@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-    <title>FNS</title>
+    <title>FNSS</title>
 </head>
 <body>
 <link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
@@ -31,12 +31,7 @@
                 <input type="text" class="search-bar"
                        onfocus="this.value=''" id="search-user-text"
                        placeholder="검색"  >
-                <div style="position: relative; z-index: 2; left:10px; top:20px;" id="search-result-box">
-                   <div class="search-item">
-                       <span class="search-profile"></span>
-                       <span class="search-name"></span>
-                   </div>
-                </div>
+                <div id="search-result-box"></div>
             </div>
             <button class="header-btn" onclick="location.href='/user/edit'">정보수정</button>
             <button class="header-btn" onclick="location.href='/user/mypage?email=<%=email%>'">마이피드</button>
@@ -152,41 +147,19 @@
         // setInterval(text_Check,1000);
     });
 
-    let input1 = document.getElementById('search-user-text');
-    input1.onkeydown = function(event) {
-        text_number=0;
-        text_number_For_Hashtag=0;
 
-        let temp=   document.getElementById("search_Result_div");
-
-
-        if(temp.getElementsByTagName("p").length!==0){
-
-
-
-            while(temp.hasChildNodes()){
-
-                temp.removeChild(temp.lastChild);
-            }
-
-        }
-
-
-    };
-
-
-    var text_Check_flag=false;
 
     function text_Check(e){
         console.log("Text Check");
-        let text_value = e.target.value;
+        let text_value = e.target.value + e.key;
         let sendData__ = { "keyword" : text_value};
-
+        console.log(text_value);
+        initSearchBox();
         if(text_value === '') return;
 
         $.ajax({
             type : "POST",
-            url : "/text_Check",
+            url : "/search/load",
             data : sendData__,
             success: function (response) {
 
@@ -230,15 +203,37 @@
                 }*/
                 console.log(response);
                 if(response){
-                    let search_Result_text= document.getElementById("search-result-box");
-                    let comment_text_area_value = search_UserText;
+                    let search_result_box= document.getElementById("search-result-box");
                     //#.시도
-                    let search_item = document.createElement("div");
-                    comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
+
+
+                    response.forEach(item => {
+                        let search_item = document.createElement("div");
+                        let search_profile = document.createElement("img");
+                        let search_name= document.createElement("span");
+
+                        search_item.classList.add("search-item");
+                        search_item.onclick = ()=> {
+                            location.href = "/user/mypage?email=" + item.email;
+                        };
+
+                        search_profile.classList.add("search-profile");
+                        search_name.classList.add("search-name");
+                        search_profile.src = item.img;
+                        search_name.textContent = item.name;
+
+                        search_item.appendChild(search_profile);
+                        search_item.appendChild(search_name);
+                        search_result_box.appendChild(search_item);
+                    });
+
+                    console.log(search_result_box);
+
+                    /*comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
                         "<img class=\"btnclass-img\" width=\"5%\"height=\"5%\""+
                         "src="+ data+ ">" +"&nbsp;"+ comment_text_area_value + "</div>" +
                         "<br></div>";
-                    search_Result_text.appendChild(comment_text_area_post_p);
+                    search_Result_text.appendChild(comment_text_area_post_p);*/
 
                 }
             }
@@ -246,6 +241,16 @@
 
 
     }
+
+    function initSearchBox() {
+        text_number_For_Hashtag=0;
+        let temp=   document.getElementById("search-result-box");
+        while(temp.hasChildNodes()){
+            temp.removeChild(temp.lastChild);
+        }
+
+    };
+
 
     // --------- 좋아요 클릭시 아이콘 Toggle ---------
     function likeToggle(target,temp_pid) {

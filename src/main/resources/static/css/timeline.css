@@ -21,10 +21,23 @@
     display: inline-block;
     width: 25%;
     margin-left: 1em;
+    vertical-align: top;
+    background-color: white;
 }
 
 .search-bar{
     width: 100%;
+}
+
+.search-profile{
+    width: 20%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.search-name{
+    margin-left: 1em;
+    color: black;
 }
 
 #search-result{
