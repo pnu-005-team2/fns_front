@@ -56,11 +56,22 @@ function loadComment(e) {
 
 //----------- 덧글 Row를 만듭니다.---------------
 function createComment(comment_info, addFront=false) {
+
     let comment_row = document.createElement("div");
     let target_comment_list = document.querySelector(`div[data-board-idx="${comment_info.pid}"]`);
     let comment_content = document.createElement("p");
     let comment_writer = document.createElement("a");
     let comment_delete= document.createElement("span");
+    let comment_date = document.createElement("span");
+
+    let time = new Date().getTime() -new Date(comment_info.created_date).getTime() ;
+
+    let second = Math.floor(time/1000);
+    let minute = Math.floor(second/60);
+    let hour = Math.floor(minute/60);
+    let day = Math.floor(hour/24);
+    let month = Math.floor(day/30);
+    let year = Math.floor(month/12);
 
     console.log(target_comment_list);
 
@@ -71,15 +82,31 @@ function createComment(comment_info, addFront=false) {
     comment_writer.href = `user/mypage?email=${comment_info.member.email}`;
     comment_writer.classList.add("writer");
 
-    comment_delete.classList.add("delete-btn");
-    comment_delete.textContent = "\u02DF";
-    comment_delete.style.fontSize = "1.8em";
-    comment_delete.onclick = deleteComment;
+    if(comment_info.member.uid == uid) {
+        comment_delete.classList.add("delete-btn");
+        comment_delete.textContent = "\u02DF";
+        comment_delete.style.fontSize = "1.8em";
+        comment_delete.onclick = deleteComment;
+    }
+    if( second <60)
+        comment_date.textContent = second + "초";
+    else if(minute <60)
+        comment_date.textContent = minute + "분";
+    else if(hour <24)
+        comment_date.textContent = hour + "시간";
+    else if(day <30)
+        comment_date.textCOntent = day + "일";
+    else if(month < 12)
+        comment_date.textContent = month + "달";
+    else
+        comment_date.textContent = year + "년";
+    comment_date.style.float="right";
 
     comment_content.textContent = comment_info.content;
 
     comment_row.appendChild(comment_writer);
     comment_row.appendChild(comment_delete);
+    comment_row.appendChild(comment_date);
     comment_row.appendChild(comment_content);
 
     if(addFront)
