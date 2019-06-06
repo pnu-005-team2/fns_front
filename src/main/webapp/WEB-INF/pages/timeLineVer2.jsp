@@ -86,8 +86,8 @@
             <strong>Following </strong>
             <c:forEach var="item" items="${friendsRecordList}">
                 <div class="friend-item" data-friend-index="${item.uid}">
-                    <img class='profile' src="${item.img}" width="12%" height="15">
-                    <strong style="width:58%">${item.name}</strong>
+                    <img onclick = "location.href='user/mypage?email=${item.email}'" class='profile' src="${item.img}" width="12%" height="15">
+                    <strong onclick = "location.href='user/mypage?email=${item.email}'" style="width:58%">${item.name}</strong>
                     <button class="follow-btn" data-friend-btn-idx="${item.uid}">unfollow</button>
                 </div>
             </c:forEach>
@@ -97,8 +97,8 @@
             <strong>Follower </strong>
             <c:forEach var="item" items="${friendedRecordList}">
                 <div>
-                    <img class='profile' src="${item.img}" width="12%" height="15">
-                    <strong>${item.name}</strong>
+                    <img onclick = "location.href='user/mypage?email=${item.email}'" class='profile' src="${item.img}" width="12%" height="15">
+                    <strong onclick = "location.href='user/mypage?email=${item.email}'" >${item.name}</strong>
                 </div>
             </c:forEach>
         </div>
@@ -107,8 +107,8 @@
             <strong>Friend Recommend </strong>
             <c:forEach var="item" items="${friendRecommendList}">
                 <div class="recommend-friend-item" data-recommend-index ="${item.uid}">
-                    <img class='profile' src="${item.img}" width="12%" height="15">
-                    <strong style="width:58%">${item.name}</strong>
+                    <img class='profile' onclick = "location.href='user/mypage?email=${item.email}'" src="${item.img}" width="12%" height="15">
+                    <strong onclick = "location.href='user/mypage?email=${item.email}'" style="width:58%">${item.name}</strong>
                     <button class="follow-btn" onclick="addfriend(<%=uid%>,${item.uid});" height="15">follow</button>
                 </div>
             </c:forEach>
