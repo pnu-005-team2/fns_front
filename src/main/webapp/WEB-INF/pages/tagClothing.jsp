@@ -11,9 +11,8 @@
     <title>Tag on your clothing information</title>
 </head>
 <body>
-<h1>Tag on your clothing information</h1>
 <%--    <%out.println(request.getParameter("tempImg").toString());%>--%>
-<form action="/timeline" method="post" enctype="multipart/form-data" >
+<form action="/board/timeline" method="post" enctype="multipart/form-data" >
     <img src="data:image/png;base64, ${image}" alt="test-image" width="250" height="250" onclick="javascript:showCoords(event)"/>
     <br/>
     <p id="demo"></p>
