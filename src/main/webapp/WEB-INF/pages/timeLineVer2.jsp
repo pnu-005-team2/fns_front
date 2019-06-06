@@ -46,13 +46,16 @@
     <div class="time-line">
         <jsp:include page="Post.jsp" />
         <c:forEach var="item" items="${postRecordlList}" step="1">
-            <div class="board-item" name="board/${item.pid}">
+            <div class="board-item" name="board/${item.pid}" style="width :100%;">
                 <div class="writer" >
                     <img src="${item.member.img}">
                     <strong>${item.member.name}</strong>
                 </div>
-                <div class="board-img">
-                    <img src="/logoShowForStudent/${item.pid}">
+                <div class="board-img" style="position: relative;padding-top:100%;overflow: hidden;">
+                    <img src="/logoShowForStudent/${item.pid}" style="position: absolute; top:0; bottom: 0;left:0;right: 0;max-width: 100%;height: auto;">
+                    <div class="linkimg" style="z-index:1;position:absolute;left:${item.productLinks[0].position_x}px;top:${ item.productLinks[0].position_y}px;">
+                        <a href="${item.productLinks[0].linktext}"><img src="https://cdn4.iconfinder.com/data/icons/geomicons/32/672366-x-128.png" style="width:10px;height:10px;z-index:2;"></a>
+                    </div>
                 </div>
                 <div class="board-content">${item.content}</div>
                 <div class="board-hashtag">${item.hashtag}</div>

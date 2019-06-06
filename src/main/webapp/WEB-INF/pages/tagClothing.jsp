@@ -13,13 +13,13 @@
 <body>
 <%--    <%out.println(request.getParameter("tempImg").toString());%>--%>
 <form action="/board/timeline" method="post" enctype="multipart/form-data" >
-    <img src="data:image/png;base64, ${image}" alt="test-image" width="250" height="250" onclick="javascript:showCoords(event)"/>
+    <img src="data:image/png;base64, ${image}" alt="test-image" width="50%" height="auto" onclick="javascript:showCoords(event)"/>
     <br/>
     <p id="demo"></p>
 
 
     <input id="X" name = "X" type="hidden" value=444 />
-    <input id="Y" name = "Y" type="hidden" value=444 />
+    <input id="Y" name = "Y" type="hidden" value=1000 />
 
     <input id="linktext" name = "linktext" type="text"/>
     <script>
