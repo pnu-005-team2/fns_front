@@ -14,7 +14,8 @@ public interface BoardRepository extends JpaRepository<Board,Integer> {
 
     @Query("select b from Board b where  b.member.email = (:email) ")
     Optional<List<Board>> findByMemberId(@Param("email") String email);
+
     Optional<Board> findByPid(Long pid);
-    List<Board> findByHashtag(String hashtag);
+    List<Board> findByHashtagLike(String hashtag);
 }
 

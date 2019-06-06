@@ -22,7 +22,7 @@ public class BoardDTO {
         this.content = board.getContent();
         this.hashtag = board.getHashtag();
         this.member = board.getMember();
-        this.likeRecords = board.getLikeRecords();
+        //this.likeRecords = board.getLikeRecords();
     }
 
 
@@ -30,7 +30,7 @@ public class BoardDTO {
     private String content;
     private String hashtag;
     private Member member;
-    private List<LikeRecord> likeRecords;
+    //private List<LikeRecord> likeRecords;
     private List<Comment> comments;
 //    private String img;
 //    private List<ProductLink> productLinks;

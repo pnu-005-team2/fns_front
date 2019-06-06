@@ -150,10 +150,11 @@
 
 
     function text_Check(e){
-        console.log("Text Check");
-        let text_value = e.target.value + e.key;
+        console.log("Text Check" + e.key);
+        let text_value = e.target.value+ e.key;
         let sendData__ = { "keyword" : text_value};
-        console.log(text_value);
+
+
         initSearchBox();
         if(text_value === '') return;
 
@@ -201,6 +202,7 @@
 
                     }
                 }*/
+
                 console.log(response);
                 if(response){
                     let search_result_box= document.getElementById("search-result-box");
@@ -238,6 +240,103 @@
                 }
             }
         });
+
+        console.log(sendData__ + "sendData__ : ");
+
+
+
+        if(text_value.substr(0,1)==="#"){
+
+            let size =5;
+            let page =0;
+            initSearchBox();
+            $.ajax({
+                type : "POST",
+                url : "/search/hash?size="+size+"&page="+page,
+                data : sendData__,
+                success: function (response) {
+
+                    console.log("response :: "+response);
+                    //console.log("response"response);
+                    /*if(data.substr(0,1)=="#"){
+
+                        if(data.substr(1)!=""){
+
+
+
+                            var jbsplit =data.substr(1).split(',');
+                            if(text_number_For_Hashtag==0){
+                                text_number_For_Hashtag=1;
+                                for( var i in jbsplit){
+                                    var temp_Data_data = { "temp_data" : jbsplit[i]
+                                    };
+                                    //  alert(temp_Data_data);
+                                    $.ajax({
+                                        type : "POST",
+                                        url : "/getImage_url",
+                                        data : temp_Data_data,
+                                        success: function (data) {
+                                            // alert(data);
+                                            var search_Result_text= document.getElementById("search_Result_div");
+                                            //  var comment_text_area_value = search_UserText;
+                                            //#.시도
+                                            var comment_text_area_post_p = document.createElement("p");
+
+                                            var comment_textNode=document.createTextNode(data);
+                                            comment_text_area_post_p.appendChild(comment_textNode);
+
+
+                                            search_Result_text.appendChild(comment_text_area_post_p);
+
+                                        }
+                                    });
+                                }
+                            }
+
+
+                        }
+                    }*/
+                    if(response){
+
+
+                        let search_result_box= document.getElementById("search-result-box");
+                        //#.시도
+
+
+                        response.forEach(item => {
+
+                            let search_item = document.createElement("div");
+                            let search_profile = document.createElement("img");
+                            let search_name= document.createElement("span");
+                            search_item.classList.add("search-item");
+                            search_item.onclick = ()=> {
+                                //location.href = "/user/mypage?email=" + item.email;
+                            };
+                            search_profile.classList.add("search-profile");
+                            search_name.classList.add("search-name");
+                            console.log("response : "+ item.pid);
+                            search_profile.src = "/logoShowForStudent/"+item.pid;
+                            search_name.textContent = item.member.name;
+
+                            search_item.appendChild(search_profile);
+                            search_item.appendChild(search_name);
+                            search_result_box.appendChild(search_item);
+                        });
+
+                        console.log(search_result_box);
+
+                        /* comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
+                             "<img class=\"btnclass-img\" width=\"5%\"height=\"5%\""+
+                             "src="+ data+ ">" +"&nbsp;"+ comment_text_area_value + "</div>" +
+                             "<br></div>";
+                         search_Result_text.appendChild(comment_text_area_post_p);*/
+
+                    }
+                }
+            });
+        }
+
+
 
 
     }
