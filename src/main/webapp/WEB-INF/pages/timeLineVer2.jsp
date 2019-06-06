@@ -250,8 +250,10 @@
 
         if(text_value.substr(0,1)==="#"){
 
+
             let size =5;
             let page =0;
+
             initSearchBox();
             $.ajax({
                 type : "POST",
@@ -302,6 +304,7 @@
                     if(response){
 
 
+
                         let search_result_box= document.getElementById("search-result-box");
                         //#.시도
 
@@ -313,7 +316,8 @@
                             let search_name= document.createElement("span");
                             search_item.classList.add("search-item");
                             search_item.onclick = ()=> {
-                                //location.href = "/user/mypage?email=" + item.email;
+
+                                location.href = "/user/mypage?email=" + item.email+ "&pid="+item.pid;
                             };
                             search_profile.classList.add("search-profile");
                             search_name.classList.add("search-name");
