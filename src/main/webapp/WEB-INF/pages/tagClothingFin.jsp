@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>tagClothing Completed</title>
+    <meta http-equiv="refresh" content="2; url=/timeline">
 </head>
 <body>
 <h1>tagClothong Completed</h1>
