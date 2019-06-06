@@ -1,8 +1,10 @@
 package com.team2.webservice.sprint1.service;
 
 import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.jpa.FriendsRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.vo.Board;
+import com.team2.webservice.sprint1.vo.Friends;
 import com.team2.webservice.sprint1.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,48 +26,40 @@ public class FriendsServiceImpl implements FriendsService{
     @Autowired
     BoardRepository boardRepository;
 
+    @Autowired
+    FriendsRepository friendsRepository;
+
     @Override
-    public Member addFriends(int uid1, int uid2) {
+    public boolean addFriends(int uid1, int uid2) {
         //mem1 :(본인) mem2를 본인의 친구목록에 추가 하고자 하는사람
         //mem2 : 추가 당하는 사람
-        System.out.println("Service add Friends");
-        Member mem1 = setMember(uid1);
-        Member mem2 = setMember(uid2);
-        boolean check = true;
+        boolean canadd = true;
 
 
-        List<Member> fList1 = showFList(mem1, mem1.getFriends());
-        for(int i = 0 ; i < fList1.size() ; ++i){
-            if(fList1.get(i) == mem2){
-                check = false;
+        List<Friends> allfri = friendsRepository.findAll();
+
+        for(int i = 0 ; i < allfri.size() ; ++i){
+            if(allfri.get(i).getMyuid() == uid1 && allfri.get(i).getYouruid() == uid2){
+                canadd = false;
+                System.out.println("친구 추가 할수 없음");
+                break;
             }
         }
 
-        if(check){
-            String temp1;
-            String temp2;
-            String newFriends ;
+        if(canadd){
+            Friends newfri = new Friends();
+            newfri.setMyuid(uid1);
+            newfri.setYouruid(uid2);
+            newfri.setYourname(setMember(uid2).getName());
 
-            temp1 = mem1.getFriends();
-            temp2 = mem2.getUid() + " ";
-            newFriends = temp1 + temp2;
-            mem1.setFriends(newFriends);
-            memberRepository.save(mem1);
+            System.out.println("friends add test : " + newfri.getYourname());
 
-
-            temp1 = mem2.getFriended();
-            String newFriended ;
-            temp2 = mem1.getUid() + " ";
-            newFriended = temp1 + temp2;
-
-            mem2.setFriended(newFriended);
-            mem2 = memberRepository.save(mem2);
-        }
-        else{
-            System.out.println("already friends");
+            friendsRepository.save(newfri);
         }
 
-        return mem2;
+
+
+        return canadd;
     }
 
     @Override
@@ -73,39 +67,29 @@ public class FriendsServiceImpl implements FriendsService{
         //mem1 :(본인)
         //mem2 : 삭제 당하는 사람
 
-        Member mem1 = setMember(uid1);
-        Member mem2 = setMember(uid2);
-        String delList = "";
+        List<Friends> allfri = friendsRepository.findAll();
 
-        List<Member> friList = showFList(mem1, mem1.getFriends());
-
-        for(int i = 0; i < friList.size() ; ++i){
-            if(uid2 != friList.get(i).getUid()){
-                delList += friList.get(i).getUid() + " ";
+        for(int i = 0 ; i < allfri.size() ; ++i){
+            if(allfri.get(i).getMyuid() == uid1 && allfri.get(i).getYouruid() == uid2){
+                friendsRepository.delete(allfri.get(i));
             }
         }
 
-        //Todo 언팔로워 계정에서 팔로잉 삭제작업 필요
-
-        mem1.setFriends(delList);
-        memberRepository.save(mem1);
 
     }
 
     @Override
-    public List<Member> showFriends(Member me) {
+    public List<Member> showFollowing(Member me) {
 
-        String friends = me.getFriends();
 
-        return showFList(me, friends);
+        return showFList(me, 0);
     }
 
     @Override
-    public List<Member> showFriended(Member me){
+    public List<Member> showFollower(Member me){
 
-        String friended = me.getFriended();
 
-        return  showFList(me, friended);
+        return  showFList(me, 1);
     }
 
     @Override
@@ -117,10 +101,8 @@ public class FriendsServiceImpl implements FriendsService{
     public List<Member> recommendFriends(Member me){
         List<Member>  all = memberRepository.findAll();
         ArrayList<Member> recoI = new ArrayList<>();
-//        List<Member> reco  = new List<Member>();
-        List<Member> myfri = showFList(me, me.getFriends());
+        List<Member> myfri = showFList(me, 0);
         boolean check = true;
-
 
         for(int i = 1; i < all.size(); ++i){
             check = true;
@@ -136,11 +118,9 @@ public class FriendsServiceImpl implements FriendsService{
                 }
             }
             if(check){
-//                System.out.println("uid check     " + i);
                 recoI.add(all.get(i));
             }
         }
-
         long seed = System.nanoTime();
         Collections.shuffle(recoI, new Random(seed));
 
@@ -159,7 +139,7 @@ public class FriendsServiceImpl implements FriendsService{
         ArrayList<Board> fbList = new ArrayList<>();
 
         List<Board> all =  boardRepository.findAll();
-        List<Member> myfri = showFList(me, me.getFriends());
+        List<Member> myfri = showFList(me, 0);
 
         boolean check ;
 
@@ -177,37 +157,30 @@ public class FriendsServiceImpl implements FriendsService{
         return fbList;
     }
 
-    protected List<Member> showFList(Member me, String fList) {
+    protected List<Member> showFList(Member me, int ftype) {
 
-        ArrayList<Integer> fIList = new ArrayList<>();
+        //ftype : 0 = following , 1 = follower
+        List<Friends> allfriends = friendsRepository.findAll();
+        ArrayList<Member> myfollowing  = new ArrayList<>();
+        ArrayList<Member> myfollwer = new ArrayList<>();
 
-        String temp = "";
-        for(int i = 0 ; i < fList.length() ; ++i){
-
-            if(fList.charAt(i) >= 48 && fList.charAt(i) <= 57) {
-                char cTemp = fList.charAt(i);
-                temp += cTemp;
-            }else if(temp != "" || temp != " "){
-                int iTemp = Integer.parseInt(temp);
-                fIList.add(iTemp);
-                temp = "";
+        for(int i = 0 ; i < allfriends.size() ; i++){
+            if(allfriends.get(i).getMyuid() == me.getUid()){
+                Member following = setMember(allfriends.get(i).getYouruid());
+                myfollowing.add(following);
             }
-
-        }
-
-        List<Member> member = memberRepository.findAll();
-        ArrayList<Member> fListR = new ArrayList<>();
-
-        for(int i = 0 ; i < member.size(); ++i){
-            for(int j = 0 ; j < fIList.size() ; ++j){
-                if(member.get(i).getUid() == (long) fIList.get(j) ){
-                    fListR.add(member.get(i));
-                    break;
-                }
+            else if(allfriends.get(i).getYouruid() == me.getUid()){
+                Member follower = setMember(allfriends.get(i).getMyuid());
+                myfollwer.add(follower);
             }
         }
 
-        return fListR;
+        if(ftype == 0){
+            return myfollowing;
+        }
+        else{
+            return  myfollwer;
+        }
     }
 
     //중복코드라서,
@@ -218,13 +191,13 @@ public class FriendsServiceImpl implements FriendsService{
         Member me = (Member)session.getAttribute("login");
 
         //show following
-        List<Member> Friends = this.showFriends(me);
+        List<Member> Friends = this.showFollowing(me);
 
         model.addAttribute("friendsRecordList", Friends);
         model.addAttribute("friendsRecordList_Byte", Friends);
 
         //show follower
-        List<Member> Friended = this.showFriended(me);
+        List<Member> Friended = this.showFollower(me);
 
         model.addAttribute("friendedRecordList", Friended);
         model.addAttribute("friendedRecordList_Byte", Friended);

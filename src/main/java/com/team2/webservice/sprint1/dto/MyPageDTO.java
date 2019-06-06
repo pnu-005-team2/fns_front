@@ -21,7 +21,7 @@ public class MyPageDTO {
         this.gender= member.getGender();
         this.img = member.getImg();
         this.intro = member.getIntro();
-        follower_cnt = member.getFriended().split(",").length;
-        following_cnt = member.getFriends().split(",").length;
+//        follower_cnt = member.getFriended().split(",").length;
+//        following_cnt = member.getFriends().split(",").length;
     }
 }

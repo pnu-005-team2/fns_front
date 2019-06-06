@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,11 +27,11 @@ public class FriendsController {
 
     @ResponseBody
     @RequestMapping(value = "/friend/add" , method = RequestMethod.POST)
-    public Member friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
+    public boolean friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
         //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
         System.out.println("FriendAdd");
-        Member friend = friendsService.addFriends(uid1, uid2);
-        return friend;
+        boolean canadd = friendsService.addFriends(uid1, uid2);
+        return canadd;
 
     }
 
@@ -53,7 +52,7 @@ public class FriendsController {
             System.out.println("올바르지 않은 계정입니다.");
             return null;
         }
-        return friendsService.showFriends(me.get());
+        return friendsService.showFollowing(me.get());
 
     }
 }
