@@ -113,12 +113,12 @@
 
         //--------프로필 사진을 뷰에서 바꿔줍니다----------
         function changeImg(target) {
-            var fileList = target.files
-            var reader = new FileReader();
+            let fileList = target.files;
+            let reader = new FileReader();
             reader.readAsDataURL(fileList[0]);
 
             reader.onload = function () {
-                var img = document.getElementsByTagName("img")[0]
+                let img = document.getElementsByTagName("img")[0];
                 img.src = reader.result
             }
         }

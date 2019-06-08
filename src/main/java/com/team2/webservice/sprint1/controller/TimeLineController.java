@@ -3,12 +3,15 @@ package com.team2.webservice.sprint1.controller;
 import com.team2.webservice.sprint1.dto.BoardDTO;
 import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
+import com.team2.webservice.sprint1.service.BoardService;
 import com.team2.webservice.sprint1.service.BoardServiceImpl;
 import com.team2.webservice.sprint1.service.FriendsServiceImpl;
 import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
+import com.team2.webservice.sprint1.service.MusinsaService;
 import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.LikeRecord;
 import com.team2.webservice.sprint1.vo.Member;
+import com.team2.webservice.sprint1.vo.Musinsa;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -27,6 +30,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -41,6 +45,9 @@ public class TimeLineController {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private MusinsaService musinsaService;
 
     private static final Logger logger =LoggerFactory.getLogger(TimeLineController.class);
 
@@ -73,11 +80,14 @@ public class TimeLineController {
 
         logger.info("Entry TimeLine");
         Member me = friendsService.setFriendListToModel(model, request);
+        LocalDate today = LocalDate.now();
+        List<Musinsa> musinsaList = musinsaService.getMusinsaList(today);
         logger.info(me.getName());
         List<Board> fBoardList = friendsService.showFBoard(me);
 
         modelMap.addAttribute("postRecordlList", fBoardList);
         modelMap.addAttribute("postRecordList_Byte", fBoardList);
+        modelMap.addAttribute("musinsaList", musinsaList);
 
         logger.info("Exit TimeLine");
 

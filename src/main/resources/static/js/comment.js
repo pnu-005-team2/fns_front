@@ -4,7 +4,6 @@ function comment_regist(e){
     let input_box = e.target.previousElementSibling;
     let pid = input_box.getAttribute("data-board-idx");
     let writer = input_box.getAttribute("data-uid");
-    let writer_name = e.target.getAttribute("data-writer");
     let content = input_box.value;
 
     let sendData = {
@@ -20,7 +19,7 @@ function comment_regist(e){
         data : sendData,
         success: function (response) {
             console.log(response);
-            createComment(response, true);
+            createComment(response, writer, true);
         }
     });
 
@@ -32,21 +31,22 @@ function comment_regist(e){
 function loadComment(e) {
     let pid = e.target.getAttribute("data-board-idx");
     let page = e.target.getAttribute("page-idx");
+    let uid = e.target.getAttribute("data-uid");
+    console.log("uid : " + uid);
     let size = 4;
-    console.log(pid);
     $.ajax({
         type : "POST",
         url : `/comment/load?size=${size}&page=${page}&sort=cid,desc`,
         data : {pid: pid},
+        datatype : "json",
         success: function (data) {
-            console.log(data);
-            console.log(pid);
+            console.log("data : " + data);
             if(data.length === 0){
                 alert("댓글이 없습니다.");
                 return;
             }
             data.forEach((item)=>{
-                createComment(item)
+                createComment(item,uid);
             });
             MoreShowBtnHandler(pid, page);
         }
@@ -55,7 +55,7 @@ function loadComment(e) {
 }
 
 //----------- 덧글 Row를 만듭니다.---------------
-function createComment(comment_info, addFront=false) {
+function createComment(comment_info, uid,addFront=false) {
 
     let comment_row = document.createElement("div");
     let target_comment_list = document.querySelector(`div[data-board-idx="${comment_info.pid}"]`);

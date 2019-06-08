@@ -16,10 +16,20 @@
     color: white;
 }
 
+.header-btn{
+    background:red;
+    color:#fff;
+    border:none;
+    position:relative;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+    width: 10%;
+}
 
 .search-wrapper{
     display: inline-block;
-    width: 25%;
+    width: 20%;
     margin-left: 1em;
     vertical-align: top;
     background-color: white;
@@ -53,7 +63,32 @@
 .left-content{
     position: fixed;
     width: 25%;
-    background-color: #FF5733;
+    height: 90%;
+    background-color: white;
+}
+
+.musinsa-list{
+    height: 100%;
+    overflow: auto;
+    padding-top: 0.3em;
+}
+
+.musinsa-item{
+    padding-bottom: 1em;
+}
+
+.musinsa-item img{
+    width: 100%;
+}
+
+.musinsa-title {
+    font-size: 1em;
+    color: black;
+}
+
+.musinsa-description {
+    font-size: 0.7em;
+    color: #b2b2b2;
 }
 
 .friendshow{
@@ -218,18 +253,7 @@
     margin-bottom: 0;
 }
 
-.header-btn{
-    background:red;
-    color:#fff;
-    border:none;
-    position:relative;
-    /*height:60px;*/
-    /*font-size:1.6em;*/
-    padding:0 2em;
-    cursor:pointer;
-    transition:800ms ease all;
-    outline:none;
-}
+
 
 
 .header-btn:hover{

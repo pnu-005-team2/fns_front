@@ -35,12 +35,21 @@
             </div>
             <button class="header-btn" onclick="location.href='/user/edit'">정보수정</button>
             <button class="header-btn" onclick="location.href='/user/mypage?email=<%=email%>'">마이피드</button>
+            <button class="header-btn" onclick="location.href='/chat'">채팅하기</button>
             <button class="header-btn" onclick="location.href='/logout'">로그아웃</button>
         </div>
     </div>
     <div class="left-wrapper">
         <div class="left-content">
-            <a href="chat">채팅하기</a><br/>
+            <div class="musinsa-list">
+                <c:forEach var="item" items="${musinsaList}" >
+                    <div class="musinsa-item" onclick="location.href = '${item.link}';">
+                        <img src="${item.img_url}">
+                        <div class="musinsa-title">${item.title}</div>
+                        <div class="musinsa-description">${item.description}</div>
+                    </div>
+                </c:forEach>
+            </div>
         </div>
     </div>
     <div class="time-line">
@@ -65,7 +74,8 @@
                        onclick="likeToggle(this), like_btn_clickevent(${item.pid})"></i>
                     </span>
                     <span class="function-item">
-                        <i class="comment-icon fa fa-comments-o fa-2x" onclick="loadComment(event)" data-board-idx="${item.pid}" ></i>
+                        <i class="comment-icon fa fa-comments-o fa-2x" onclick="loadComment(event)" data-board-idx="${item.pid}"
+                            data-uid = "<%=uid%>"></i>
                     </span>
                 </div>
                 <%--Todo data-board-idx를 name으로 바꾸고 /단위로 잘라서 정보를 담을 수 있게 해보자--%>
