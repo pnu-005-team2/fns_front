@@ -105,22 +105,28 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">Comments</h4>
             </div>
             <div class="modal-body">
                 <span class="board-img"><img src="" alt=""> </span>
-                <div class="content" style="overflow: auto">
+                <div class="content">
                     <div class="board-profile">
                         <img>
                         <strong></strong>
                     </div>
+                   
+                   
+                   <div class="myComment">
                     <span class="board-content"></span>
-                    <span class="board-hashtag"></span>
+                    
+                    </div>
+                    <span class="board-hashtag" style="color: #2c6ed5"></span>
+                    
                     <div class="comment-box" name="comment/${item.pid}">
                         <div class="comment-input-box">
                             <input type="text" class="comment-input" data-board-idx=""
                                    data-uid= "<%=uid%>" page-idx = "0"
-                                   placeholder="re">
+                                   placeholder="type comment">
                             <button class="comment-btn" data-writer="<%=name%>">Enter</button>
                         </div>
                         <div class="comment-list"
