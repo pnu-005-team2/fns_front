@@ -101,7 +101,7 @@
                 <div class="friend-item" data-friend-index="${item.uid}">
                     <img onclick = "location.href='user/mypage?email=${item.email}'" class='profile' src="${item.img}" width="12%" height="15">
                     <strong onclick = "location.href='user/mypage?email=${item.email}'" style="width:58%">${item.name}</strong>
-                    <button class="follow-btn" data-friend-btn-idx="${item.uid}">unfollow</button>
+                    <button class="follow-btn" data-friend-btn-idx="${item.uid}" data-uid = <%=uid%> >unfollow</button>
                 </div>
             </c:forEach>
         </div>
@@ -128,7 +128,7 @@
         </div>
     </div>
 </div>
-<script src="/resources/js/timeline.js"></script>
+<script src="/resources/js/friend.js"></script>
 <script src="/resources/js/comment.js"></script>
 <script>
 
@@ -177,45 +177,6 @@
             data : sendData__,
             success: function (response) {
 
-                /*if(data.substr(0,1)=="#"){
-
-                    if(data.substr(1)!=""){
-
-
-
-                        var jbsplit =data.substr(1).split(',');
-                        if(text_number_For_Hashtag==0){
-                            text_number_For_Hashtag=1;
-                            for( var i in jbsplit){
-                                var temp_Data_data = { "temp_data" : jbsplit[i]
-                                };
-                                //  alert(temp_Data_data);
-                                $.ajax({
-                                    type : "POST",
-                                    url : "/getImage_url",
-                                    data : temp_Data_data,
-                                    success: function (data) {
-                                        // alert(data);
-                                        var search_Result_text= document.getElementById("search_Result_div");
-                                        //  var comment_text_area_value = search_UserText;
-                                        //#.시도
-                                        var comment_text_area_post_p = document.createElement("p");
-
-                                        var comment_textNode=document.createTextNode(data);
-                                        comment_text_area_post_p.appendChild(comment_textNode);
-
-
-                                        search_Result_text.appendChild(comment_text_area_post_p);
-
-                                    }
-                                });
-                            }
-                        }
-
-
-                    }
-                }*/
-
                 console.log(response);
                 if(response){
                     let search_result_box= document.getElementById("search-result-box");
@@ -244,12 +205,6 @@
 
                     console.log(search_result_box);
 
-                    /*comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
-                        "<img class=\"btnclass-img\" width=\"5%\"height=\"5%\""+
-                        "src="+ data+ ">" +"&nbsp;"+ comment_text_area_value + "</div>" +
-                        "<br></div>";
-                    search_Result_text.appendChild(comment_text_area_post_p);*/
-
                 }
             }
         });
@@ -272,45 +227,6 @@
                 success: function (response) {
 
                     console.log("response :: "+response);
-                    //console.log("response"response);
-                    /*if(data.substr(0,1)=="#"){
-
-                        if(data.substr(1)!=""){
-
-
-
-                            var jbsplit =data.substr(1).split(',');
-                            if(text_number_For_Hashtag==0){
-                                text_number_For_Hashtag=1;
-                                for( var i in jbsplit){
-                                    var temp_Data_data = { "temp_data" : jbsplit[i]
-                                    };
-                                    //  alert(temp_Data_data);
-                                    $.ajax({
-                                        type : "POST",
-                                        url : "/getImage_url",
-                                        data : temp_Data_data,
-                                        success: function (data) {
-                                            // alert(data);
-                                            var search_Result_text= document.getElementById("search_Result_div");
-                                            //  var comment_text_area_value = search_UserText;
-                                            //#.시도
-                                            var comment_text_area_post_p = document.createElement("p");
-
-                                            var comment_textNode=document.createTextNode(data);
-                                            comment_text_area_post_p.appendChild(comment_textNode);
-
-
-                                            search_Result_text.appendChild(comment_text_area_post_p);
-
-                                        }
-                                    });
-                                }
-                            }
-
-
-                        }
-                    }*/
                     if(response){
 
 
@@ -341,12 +257,6 @@
                         });
 
                         console.log(search_result_box);
-
-                        /* comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
-                             "<img class=\"btnclass-img\" width=\"5%\"height=\"5%\""+
-                             "src="+ data+ ">" +"&nbsp;"+ comment_text_area_value + "</div>" +
-                             "<br></div>";
-                         search_Result_text.appendChild(comment_text_area_post_p);*/
 
                     }
                 }
@@ -420,41 +330,6 @@
 
     }
 
-    function addfriend(mypid,fripid){
-        let sendData = {
-            "uid1" : mypid,
-            "uid2" : fripid
-        };
-        $.ajax({
-            type : "POST",
-            url : "/friend/add",
-            data : sendData,
-            success: function (response) {
-                console.log(response);
-                removeRow("data-recommend-index", response.uid);
-                createFriendItem(response);
-            }
-        });
-    }
-
-    function deletefriend(e){
-        console.log(e.target);
-        let target_uid = e.target.getAttribute("data-friend-btn-idx");
-        let source_uid = <%=uid%>
-        console.log("delete Click" + target_uid + ", " + source_uid);
-        let sendData = {
-            "uid1" : source_uid,
-            "uid2" : target_uid
-        };
-        $.ajax({
-            type : "POST",
-            url : "/fried/delete",
-            data : sendData,
-            success: function (response) {
-                removeRow("data-friend-index", response);
-            }
-        });
-    }
 
     // --------- 좋아요 클릭시 Event 처리 ---------
     //Todo 세부구현 필요

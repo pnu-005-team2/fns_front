@@ -79,15 +79,13 @@ public class FriendsServiceImpl implements FriendsService{
     }
 
     @Override
-    public List<Member> showFollowing(Member me) {
-
+    public List<Member> showFollowing(int me) {
 
         return showFList(me, 0);
     }
 
     @Override
-    public List<Member> showFollower(Member me){
-
+    public List<Member> showFollower(int me){
 
         return  showFList(me, 1);
     }
@@ -101,7 +99,7 @@ public class FriendsServiceImpl implements FriendsService{
     public List<Member> recommendFriends(Member me){
         List<Member>  all = memberRepository.findAll();
         ArrayList<Member> recoI = new ArrayList<>();
-        List<Member> myfri = showFList(me, 0);
+        List<Member> myfri = showFList(me.getUid(), 0);
         boolean check = true;
 
         for(int i = 1; i < all.size(); ++i){
@@ -134,12 +132,18 @@ public class FriendsServiceImpl implements FriendsService{
         return null;
     }
 
+    public List<Member> loadFriendsByKeyword(int uid, String keyword){
+        if(keyword.equals("following")) return showFollowing(uid);
+        if(keyword.equals("follower")) return showFollower(uid);
+        return null;
+    }
+
 
     protected List<Board> showFriBoard(Member me){
         ArrayList<Board> fbList = new ArrayList<>();
 
         List<Board> all =  boardRepository.findAll();
-        List<Member> myfri = showFList(me, 0);
+        List<Member> myfri = showFList(me.getUid(), 0);
 
         boolean check ;
 
@@ -157,7 +161,7 @@ public class FriendsServiceImpl implements FriendsService{
         return fbList;
     }
 
-    protected List<Member> showFList(Member me, int ftype) {
+    protected List<Member> showFList(int me, int ftype) {
 
         //ftype : 0 = following , 1 = follower
         List<Friends> allfriends = friendsRepository.findAll();
@@ -165,11 +169,11 @@ public class FriendsServiceImpl implements FriendsService{
         ArrayList<Member> myfollwer = new ArrayList<>();
 
         for(int i = 0 ; i < allfriends.size() ; i++){
-            if(allfriends.get(i).getMyuid() == me.getUid()){
+            if(allfriends.get(i).getMyuid() == me){
                 Member following = setMember(allfriends.get(i).getYouruid());
                 myfollowing.add(following);
             }
-            else if(allfriends.get(i).getYouruid() == me.getUid()){
+            else if(allfriends.get(i).getYouruid() == me){
                 Member follower = setMember(allfriends.get(i).getMyuid());
                 myfollwer.add(follower);
             }
@@ -191,13 +195,13 @@ public class FriendsServiceImpl implements FriendsService{
         Member me = (Member)session.getAttribute("login");
 
         //show following
-        List<Member> Friends = this.showFollowing(me);
+        List<Member> Friends = this.showFollowing(me.getUid());
 
         model.addAttribute("friendsRecordList", Friends);
         model.addAttribute("friendsRecordList_Byte", Friends);
 
         //show follower
-        List<Member> Friended = this.showFollower(me);
+        List<Member> Friended = this.showFollower(me.getUid());
 
         model.addAttribute("friendedRecordList", Friended);
         model.addAttribute("friendedRecordList_Byte", Friended);

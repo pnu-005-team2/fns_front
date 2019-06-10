@@ -1,4 +1,47 @@
+function addfriend(mypid,fripid){
+    let sendData = {
+        "uid1" : mypid,
+        "uid2" : fripid
+    };
+    $.ajax({
+        type : "POST",
+        url : "/friend/add",
+        data : sendData,
+        success: function (response) {
+            console.log(response);
+            removeRow("data-recommend-index", response.uid);
+            createFriendItem(response);
+        }
+    });
+}
 
+function deletefriend(e){
+    console.log(e.target);
+    let target_uid = e.target.dataset["friend-btn-idx"];
+    let source_uid = e.target.dataset['uid'];
+    console.log("delete Click" + target_uid + ", " + source_uid);
+    let sendData = {
+        "uid1" : source_uid,
+        "uid2" : target_uid
+    };
+    $.ajax({
+        type : "POST",
+        url : "/fried/delete",
+        data : sendData,
+        success: function (response) {
+            removeRow("data-friend-index", response);
+        }
+    });
+}
+
+
+
+function initFriends() {
+    let friend_list = document.querySelector(".follow");
+    while (friend_list.hasChildNodes()) friend_list.lastChild.remove();
+
+    
+}
 
 //----------- Folloing Row를 만듭니다. ---------------
 function createFriendItem(freind_infor) {

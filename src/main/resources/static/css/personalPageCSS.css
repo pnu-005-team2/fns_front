@@ -331,7 +331,7 @@ section.section2 {
 
 .board-img img{
     width: 90%;
-    height: auto%;
+    height: 100%;
     padding: 0.9px;
 }
 
@@ -390,3 +390,11 @@ section.section2 {
   position: relative;
 }
 
+
+.follow-modal-dialog{
+    width: 45%;
+}
+
+.follow-modal-content{
+    background-color: #7b7b7b;
+}

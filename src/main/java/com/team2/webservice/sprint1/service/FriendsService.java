@@ -11,8 +11,8 @@ public interface FriendsService {
     public boolean addFriends(int uid1, int uid2);
     public void deleteFriend(int uid1, int uid2);
     //친구목록 보기
-    public List<Member> showFollowing(Member me);
-    public List<Member> showFollower(Member me);
+    public List<Member> showFollowing(int me);
+    public List<Member> showFollower(int me);
     //친구 게시물 수집
     public List<Board> showFBoard(Member me);
     //친구 조회

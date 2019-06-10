@@ -36,7 +36,7 @@ public class FriendsController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/fried/delete" , method = RequestMethod.POST)
+    @RequestMapping(value = "/friend/delete" , method = RequestMethod.POST)
     public int friendDelete(int uid1, int uid2, Model model, HttpServletRequest request){
         //1: 삭제행위를 하는사람, 2: 삭제 당하는사람
         friendsService.deleteFriend(uid1, uid2);
@@ -44,22 +44,17 @@ public class FriendsController {
         return uid2;
     }
 
-    @RequestMapping(value = "/load/friend", method = RequestMethod.POST)
     @ResponseBody
-    public List<Member> loadFriends(int uid, String keyword){
+    @RequestMapping(value = "/friend/load", method = RequestMethod.POST)
+    public List<Member> loadriends(int uid, String keyword){
+        System.out.println("Entry Load Friends");
         //Todo keyword에 따라 일치하는 친구들 뿌려주기
-        Optional<Member> me = memberRepository.findById(uid);
-        Optional<List<Member>> test = memberRepository.findByUidAndNameLike(uid, keyword);
-        for (int i = 0; i < test.get().size(); i++) {
-            System.out.println("Test");
-            System.out.println(test.get().get(i).getName());
-        }
-
-        if(!me.isPresent()){
-            System.out.println("올바르지 않은 계정입니다.");
-            return null;
-        }
-        return friendsService.showFollowing(me.get());
+//        Optional<List<Member>> test = memberRepository.findByUidAndNameLike(uid, keyword);
+//        for (int i = 0; i < test.get().size(); i++) {
+//            System.out.println("Test");
+//            System.out.println(test.get().get(i).getName());
+//        }
+        return friendsService.loadFriendsByKeyword(uid,keyword);
 
     }
 }
