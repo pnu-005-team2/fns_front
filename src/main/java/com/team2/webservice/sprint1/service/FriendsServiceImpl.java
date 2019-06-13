@@ -133,9 +133,16 @@ public class FriendsServiceImpl implements FriendsService{
     }
 
     public List<Member> loadFriendsByKeyword(int uid, String keyword){
-        if(keyword.equals("following")) return showFollowing(uid);
-        if(keyword.equals("follower")) return showFollower(uid);
-        return null;
+        List<Member> rst = null;
+        if(keyword == null) rst = showFollowing(uid);
+        else if(keyword.equals("following")) rst = showFollowing(uid);
+        else if(keyword.equals("follower")) rst = showFollower(uid);
+
+        return rst;
+    }
+
+    public boolean isFollowing(int uid, String candi){
+        return friendsRepository.existsByMyuidAndYourname(uid,candi);
     }
 
 

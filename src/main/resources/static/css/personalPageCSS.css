@@ -397,4 +397,5 @@ section.section2 {
 
 .follow-modal-content{
     background-color: #7b7b7b;
+    overflow: auto;
 }

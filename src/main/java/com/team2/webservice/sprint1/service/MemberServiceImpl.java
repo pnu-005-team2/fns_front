@@ -104,8 +104,8 @@ public class MemberServiceImpl implements MemberService {
 
     public MyPageDTO transDTO(Member member){
         MyPageDTO myPageDTO = new MyPageDTO(member);
-        int follower_cnt = friendsRepository.findByMyuid(member.getUid()).size();
-        int following_cnt = friendsRepository.findByYouruid(member.getUid()).size();
+        int following_cnt = friendsRepository.findByMyuid(member.getUid()).size();
+        int follower_cnt = friendsRepository.findByYouruid(member.getUid()).size();
         myPageDTO.setFollower_cnt(follower_cnt);
         myPageDTO.setFollowing_cnt(following_cnt);
         return myPageDTO;

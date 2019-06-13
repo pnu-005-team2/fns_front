@@ -1,8 +1,9 @@
-function addfriend(mypid,fripid){
+function addfriend(mypid,fripid, createRow=true){
     let sendData = {
         "uid1" : mypid,
         "uid2" : fripid
     };
+
     $.ajax({
         type : "POST",
         url : "/friend/add",
@@ -10,14 +11,15 @@ function addfriend(mypid,fripid){
         success: function (response) {
             console.log(response);
             removeRow("data-recommend-index", response.uid);
-            createFriendItem(response);
+            if(createRow)
+                createFriendItem(response);
         }
     });
 }
 
 function deletefriend(e){
     console.log(e.target);
-    let target_uid = e.target.dataset["friend-btn-idx"];
+    let target_uid = e.target.dataset["friendBtnIdx"];
     let source_uid = e.target.dataset['uid'];
     console.log("delete Click" + target_uid + ", " + source_uid);
     let sendData = {
@@ -26,7 +28,7 @@ function deletefriend(e){
     };
     $.ajax({
         type : "POST",
-        url : "/fried/delete",
+        url : "/friend/delete",
         data : sendData,
         success: function (response) {
             removeRow("data-friend-index", response);
@@ -37,10 +39,9 @@ function deletefriend(e){
 
 
 function initFriends() {
+    console.log("Init Friends");
     let friend_list = document.querySelector(".follow");
     while (friend_list.hasChildNodes()) friend_list.lastChild.remove();
-
-    
 }
 
 //----------- Folloing Row를 만듭니다. ---------------
@@ -70,6 +71,8 @@ function createFriendItem(freind_infor) {
 
 //----------- target_name 속성이 idx인 Row를 제거합니다. ---------------
 function removeRow(target_name, idx) {
+    console.log(target_name);
+    console.log(idx);
     let target_row = document.querySelector(`div[${target_name}="${idx}"]`);
     console.log(target_row);
     target_row.remove();

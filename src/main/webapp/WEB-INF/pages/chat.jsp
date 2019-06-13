@@ -204,7 +204,7 @@
     function searchFriends() {
         $.ajax({
             type : "POST",
-            url  : "/load/friend",
+            url  : "/friend//load",
             data : {uid : <%=uid%>},
             success: response => {
                 $('.modal-body').empty();
