@@ -7315,7 +7315,7 @@ jQuery.fn.extend( {
 			clearQueue = type;
 			type = undefined;
 		}
-		if ( clearQueue && type !== false ) {
+		if ( clearQueue && type != false ) {
 			this.queue( type || "fx", [] );
 		}
 

@@ -102,15 +102,17 @@ public class TimeLineController {
 
         try{
             Optional<Board> oBoard = boardRepository.findById(pid);
-            Board board = oBoard.get();
-            Blob blob = board.getImg();
-            int blob_length =(int)blob.length();
-            try{
-                byte[] imagefile1 = board.getImg().getBytes(1,blob_length);
-                InputStream in1 = new ByteArrayInputStream(imagefile1);
-                IOUtils.copy(in1, res.getOutputStream());
-            }catch (Exception e){
-             e.printStackTrace();
+            if(oBoard.isPresent()){
+                Board board = oBoard.get();
+                Blob blob = board.getImg();
+                int blob_length =(int)blob.length();
+                try{
+                    byte[] imagefile1 = board.getImg().getBytes(1,blob_length);
+                    InputStream in1 = new ByteArrayInputStream(imagefile1);
+                    IOUtils.copy(in1, res.getOutputStream());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
         }catch (Exception e){
@@ -239,8 +241,6 @@ public class TimeLineController {
         //Optional<Member> member_Optional =  memberRepository.findByUid()
         // Optional<LikeRecord> likeRecordsdasdsd = likeRecordRepository.findBy
         Optional<LikeRecord> likeRecord_Optional= likeRecordRepository.findByBoard(board_Optional.get());
-        //Optional<Board> board_MemberWriter= boardRepository.findByMember()
-        System.out.println(likeRecord_Optional);
         if(likeRecord_Optional.isPresent()){
             LikeRecord likeRecord = likeRecord_Optional.get();
             Boolean temp_Boolean =Boolean.parseBoolean(like_Value);
@@ -249,6 +249,7 @@ public class TimeLineController {
             likeRecordRepository.save(likeRecord);
             return "success";
         }
+        //Optional<Board> board_MemberWriter= boardRepository.findByMember()
         return "null";
 
 

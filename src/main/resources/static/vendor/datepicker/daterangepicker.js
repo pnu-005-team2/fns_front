@@ -915,8 +915,9 @@
             for (var i = start; i <= end; i++) {
                 var i_in_24 = i;
                 if (!this.timePicker24Hour)
-                    i_in_24 = selected.hour() >= 12 ? (i == 12 ? 12 : i + 12) : (i == 12 ? 0 : i);
-
+                    if(selected!=null){
+                        i_in_24 = selected.hour() >= 12 ? (i == 12 ? 12 : i + 12) : (i == 12 ? 0 : i);
+                    }
                 var time = selected.clone().hour(i_in_24);
                 var disabled = false;
                 if (minDate && time.minute(59).isBefore(minDate))

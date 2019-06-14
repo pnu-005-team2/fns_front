@@ -64,7 +64,9 @@ public class UserController {
         Optional<Member> member = memberRepository.findByEmail(email);
         if(!member.isPresent()) logger.error("계정이 존재하지 않습니다.");
         model.addAttribute("boardList", boards);
-        model.addAttribute("pageUser", memberService.transDTO(member.get()));
+        if(member.isPresent()){
+            model.addAttribute("pageUser", memberService.transDTO(member.get()));
+        }
         model.addAttribute("isMine", login.getEmail().equals(email));
         model.addAttribute("isFriend", friendsService.isFollowing(login.getUid(), member.get().getName()));
         return "personalPage";

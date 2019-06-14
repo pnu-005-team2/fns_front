@@ -79,7 +79,13 @@ public class S3Uploader {
         System.out.println(convertFile.toString());
         if(convertFile.createNewFile()){ // createNewFile(): 지정된 경로로 빈 파일 생성, 같은 이름이 존재하면 실패
             FileOutputStream fos = new FileOutputStream(convertFile);
-            fos.write(file.getBytes()); // 파일 내용을 저장
+            try{
+                fos.write(file.getBytes()); // 파일 내용을 저장
+            }catch(Exception e){
+                e.printStackTrace();
+            }finally {
+                fos.close();
+            }
             return Optional.of(convertFile);
         }
 

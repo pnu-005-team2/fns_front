@@ -46,7 +46,8 @@ public class ChatServiceImpl  implements ChatService{
 
     //-----------------친구를 초대합니다.-------------------
     public ChatRoom invite(int cid, String[] memberNames){
-        logger.info("Invite Member" + memberNames.toString());
+
+        logger.info("Invite Member" + Arrays.toString(memberNames));
         saveChatMember(memberNames, cid);
         Optional<ChatRoom> chatRoom= chatRoomRepository.findById(cid);
 
@@ -156,7 +157,10 @@ public class ChatServiceImpl  implements ChatService{
             if(!member.isPresent()){
                 logger.error("채팅방에 없는 계정입니다.");
             }
-            chatMember.setUid(member.get().getUid());
+            if(member.isPresent()){
+                chatMember.setUid(member.get().getUid());
+            }
+
             chatMemberRepo.save(chatMember);
         }
     }
