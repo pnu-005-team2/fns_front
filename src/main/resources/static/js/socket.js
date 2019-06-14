@@ -65,7 +65,8 @@ let WebSocket = (()=>{
                console.log(msg);
                console.log(msg.readCnt);
                printMessage(msg);
-               notify(msg);
+               if(msg.member.name != userName)
+                    notify(msg);
                //todo 스크롤 내리기
             });
         });
