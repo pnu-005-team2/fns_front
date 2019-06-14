@@ -27,7 +27,8 @@ public class JoinController {
     public String registerPost(Member member, HttpServletRequest request)
     {
         System.out.println(member);
-        System.out.println("Post");
+        System.out.println("Board");
+        member.setImg("https://s3.ap-northeast-2.amazonaws.com/fns-image/user_img.svg");
         memberService.register(member);
         return "redirect:/login";
     }

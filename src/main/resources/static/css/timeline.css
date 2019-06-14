@@ -1,0 +1,198 @@
+
+.left-wrapper{
+    display: inline-block;
+    vertical-align: top;
+    width: 25%;
+}
+
+.left-content{
+    position: fixed;
+    width: 25%;
+    height: 90%;
+    background-color: white;
+}
+
+.musinsa-list{
+    height: 100%;
+    overflow: auto;
+    padding-top: 0.3em;
+}
+
+.musinsa-item{
+    padding-bottom: 1em;
+}
+
+.musinsa-item img{
+    width: 100%;
+}
+
+.musinsa-title {
+    font-size: 1em;
+    color: black;
+}
+
+.musinsa-description {
+    font-size: 0.7em;
+    color: #b2b2b2;
+}
+
+.friendshow{
+    width: 23%;
+    height: 100%;
+    margin-top: 1em;
+    display: inline-block;
+    vertical-align: top;
+    position: fixed;
+    margin-left: 1em;
+}
+
+.friendshow .following{
+    margin-bottom: 1em;
+    height: 30%;
+    overflow: hidden;
+}
+
+.friendshow .follower{
+    margin-bottom: 1em;
+    overflow: hidden;
+}
+
+.time-line{
+    width: 50%;
+    display: inline-block;
+    background-color: white;
+    color: black;
+    padding: 0.2em;
+}
+
+/*.board-item {*/
+    /*border: solid;*/
+    /*margin-top: 1em;*/
+    /*height: 50em;*/
+
+    /*border-top: 10px solid skyblue;*/
+    /*border-bottom: 10px solid skyblue;*/
+    /*border-left: 10px solid skyblue;*/
+    /*border-right: 10px solid skyblue;*/
+    /*border-radius: 10px;*/
+/*}*/
+
+
+.board-item {
+    min-height: 40em;
+}
+
+.board-item div {
+    width: 100%;
+}
+
+
+.writer img {
+    width: 5em;
+    height: 5em;
+}
+
+
+.board-img img {
+    width: 100%;
+    height: 25em;
+}
+
+.board-content {
+    padding-left: 1em;
+    font-size: 1.2em;
+}
+
+.board-hashtag {
+    color: #2c6ed5;
+    padding-left: 1em;
+    font-size: 0.7em;
+}
+
+.board-funtion {
+    height: 4em;
+    padding: 1em;
+}
+
+.board-funtion i{
+    margin-right: 1em;
+}
+
+.function-item {
+
+}
+
+.comment-box {
+    min-height: 0;
+}
+
+.comment-input-box{
+    text-align: center;
+}
+
+.comment-input {
+    width: 80%;
+}
+.enter-key {
+    width: 10%;
+}
+
+/*.following{*/
+    /*border: solid;*/
+
+    /*border-top: 10px solid skyblue;*/
+    /*border-bottom: 10px solid skyblue;*/
+    /*border-left: 10px solid skyblue;*/
+    /*border-right: 10px solid skyblue;*/
+    /*border-radius: 10px;*/
+
+/*}*/
+/*.follower{*/
+    /*border: solid;*/
+    /*margin-top: 1em;*/
+    /*border-top: 10px solid skyblue;*/
+    /*border-bottom: 10px solid skyblue;*/
+    /*border-left: 10px solid skyblue;*/
+    /*border-right: 10px solid skyblue;*/
+    /*border-radius: 10px;*/
+
+/*}*/
+/*.friendRecommend{*/
+    /*border: solid;*/
+    /*margin-top: 1em;*/
+    /*border-top: 10px solid skyblue;*/
+    /*border-bottom: 10px solid skyblue;*/
+    /*border-left: 10px solid skyblue;*/
+    /*border-right: 10px solid skyblue;*/
+    /*border-radius: 10px;*/
+
+/*}*/
+.profile{
+    width: 30px; height: 30px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+}
+
+.recommend-friend-item button{
+    float: right;
+}
+
+.comment-list {
+    overflow: auto;
+    min-height: 0;
+    width: 100%;
+    padding-left: 1em;
+}
+
+
+.comment-item .writer {
+    color: blue;
+}
+
+.comment-item p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+

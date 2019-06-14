@@ -23,7 +23,7 @@ function commentList(){
                 a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
                 a += '<div class="commentInfo'+value.cno+'">'+'댓글번호 : '+value.cno+' / 작성자 : '+value.writer;
                 a += '<a onclick="commentUpdate('+value.cno+',\''+value.content+'\');"> 수정 </a>';
-                a += '<a onclick="commentDelete('+value.cno+');"> 삭제 </a> </div>';
+                a += '<a onclick="deleteComment('+value.cno+');"> 삭제 </a> </div>';
                 a += '<div class="commentContent'+value.cno+'"> <p> 내용 : '+value.content +'</p>';
                 a += '</div></div>';
             });
@@ -37,7 +37,7 @@ function commentList(){
 function commentInsert(insertData){
     $.ajax({
         url : '/comment/insert',
-        type : 'post',
+        type : 'board',
         data : insertData,
         success : function(data){
             if(data == 1) {
@@ -66,7 +66,7 @@ function commentUpdateProc(cno){
     
     $.ajax({
         url : '/comment/update',
-        type : 'post',
+        type : 'board',
         data : {'content' : updateContent, 'cno' : cno},
         success : function(data){
             if(data == 1) commentList(bno); //댓글 수정후 목록 출력 
@@ -78,7 +78,7 @@ function commentUpdateProc(cno){
 function commentDelete(cno){
     $.ajax({
         url : '/comment/delete/'+cno,
-        type : 'post',
+        type : 'board',
         success : function(data){
             if(data == 1) commentList(bno); //댓글 삭제후 목록 출력 
         }

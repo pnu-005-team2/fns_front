@@ -1,132 +1,284 @@
 package com.team2.webservice.sprint1.controller;
 
-import com.team2.webservice.sprint1.vo.Post;
-import com.team2.webservice.sprint1.jpa.PostRepository;
+import com.team2.webservice.sprint1.dto.BoardDTO;
+import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.jpa.MemberRepository;
+import com.team2.webservice.sprint1.service.BoardService;
+import com.team2.webservice.sprint1.service.BoardServiceImpl;
+import com.team2.webservice.sprint1.service.FriendsServiceImpl;
+import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
+import com.team2.webservice.sprint1.service.MusinsaService;
+import com.team2.webservice.sprint1.vo.Board;
+import com.team2.webservice.sprint1.vo.LikeRecord;
+import com.team2.webservice.sprint1.vo.Member;
+import com.team2.webservice.sprint1.vo.Musinsa;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import java.util.List;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.time.LocalDate;
+import java.util.*;
 
 @Controller
 public class TimeLineController {
+
+
     @Autowired
-    private PostRepository postRepository;
+    private LikeRecordRepository likeRecordRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private BoardRepository boardRepository;
+
+    @Autowired
+    private MusinsaService musinsaService;
+
+    private static final Logger logger =LoggerFactory.getLogger(TimeLineController.class);
 
 
+    @Autowired
+    FriendsServiceImpl friendsService;
+
+    @Autowired
+    BoardServiceImpl boardService;
+
+    List<Board> boardRecordList;
+    List<LikeRecord> likeRecordList;
 
 
-
-   /* @GetMapping
-    @RequestMapping("/post")
+    @RequestMapping(value = "/timeline/origin", method = RequestMethod.POST)
     public String write(Model model)
     {
-
-        return "Post";
-    }*/
-
-    @PostMapping
-    @RequestMapping("/timeline")
-    public String Post(ModelMap modelMap)
-    {
-//        String content =request.getParameter("content");
- //       Post client = new Post();
-
-
-
-        List<Post> postRecordList = postRepository.findAll();
-
-//       int byte_num=postRecordList.size();
-
-
-/*
-ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    byte[] buf = new byte[1024];
-    Blob blob = profile.getContent();
-    InputStream in =  blob.getBinaryStream();
-    System.out.println("id content" +in);
-    int n = 0;
-    while ((n=in.read(buf))>=0)
-    {
-        baos.write(buf, 0, n);
-
-    }
-
-    in.close();
-    byte[] bytes = baos.toByteArray();
-    System.out.println("bytes" +bytes);
-    byte[] encodeBase64 = Base64.encodeBase64(buf);
-    String base64Encoded = new String(encodeBase64, "UTF-8");
-
-
-    customer.setEmailId(customerName);
-    profile.setCustomer(customer);
-    //profile.setContent(blob);
-    System.out.println();
-    profile = profileService.findProfileById(customer);
-    model.addAttribute("content",base64Encoded);
-    model.addAttribute("profile", profile);
-    return "myProfile";
- */
-
-     /*   for(int i=0;i<postRecordList.size();i++){
-
-            try{
-                byte[] imgByteArray= postRecordList.get(i).getImg().getBytes();
-
-                //byte[] imgByteArray = Base64.getDecoder().decode(temp_img_String.getBytes());
-
-                postresults_List.get(i).content_result= postRecordList.get(i).getContent();
-                postresults_List.get(i).hashtag_result= postRecordList.get(i).getHashtag();
-                postresults_List.get(i).pid_result= postRecordList.get(i).getPid();
-                postresults_List.get(i).writer_result= postRecordList.get(i).getWriter();
-                postresults_List.get(i).img_result= imgByteArray;
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
-
-//
-        }*/
-
-      Post post;
-
-
-        //List<Image>
-
-
-        modelMap.addAttribute("postRecordlList",postRecordList);
-        modelMap.addAttribute("postRecordList_Byte",postRecordList);
-      //  model.addAttribute("postResult_ArrayList",postresults_List);
-       // model.addAttribute("postImageList",)
-
+        System.out.println("Origin");
+        boardRecordList = boardRepository.findAll();
+        model.addAttribute("postRecordlList", boardRecordList);
+        model.addAttribute("postRecordList_Byte", boardRecordList);
         return "Timeline";
 
-        /*
+    }
 
-          System.out.println("In LikeRecord");
-        List<LikeRecord> likeRecordList = likeRecordRepository.findAll(); // select * from LikeRecord
-        model.addAttribute("LikeList", likeRecordList);
-        System.out.println(likeRecordList.get(0).getLid());
-        return "LikeTest";
-         */
+    @PostMapping
+    @RequestMapping(value = "/timeline", method = RequestMethod.GET)
+    public String Post(ModelMap modelMap, Model model, HttpServletRequest request)
+    {
 
-//        client.setPid((long)2);
-     /*   client.setContent(content);
-        client.setWriter("KIM");
-        client.setHashtag("안녕, 안녕하세요");
-        client.setImg("1234");
-//        Post client = new Post((long) 1, content, "Lee", ",,,,", "부산대");
-//        postRepository.save(client);
-        List<Post> test = postRepository.findAll();
-        for(int i = 0 ; i < test.size() ; ++i){
-            System.out.println("TEST : " + test.get(i).getContent());
+        logger.info("Entry TimeLine");
+        Member me = friendsService.setFriendListToModel(model, request);
+        LocalDate today = LocalDate.now();
+        List<Musinsa> musinsaList = musinsaService.getMusinsaList(today);
+        logger.info(me.getName());
+        List<Board> fBoardList = friendsService.showFBoard(me);
+
+        modelMap.addAttribute("postRecordlList", fBoardList);
+        modelMap.addAttribute("postRecordList_Byte", fBoardList);
+        modelMap.addAttribute("musinsaList", musinsaList);
+
+        logger.info("Exit TimeLine");
+
+        return "timeLineVer2";
+    }
+
+
+    @RequestMapping("/logoShowForStudent/{pid}")
+    public void imageView(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") int pid) throws IOException {
+        res.setContentType("image/png");
+
+
+        try{
+            Optional<Board> oBoard = boardRepository.findById(pid);
+            Board board = oBoard.get();
+            Blob blob = board.getImg();
+            int blob_length =(int)blob.length();
+            try{
+                byte[] imagefile1 = board.getImg().getBytes(1,blob_length);
+                InputStream in1 = new ByteArrayInputStream(imagefile1);
+                IOUtils.copy(in1, res.getOutputStream());
+            }catch (Exception e){
+             e.printStackTrace();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
-*/
+
 
     }
+
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/search/load")
+    public List<Member> checkSearchName(String keyword)
+    {
+        logger.info("Entry checkSearchName" + keyword);
+        System.out.println("keykeyword : "+keyword);
+        List<Member> member_list = memberRepository.findByNameLike(keyword+"%");
+
+        if(!member_list.isEmpty()) {
+            logger.info("No Empty");
+            for (int i = 0; i < member_list.size(); i++) {
+                logger.info(member_list.get(i).getName());
+            }
+        }
+        else
+            logger.info("계정이 존재하지 않습니다.");
+
+        logger.info("Exit checkSearchName");
+        return member_list;
+    }
+
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/search/hash")
+    public List<BoardDTO> checkhashSearch(String keyword, Pageable pageable)
+    {
+
+        logger.info("Entry checkSearchName" + keyword);
+    //    System.out.println("keykeyword : "+keyword);
+        List<Board> temp_board_list = boardRepository.findByHashtagLike("%"+keyword.substring(1)+"%");
+
+
+
+
+
+        List<BoardDTO> return_board_list = new ArrayList<>();
+
+
+
+        if(keyword.substring(0,1).equals("#")){
+
+
+            if (temp_board_list != null) {
+                for (int i = 0; i < temp_board_list.size(); i++) {
+                    if (temp_board_list.get(i).getHashtag() != null) {
+                        String temp_HashTag = temp_board_list.get(i).getHashtag();
+                        String[] temp_HashTag_Array = temp_HashTag.split(",");
+
+                        for (int j = 0; j < temp_HashTag_Array.length; j++) {
+                            System.out.println(temp_HashTag_Array[j]+ "comparecompare : " +keyword.substring(1));
+                            if (temp_HashTag_Array[j].equals(keyword.substring(1))) {
+                                BoardDTO boardDTO=  boardService.transDTO(temp_board_list.get(i),pageable);
+                                return_board_list.add(boardDTO);
+                                System.out.print("retur board list add :  "+ boardDTO.getPid());
+                                break;
+                            }
+                        }
+                        ;
+
+                    }
+
+                }
+
+            }
+
+
+
+            //System.out.println("qweqwewqeqweqwewqe"+return_board_list.size());
+            if(return_board_list.size()==0){
+                System.out.println("qweqwewqeqweqwewqe");
+                return null;
+            }
+            System.out.println("aaaaaaaaaaaaaaa");
+            return return_board_list;
+        }
+        return null;
+    }
+
+
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/getImage_url")
+    public String GetImageUrl_For_Hash(HttpServletRequest request)
+    {
+
+        String temp_data= request.getParameter("temp_data");
+        Optional<Board> temp__board= boardRepository.findByPid(Long.parseLong(temp_data.trim()));
+        if(temp__board.isPresent()){
+            return temp__board.get().getMember().toString();
+        }
+
+        return "null";
+
+
+    }
+
+
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/like_btn_Value_Url")
+    public String Like_Board_Check_And_Change(HttpServletRequest request)
+    {
+
+
+
+        String like_Value= request.getParameter("like_Value");
+        String post_Pid = request.getParameter("post_Pid");
+
+
+        Optional<Board> board_Optional = boardRepository.findByPid(Long.parseLong(post_Pid));
+
+        //Optional<Member> member_Optional =  memberRepository.findByUid()
+        // Optional<LikeRecord> likeRecordsdasdsd = likeRecordRepository.findBy
+        Optional<LikeRecord> likeRecord_Optional= likeRecordRepository.findByBoard(board_Optional.get());
+        //Optional<Board> board_MemberWriter= boardRepository.findByMember()
+        System.out.println(likeRecord_Optional);
+        if(likeRecord_Optional.isPresent()){
+            LikeRecord likeRecord = likeRecord_Optional.get();
+            Boolean temp_Boolean =Boolean.parseBoolean(like_Value);
+            likeRecord.setLike_boolean(temp_Boolean);
+            likeRecord.getMember();
+            likeRecordRepository.save(likeRecord);
+            return "success";
+        }
+        return "null";
+
+
+
+
+
+    }
+
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/likeBoolean_FirstCheck")
+    public String Like_Record_BooleanValue_Check(HttpServletRequest request)
+    {
+
+        return "success";
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
