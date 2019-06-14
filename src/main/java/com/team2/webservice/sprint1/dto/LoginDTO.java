@@ -1,8 +1,6 @@
 package com.team2.webservice.sprint1.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 
 /*

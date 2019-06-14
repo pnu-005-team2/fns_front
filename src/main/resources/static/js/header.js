@@ -93,7 +93,7 @@ function text_Check(e){
     }
 }
 function initSearchBox() {
-    text_number_For_Hashtag=0;
+
     let temp=   document.getElementById("search-result-box");
     while(temp.hasChildNodes()){
         temp.removeChild(temp.lastChild);

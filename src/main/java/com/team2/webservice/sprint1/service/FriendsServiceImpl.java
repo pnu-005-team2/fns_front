@@ -14,9 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
-import static java.lang.Integer.parseInt;
-import static java.lang.Long.parseLong;
-
 @Service
 public class FriendsServiceImpl implements FriendsService{
 

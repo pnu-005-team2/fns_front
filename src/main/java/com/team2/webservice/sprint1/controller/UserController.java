@@ -2,7 +2,6 @@ package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.dto.ProfileDTO;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
-import com.team2.webservice.sprint1.service.FriendsService;
 import com.team2.webservice.sprint1.service.FriendsServiceImpl;
 import com.team2.webservice.sprint1.service.MemberServiceImpl;
 import com.team2.webservice.sprint1.vo.Board;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;

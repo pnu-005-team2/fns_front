@@ -9,12 +9,10 @@ import com.team2.webservice.sprint1.jpa.FriendsRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.Member;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,7 +62,8 @@ public class MemberServiceImpl implements MemberService {
     public Optional<Member> editProfile(ProfileDTO profileDTO) throws IOException {
         Optional<Member> oMember = memberRepository.findByEmail(profileDTO.getEmail());
         Member member = null;
-        System.out.println(profileDTO);
+        logger.info(profileDTO.toString());
+
         if(oMember.isPresent()){
             member = oMember.get();
             logger.info("Edit Find");
@@ -114,7 +113,7 @@ public class MemberServiceImpl implements MemberService {
         if(boards.isPresent()) board_cnt = boards.get().size();
         myPageDTO.setFollower_cnt(follower_cnt);
         myPageDTO.setFollowing_cnt(following_cnt);
-        myPageDTO.setBoard_cnt(board_cnt);;
+        myPageDTO.setBoard_cnt(board_cnt);
         return myPageDTO;
     }
 

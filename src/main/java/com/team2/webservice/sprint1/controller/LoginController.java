@@ -1,11 +1,8 @@
 package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.dto.LoginDTO;
-import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.service.MemberServiceImpl;
-import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.Member;
-import com.team2.webservice.sprint1.jpa.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Optional;
 
 // 모델은 수명이 딱 그 페이지만임!

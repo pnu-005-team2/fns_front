@@ -3,7 +3,6 @@ package com.team2.webservice.sprint1.jpa;
 import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.LikeRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 

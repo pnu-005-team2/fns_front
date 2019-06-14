@@ -1,16 +1,13 @@
 package com.team2.webservice.sprint1.dto;
 
 
-import com.team2.webservice.sprint1.jpa.CommentRepository;
-import com.team2.webservice.sprint1.vo.*;
+import com.team2.webservice.sprint1.vo.Board;
+import com.team2.webservice.sprint1.vo.Comment;
+import com.team2.webservice.sprint1.vo.Member;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
 import java.util.List;
 
 @Getter

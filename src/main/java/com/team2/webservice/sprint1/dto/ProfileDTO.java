@@ -1,6 +1,5 @@
 package com.team2.webservice.sprint1.dto;
 
-import com.team2.webservice.sprint1.vo.Member;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 

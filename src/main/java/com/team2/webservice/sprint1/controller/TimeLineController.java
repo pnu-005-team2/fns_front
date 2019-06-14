@@ -2,18 +2,16 @@ package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.dto.BoardDTO;
 import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
-import com.team2.webservice.sprint1.service.BoardService;
 import com.team2.webservice.sprint1.service.BoardServiceImpl;
 import com.team2.webservice.sprint1.service.FriendsServiceImpl;
-import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
 import com.team2.webservice.sprint1.service.MusinsaService;
 import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.LikeRecord;
 import com.team2.webservice.sprint1.vo.Member;
 import com.team2.webservice.sprint1.vo.Musinsa;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +23,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.*;
 import java.sql.Blob;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class TimeLineController {
@@ -112,8 +111,8 @@ public class TimeLineController {
                     Writer writer= new StringWriter();
                     e.printStackTrace(new PrintWriter(writer));
                     String s = writer.toString();
-                    System.out.println(s);
-                    //e.printStackTrace();
+                    logger.info(s);
+
                 }
             }
 
@@ -121,8 +120,7 @@ public class TimeLineController {
             Writer writer= new StringWriter();
             e.printStackTrace(new PrintWriter(writer));
             String s = writer.toString();
-            System.out.println(s);
-            //e.printStackTrace();
+            logger.info(s);
         }
 
 

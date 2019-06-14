@@ -1,6 +1,5 @@
 package com.team2.webservice.sprint1.service;
 
-import com.team2.webservice.sprint1.controller.CommentController;
 import com.team2.webservice.sprint1.jpa.CommentRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.vo.Comment;
@@ -12,9 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
