@@ -57,14 +57,14 @@
             <textarea type="text" name="intro" placeholder="<%=intro%>"/> </textarea>
         </div>
         <input type="hidden" name="email" value= "<%=email%>">
-        <input class="profile-button" type="submit" value="Update">
+        <input class="profile-button pnt" type="submit" value="Update">
         &nbsp;
-        <div class="file-box profile-button">
-            <label for="profile-img">Image</label>
+        <div class="file-box profile-button pnt">
+            <label for="profile-img" class="pnt">Image</label>
             <input  name = "image" type="file" accept = "image/*" id = "profile-img" onchange="changeImg(this)">
         </div>
         &nbsp;
-        <input class="profile-button" type="reset"  value="Cancel">
+        <input class="profile-button pnt" type="reset"  value="Cancel">
     </form>
 </div>
     <script>

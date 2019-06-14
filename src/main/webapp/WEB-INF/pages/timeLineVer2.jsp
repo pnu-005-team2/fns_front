@@ -30,7 +30,7 @@
         <div class="left-content">
             <div class="musinsa-list">
                 <c:forEach var="item" items="${musinsaList}" >
-                    <div class="musinsa-item" onclick="location.href = '${item.link}';">
+                    <div class="musinsa-item pnt" onclick="location.href = '${item.link}';">
                         <img src="${item.img_url}">
                         <div class="musinsa-title">${item.title}</div>
                         <div class="musinsa-description">${item.description}</div>
@@ -44,24 +44,24 @@
         <c:forEach var="item" items="${postRecordlList}" step="1">
             <div class="board-item" name="board/${item.pid}" style="width :100%;">
                 <div class="writer" >
-                    <img src="${item.member.img}">
-                    <strong>${item.member.name}</strong>
+                    <img class="pnt" onclick = "location.href='user/mypage?email=${item.member.email}'" src="${item.member.img}">
+                    <strong class="pnt" onclick = "location.href='user/mypage?email=${item.member.email}'">${item.member.name}</strong>
                 </div>
                 <div class="board-img" style="position: relative;padding-top:100%;overflow: hidden;">
                     <img src="/logoShowForStudent/${item.pid}" style="position: absolute; top:0; bottom: 0;left:0;right: 0;max-width: 100%;height: auto;">
-                    <div class="linkimg" style="z-index:1;position:absolute;left:${item.productLinks[0].position_x}px;top:${ item.productLinks[0].position_y}px;">
+                    <div class="linkimg pnt" style="z-index:1;position:absolute;left:${item.productLinks[0].position_x}px;top:${ item.productLinks[0].position_y}px;">
                         <a href="${item.productLinks[0].linktext}" target="_blank"><img src="https://cdn4.iconfinder.com/data/icons/geomicons/32/672366-x-128.png" style="width:10px;height:10px;z-index:2;"></a>
                     </div>
                 </div>
                 <div class="board-content">${item.content}</div>
-                <div class="board-hashtag">${item.hashtag}</div>
+                <div class="board-hashtag pnt">${item.hashtag}</div>
                 <div class="board-funtion">
                     <span class="function-item">
-                    <i id="like_btn${item.pid}" class="fa fa-thumbs-o-up fa-2x"
+                    <i id="like_btn${item.pid}" class="fa fa-thumbs-o-up fa-2x pnt"
                        onclick="likeToggle(this), like_btn_clickevent(${item.pid})"></i>
                     </span>
                     <span class="function-item">
-                        <i class="comment-icon fa fa-comments-o fa-2x" onclick="loadComment(event)" data-board-idx="${item.pid}"
+                        <i class="comment-icon fa fa-comments-o fa-2x pnt" onclick="loadComment(event)" data-board-idx="${item.pid}"
                             data-uid = "<%=uid%>"></i>
                     </span>
                 </div>
@@ -86,8 +86,8 @@
             <strong>Following </strong>
             <c:forEach var="item" items="${friendsRecordList}">
                 <div class="friend-item" data-friend-index="${item.uid}">
-                    <img onclick = "location.href='user/mypage?email=${item.email}'" class='profile' src="${item.img}" width="12%" height="15">
-                    <strong onclick = "location.href='user/mypage?email=${item.email}'" style="width:58%">${item.name}</strong>
+                    <img onclick = "location.href='user/mypage?email=${item.email}'" class='profile pnt' src="${item.img}" width="12%" height="15">
+                    <strong class="pnt" onclick = "location.href='user/mypage?email=${item.email}'" style="width:58%">${item.name}</strong>
                     <button class="follow-btn" data-friend-btn-idx="${item.uid}" data-uid = <%=uid%> >unfollow</button>
                 </div>
             </c:forEach>
@@ -97,8 +97,8 @@
             <strong>Follower </strong>
             <c:forEach var="item" items="${friendedRecordList}">
                 <div>
-                    <img onclick = "location.href='user/mypage?email=${item.email}'" class='profile' src="${item.img}" width="12%" height="15">
-                    <strong onclick = "location.href='user/mypage?email=${item.email}'" >${item.name}</strong>
+                    <img onclick = "location.href='user/mypage?email=${item.email}'" class='profile pnt' src="${item.img}" width="12%" height="15">
+                    <strong class="pnt" onclick = "location.href='user/mypage?email=${item.email}'" >${item.name}</strong>
                 </div>
             </c:forEach>
         </div>
@@ -107,9 +107,9 @@
             <strong>Friend Recommend </strong>
             <c:forEach var="item" items="${friendRecommendList}">
                 <div class="recommend-friend-item" data-recommend-index ="${item.uid}">
-                    <img class='profile' onclick = "location.href='user/mypage?email=${item.email}'" src="${item.img}" width="12%" height="15">
-                    <strong onclick = "location.href='user/mypage?email=${item.email}'" style="width:58%">${item.name}</strong>
-                    <button class="follow-btn" onclick="addfriend(<%=uid%>,${item.uid});" height="15">follow</button>
+                    <img class='profile pnt' onclick = "location.href='user/mypage?email=${item.email}'" src="${item.img}" width="12%" height="15">
+                    <strong class="pnt" onclick = "location.href='user/mypage?email=${item.email}'" style="width:58%">${item.name}</strong>
+                    <button class="follow-btn pnt" onclick="addfriend(<%=uid%>,${item.uid});" height="15">follow</button>
                 </div>
             </c:forEach>
         </div>
@@ -158,8 +158,6 @@
 
         }
 
-
-
         alert("temp pid "+ temp_pid);
         var sendData = { "like_Value" : temp_value,
             "post_Pid": temp_pid
@@ -204,8 +202,6 @@
                 "like_boolean" : "true"
             }
         }
-
-
     }
 
 </script>

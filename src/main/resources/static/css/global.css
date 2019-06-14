@@ -152,3 +152,5 @@
 .follow-btn:hover:after {
     width: 100%;
 }
+
+.pnt { cursor: pointer; }

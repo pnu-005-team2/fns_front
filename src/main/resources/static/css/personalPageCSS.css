@@ -21,8 +21,6 @@ body {
   background: #ffffff;
   color: #333;
   font-weight: normal;
-  font-size: 1em;
-  font-family: 'Open Sans', serif;
 }
 
 input:focus, textarea:focus, keygen:focus, select:focus {

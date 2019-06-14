@@ -44,12 +44,12 @@
           </div>
           <div class="col2 last">
             <div class="grid clearfix">
-              <div class="col3 first follow-btn" data-value="following" data-uid="${pageUser.uid}"
+              <div class="col3 first follow-btn pnt" data-value="following" data-uid="${pageUser.uid}"
                    data-toggle="modal" data-target="#follow-modal" data-login="<%=uid%>">
                 <h1>${pageUser.following_cnt}</h1>
                 <span>Following</span>
               </div>
-              <div class="col3 follow-btn" data-value="follower" data-uid="${pageUser.uid}"
+              <div class="col3 follow-btn pnt" data-value="follower" data-uid="${pageUser.uid}"
                    data-toggle="modal" data-target="#follow-modal" data-login="<%=uid%>">
                   <h1>${pageUser.follower_cnt}</h1>
                   <span>Follower</span>
