@@ -30,7 +30,8 @@
 
 <div class="header-wrapper">
     <div class="header-content">
-        <Strong style="color: yellow" onclick="location.href='/timeline'" class="pnt" >Fashion Network Service</Strong>
+        <img src="https://github.com/pnu-005-team2/fns_front/blob/master/src/main/resources/static/images/KakaoTalk_20190615_011550078.png?raw=true"
+             style="width:40px;height:40px; border-radius:100%" onclick="location.href='/timeline'" class="pnt">
         <div class="search-wrapper">
             <input type="text" class="search-bar"
                    onfocus="this.value=''" id="search-user-text"

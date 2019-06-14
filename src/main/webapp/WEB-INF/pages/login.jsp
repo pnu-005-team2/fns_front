@@ -8,7 +8,7 @@
 
 </head>
 
-<body>
+<body style="background-color: #FEDEDB">
 <%--<jsp:include page="header.jsp"/>--%>
 <jsp:include page="body.jsp"/>
 

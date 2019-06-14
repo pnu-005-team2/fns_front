@@ -31,12 +31,8 @@
     <div class="row justify-content-center h-100">
         <div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
             <div class="card-header">
-                <div class="input-group">
-                    <input type="text" placeholder="Search..." name="" class="form-control search">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text search_btn"><i class="fas fa-search">   </i><i onclick="searchFriends()" class ="fas fa-user" data-toggle="modal" data-target="#myModal"> </i></span>
-                    </div>
-                </div>
+                <li onclick="searchFriends()" class="pnt" data-toggle="modal" data-target="#myModal" style="
+                        color: white;"><i class="fas fa-plus" ></i> Create Chat Room</li>
             </div>
             <div class="card-body contacts_body">
                 <ui class="contacts">
@@ -68,13 +64,11 @@
                         </div>
                         <div id="user_info">
                             <span id = 'chatroom_name'>hw</span>
-                            <p id ="messages_cnt">1767 Messages</p>
                         </div>
                     </div>
                     <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
                     <div class="action_menu">
                         <ul>
-                            <li onclick="createChatRoom()"><i class="fas fa-plus" ></i> Create Chat Room</li>
                             <li onclick ="exitChatRoom()"><i class="fas fa-ban"></i> Exit Chat Room</li>
                         </ul>
                     </div>
@@ -82,13 +76,7 @@
                 <div id = "chatOutput" class="card-body msg_card_body"></div>
                 <div class="card-footer">
                     <div class="input-group">
-                        <div class="input-group-append">
-                            <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
-                        </div>
                         <input name="" id ="chatInput" class="form-control type_msg chat" placeholder="Type your message..."></input>
-                        <div class="input-group-append">
-                            <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -167,10 +155,6 @@
                     $("#chatroom_name").empty();
                     $("#chatroom_name").append(data.name);
 
-                    $("#messages_cnt").empty();
-                    $("#messages_cnt").append(data.messages.length);
-                    $("#messages_cnt").append(" Messages");
-
                     $("#chatroom_img").attr("src",data.messages[data.messages.length-1].member.img);
                     WebSocket.init(data.cid,data.members.length-1, userName);
                 }
@@ -199,7 +183,7 @@
         })
     }
     function exitChatRoom() {
-        WebSocket.sendExit(location.reload());
+        WebSocket.sendExit(function(){location.reload()});
     }
     function searchFriends() {
         $.ajax({

@@ -115,7 +115,7 @@ let WebSocket = (()=>{
         stompClient.send("/app/exit_room/"+ roomId, {},
             // JSON.stringify({"memberName" : userName}));
             userName);
-        callback();
+        setTimeout(function (){callback();},1000);
     }
     
     function clear(input) {
