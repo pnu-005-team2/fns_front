@@ -922,12 +922,12 @@
                     }
 
                 var disabled = false;
-                if (minDate && time.minute(59).isBefore(minDate))
+                if (minDate && time!=null && time.minute(59).isBefore(minDate))
                     disabled = true;
-                if (maxDate && time.minute(0).isAfter(maxDate))
+                if (maxDate && time!=null && time.minute(0).isAfter(maxDate))
                     disabled = true;
 
-                if (i_in_24 == selected.hour() && !disabled) {
+                if (selected!=null && i_in_24 == selected.hour() && !disabled) {
                     html += '<option value="' + i + '" selected="selected">' + i + '</option>';
                 } else if (disabled) {
                     html += '<option value="' + i + '" disabled="disabled" class="disabled">' + i + '</option>';
@@ -954,7 +954,7 @@
                 if (maxDate && time.second(0).isAfter(maxDate))
                     disabled = true;
 
-                if (selected.minute() == i && !disabled) {
+                if (selected!=null&&  selected.minute() == i && !disabled) {
                     html += '<option value="' + i + '" selected="selected">' + padded + '</option>';
                 } else if (disabled) {
                     html += '<option value="' + i + '" disabled="disabled" class="disabled">' + padded + '</option>';
@@ -974,15 +974,17 @@
 
                 for (var i = 0; i < 60; i++) {
                     var padded = i < 10 ? '0' + i : i;
-                    var time = selected.clone().second(i);
-
+                    var time;
+                    if(selected!=null){
+                        time = selected.clone().second(i);
+                    }
                     var disabled = false;
-                    if (minDate && time.isBefore(minDate))
+                    if (minDate && time!=null && time.isBefore(minDate))
                         disabled = true;
-                    if (maxDate && time.isAfter(maxDate))
+                    if (maxDate && time!=null&& time.isAfter(maxDate))
                         disabled = true;
 
-                    if (selected.second() == i && !disabled) {
+                    if (selected!=null &&selected.second() == i && !disabled) {
                         html += '<option value="' + i + '" selected="selected">' + padded + '</option>';
                     } else if (disabled) {
                         html += '<option value="' + i + '" disabled="disabled" class="disabled">' + padded + '</option>';
@@ -1004,13 +1006,13 @@
                 var am_html = '';
                 var pm_html = '';
 
-                if (minDate && selected.clone().hour(12).minute(0).second(0).isBefore(minDate))
+                if (minDate && selected!=null&& selected.clone().hour(12).minute(0).second(0).isBefore(minDate))
                     am_html = ' disabled="disabled" class="disabled"';
 
-                if (maxDate && selected.clone().hour(0).minute(0).second(0).isAfter(maxDate))
+                if (maxDate && selected!=null&& selected.clone().hour(0).minute(0).second(0).isAfter(maxDate))
                     pm_html = ' disabled="disabled" class="disabled"';
 
-                if (selected.hour() >= 12) {
+                if (selected!=null&& selected.hour() >= 12) {
                     html += '<option value="AM"' + am_html + '>AM</option><option value="PM" selected="selected"' + pm_html + '>PM</option>';
                 } else {
                     html += '<option value="AM" selected="selected"' + am_html + '>AM</option><option value="PM"' + pm_html + '>PM</option>';
