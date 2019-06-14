@@ -30,13 +30,14 @@ public class FriendsServiceImpl implements FriendsService{
     FriendsRepository friendsRepository;
 
     @Override
-    public boolean addFriends(int uid1, int uid2) {
+    public Friends addFriends(int uid1, int uid2) {
         //mem1 :(본인) mem2를 본인의 친구목록에 추가 하고자 하는사람
         //mem2 : 추가 당하는 사람
         boolean canadd = true;
 
 
         List<Friends> allfri = friendsRepository.findAll();
+        Friends rst = null;
 
         for(int i = 0 ; i < allfri.size() ; ++i){
             if(allfri.get(i).getMyuid() == uid1 && allfri.get(i).getYouruid() == uid2){
@@ -54,12 +55,10 @@ public class FriendsServiceImpl implements FriendsService{
 
             System.out.println("friends add test : " + newfri.getYourname());
 
-            friendsRepository.save(newfri);
+            rst = friendsRepository.save(newfri);
         }
 
-
-
-        return canadd;
+        return rst;
     }
 
     @Override

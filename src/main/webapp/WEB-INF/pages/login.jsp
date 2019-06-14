@@ -44,8 +44,8 @@
     });
 
     $("#join-button").click(function () {
-        console.log("조인 버튼 클릭")
-        location.href = '/user/register'
+        console.log("조인 버튼 클릭");
+        location.href = '/join/register';
     })
 
 

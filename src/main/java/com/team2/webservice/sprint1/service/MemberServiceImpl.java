@@ -64,6 +64,7 @@ public class MemberServiceImpl implements MemberService {
     public Optional<Member> editProfile(ProfileDTO profileDTO) throws IOException {
         Optional<Member> oMember = memberRepository.findByEmail(profileDTO.getEmail());
         Member member = null;
+        System.out.println(profileDTO);
         if(oMember.isPresent()){
             member = oMember.get();
             logger.info("Edit Find");
@@ -71,7 +72,7 @@ public class MemberServiceImpl implements MemberService {
                 member.setName(profileDTO.getName());
             if(!profileDTO.getIntro().equals(""))
                 member.setIntro(profileDTO.getIntro());
-            if(profileDTO.getImg() != null) {
+            if(profileDTO.getImg() != null ) {
                 String url = s3Uploader.upload(profileDTO.getImg(), "static");
                 System.out.println(url);
                 member.setImg(url);
@@ -106,8 +107,12 @@ public class MemberServiceImpl implements MemberService {
         MyPageDTO myPageDTO = new MyPageDTO(member);
         int following_cnt = friendsRepository.findByMyuid(member.getUid()).size();
         int follower_cnt = friendsRepository.findByYouruid(member.getUid()).size();
+        Optional<List<Board>> boards = boardRepository.findByMemberId(member.getEmail());
+        int board_cnt = 0;
+        if(boards.isPresent()) board_cnt = boards.get().size();
         myPageDTO.setFollower_cnt(follower_cnt);
         myPageDTO.setFollowing_cnt(following_cnt);
+        myPageDTO.setBoard_cnt(board_cnt);;
         return myPageDTO;
     }
 

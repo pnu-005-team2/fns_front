@@ -9,12 +9,15 @@ function addfriend(mypid,fripid, createRow=true){
         url : "/friend/add",
         data : sendData,
         success: function (response) {
-            console.log(response);
-            removeRow("data-recommend-index", response.uid);
+            console.log("Friends Add : "+ response);
+            removeRow("data-recommend-index", response.youruid);
             if(createRow)
                 createFriendItem(response);
+
+            console.log("Complete");
         }
     });
+
 }
 
 function deletefriend(e){

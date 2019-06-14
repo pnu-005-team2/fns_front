@@ -19,6 +19,7 @@ public class MyPageDTO {
     private String intro;
     private int follower_cnt;
     private int following_cnt;
+    private int board_cnt;
 
 
     public MyPageDTO(Member member){

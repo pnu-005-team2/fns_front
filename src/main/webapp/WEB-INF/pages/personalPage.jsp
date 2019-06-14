@@ -70,8 +70,8 @@
                   <span>Follower</span>
               </div>
               <div class="col3 last">
-                  <h1>${pageUser.gender}</h1>
-                  <span>Gender</span>
+                  <h1>${pageUser.board_cnt}</h1>
+                  <span>Board Number</span>
               </div>
             </div>
           </div>

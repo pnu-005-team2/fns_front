@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/join")
 public class JoinController {
 
     @Autowired

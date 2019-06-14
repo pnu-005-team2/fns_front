@@ -3,6 +3,7 @@ package com.team2.webservice.sprint1.controller;
 
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.service.FriendsServiceImpl;
+import com.team2.webservice.sprint1.vo.Friends;
 import com.team2.webservice.sprint1.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class FriendsController {
@@ -27,12 +27,12 @@ public class FriendsController {
 
     @ResponseBody
     @RequestMapping(value = "/friend/add" , method = RequestMethod.POST)
-    public boolean friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
+    public Friends friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
         //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
         System.out.println("FriendAdd");
-        boolean canadd = friendsService.addFriends(uid1, uid2); // todo 왜 boolean??
+        Friends canadd = friendsService.addFriends(uid1, uid2);
+        System.out.println(canadd.getYourname());
         return canadd;
-
     }
 
     @ResponseBody

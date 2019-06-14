@@ -87,7 +87,7 @@ public class BoardController {
 
         boardService.tagCloth(productLink, board, x, y, linkText, writer);
 
-        return "tagClothingFin";
+        return "redirect:/timeline";
     }
 
     @ResponseBody

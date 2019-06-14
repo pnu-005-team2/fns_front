@@ -66,7 +66,13 @@
     </form>
 </div>
     <script>
-
+        window.addEventListener( "load", ()=>{
+            console.log("edit load complete");
+            //Todo 프로필 이미지 가지고 와서 넘겨줘야해
+            // let img = document.getElementById("profile-img");
+            // let blob = new Blob(img);
+            // console.log(blob);
+        } );
 
         function validateForm() {
             var name = document.forms["myForm"]["name"].value;
