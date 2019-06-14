@@ -195,6 +195,7 @@
 .comment-list {
     overflow: auto;
     min-height: 0;
+    max-height: 20em;
     width: 100%;
     padding-left: 1em;
 }

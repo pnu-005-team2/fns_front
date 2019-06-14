@@ -27,11 +27,11 @@ public class FriendsController {
 
     @ResponseBody
     @RequestMapping(value = "/friend/add" , method = RequestMethod.POST)
-    public Friends friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
+    public Member friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
         //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
         System.out.println("FriendAdd");
-        Friends canadd = friendsService.addFriends(uid1, uid2);
-        System.out.println(canadd.getYourname());
+        Member canadd = friendsService.addFriends(uid1, uid2);
+
         return canadd;
     }
 

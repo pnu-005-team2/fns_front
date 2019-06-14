@@ -39,7 +39,7 @@ public class BoardServiceImpl implements BoardService {
 
         Pattern hashtagPattern = Pattern.compile("\\#([0-9a-zA-Z가-힣]*)");
         Matcher hashMatch = hashtagPattern.matcher(board.getContent());
-
+        String content = board.getContent();
         //게시글 내용에서 hash 태그를 찾습니다.
         String hashTag = null;
         while (hashMatch.find()) {
@@ -48,10 +48,13 @@ public class BoardServiceImpl implements BoardService {
             } else {
                 hashTag += "," + fillter(hashMatch.group());
             }
+            content = StringUtils.removeFirst(content,"\\#([0-9a-zA-Z가-힣]*)");
         }
+
 
         //작성자 엔티티를 찾아서 넣어줍니다.
         //Todo ManyToOne 관계일 때 id에 해당하는 객체를 찾아서 넘겨줘야함, 비효율적 리팩토링 필요
+        board.setContent(content);
         setMember(board, writer);
         board.setHashtag(hashTag);
 //        board.setClothingTag("@ ");

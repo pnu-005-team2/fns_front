@@ -313,7 +313,7 @@ section.section2 {
 
 .modal-content {
     top: 10em;
-    height: 50em;
+    height: 30em;
 }
 
 .modal-body {
@@ -339,6 +339,7 @@ section.section2 {
     height: 90%;
     display: inline-block;
     vertical-align: top;
+    overflow: auto;
 }
 
 .modal-body .board-profile{

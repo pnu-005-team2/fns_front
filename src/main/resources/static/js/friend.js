@@ -10,7 +10,7 @@ function addfriend(mypid,fripid, createRow=true){
         data : sendData,
         success: function (response) {
             console.log("Friends Add : "+ response);
-            removeRow("data-recommend-index", response.youruid);
+            removeRow("data-recommend-index", response.uid);
             if(createRow)
                 createFriendItem(response);
 
