@@ -20,10 +20,18 @@
 
 .musinsa-item{
     padding-bottom: 1em;
+    border: solid;
+    border-width:3px;
+    border-color:#FF6F61;
+    border-radius: 10%;
+    margin-top:2em;
 }
 
 .musinsa-item img{
-    width: 100%;
+    width: 90%;
+    border-radius: 10%;
+    margin-left:5%;
+    margin-top:0.5em;
 }
 
 .musinsa-title {
