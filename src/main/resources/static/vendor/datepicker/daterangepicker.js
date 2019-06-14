@@ -946,12 +946,16 @@
 
             for (var i = 0; i < 60; i += this.timePickerIncrement) {
                 var padded = i < 10 ? '0' + i : i;
-                var time = selected.clone().minute(i);
+                var time;
+                if(selected!=null){
+                    time = selected.clone().minute(i);
+                }
+
 
                 var disabled = false;
-                if (minDate && time.second(59).isBefore(minDate))
+                if (minDate && time!=null&& time.second(59).isBefore(minDate))
                     disabled = true;
-                if (maxDate && time.second(0).isAfter(maxDate))
+                if (maxDate && time!=null&& time.second(0).isAfter(maxDate))
                     disabled = true;
 
                 if (selected!=null&&  selected.minute() == i && !disabled) {
