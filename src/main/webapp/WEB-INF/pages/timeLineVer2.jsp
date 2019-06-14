@@ -12,10 +12,10 @@
 <html>
 <head>
     <title>FNS</title>
+    <link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
+    <link rel="stylesheet" href="/resources/css/global.css" type="text/css"/>
 </head>
-<body>
-<link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
-<link rel="stylesheet" href="/resources/css/global.css" type="text/css"/>
+<body style="background-color: #FEDEDB;">
 <%
     request.setAttribute("member", session.getAttribute("login"));
     Member user = (Member)session.getAttribute("login");

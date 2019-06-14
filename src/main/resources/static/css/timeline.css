@@ -59,11 +59,13 @@
 }
 
 .time-line{
-    width: 50%;
+    width: 40%;
     display: inline-block;
     background-color: #FEDEDB;
     color: black;
     padding: 0.2em;
+    margin-left: 13%;
+    margin-right: 4%;
 }
 
 /*.board-item {*/

@@ -1,6 +1,8 @@
 .page-container {
     background-color: #FEDEDB;
     color: black;
+    width: 70%;
+    margin-left: 10%;
 }
 .header-wrapper{
     width: 100%;
@@ -126,7 +128,7 @@
     background: none;
     border: 0.2em solid #fff;
     border-radius: 5px;
-    color: #fff;
+    color: black;
     display: block;
     font-size: 0.7em;
     font-weight: bold;
