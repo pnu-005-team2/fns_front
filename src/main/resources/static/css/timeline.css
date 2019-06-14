@@ -200,6 +200,7 @@
 }
 
 .clothTag{
+    background:rgba(255,255,255,0.1);
     border-radius: 100%;
     transition:800ms ease all;
 }

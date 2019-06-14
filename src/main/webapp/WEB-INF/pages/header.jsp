@@ -7,7 +7,7 @@
     Member user = (Member)session.getAttribute("login");
     String email = user.getEmail();
 %>
-
+<jsp:include page="body.jsp"/>
 <link rel="stylesheet" href="/resources/css/global.css" type="text/css"/>
 <div class="header-wrapper">
     <div class="header-content">
