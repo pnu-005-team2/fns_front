@@ -1,6 +1,6 @@
 .page-container {
-    background-color: red;
-    color: white;
+    background-color: #FEDEDB;
+    color: black;
 }
 .header-wrapper{
     width: 100%;
@@ -10,7 +10,7 @@
 .header-content {
     width: 100%;
     height: 7%;
-    background-color: red;
+    background-color: #2F5597;
     padding: 0.4em;
     z-index: 1;
     position: fixed;
@@ -21,7 +21,7 @@
 }
 
 .header-btn{
-    background:red;
+    background:#BFBFBF;
     color:#fff;
     border:none;
     position:relative;
@@ -33,8 +33,8 @@
 
 
 .header-btn:hover{
-    background:red;
-    color:black;
+    background:#2F5597;
+    color:white;
 }
 
 .header-btn:before,.header-btn:after{
@@ -86,8 +86,12 @@
 }
 
 .board-item {
-    border: 0.2em solid black;
-    margin-bottom: 0.3em;
+    /*border: 0.2em solid rgba(255,111,97,0.59);*/
+    margin-top: 0.3em;
+    border-radius: 5%;
+    background-color: rgb(255,111,97);
+    color: white;
+
 }
 
 .follow {

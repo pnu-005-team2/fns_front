@@ -9,7 +9,7 @@
     position: fixed;
     width: 25%;
     height: 90%;
-    background-color: white;
+    background-color: #FEDEDB;
 }
 
 .musinsa-list{
@@ -61,7 +61,7 @@
 .time-line{
     width: 50%;
     display: inline-block;
-    background-color: white;
+    background-color: #FEDEDB;
     color: black;
     padding: 0.2em;
 }
@@ -91,6 +91,8 @@
 .writer img {
     width: 5em;
     height: 5em;
+    border-radius: 50%;
+    padding: 1em;
 }
 
 
@@ -106,7 +108,7 @@
 
 .board-hashtag {
     color: #2c6ed5;
-    padding-left: 1em;
+    padding-left: 2em;
     font-size: 0.7em;
 }
 
@@ -125,13 +127,14 @@
 
 .comment-box {
     min-height: 0;
+    padding: 1.3em;
 }
 
 .comment-input-box{
     text-align: center;
 }
 
-.comment-input {
+.comment-input{
     width: 80%;
 }
 .enter-key {
