@@ -49,8 +49,8 @@
                 </div>
                 <div class="board-img" style="position: relative;padding-top:100%;overflow: hidden;">
                     <img src="/logoShowForStudent/${item.pid}" style="position: absolute; top:0; bottom: 0;left:0;right: 0;max-width: 100%;height: auto;">
-                    <div class="linkimg pnt" style="z-index:1;position:absolute;left:${item.productLinks[0].position_x}px;top:${ item.productLinks[0].position_y}px;">
-                        <a href="${item.productLinks[0].linktext}" target="_blank"><img src="https://cdn4.iconfinder.com/data/icons/geomicons/32/672366-x-128.png" style="width:10px;height:10px;z-index:2;"></a>
+                    <div class="linkimg" style="z-index:1;position:absolute;left:${item.productLinks[0].position_x}px;top:${ item.productLinks[0].position_y}px;">
+                        <a href="${item.productLinks[0].linktext}" target="_blank"><div class ="clothTag pnt" style="width:60px;height:60px;z-index:2;"></a>
                     </div>
                 </div>
                 <div class="board-content">${item.content}</div>

@@ -199,4 +199,14 @@
     margin-bottom: 0;
 }
 
-
+.clothTag{
+    border-radius: 100%;
+    transition:800ms ease all;
+}
+.clothTag:hover {
+    background:rgba(255,255,255,0.8);
+}
+.clothTag:hover:before,.clothTag:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
