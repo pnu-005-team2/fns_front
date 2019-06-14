@@ -67,7 +67,7 @@ let WebSocket = (()=>{
                printMessage(msg);
                if(msg.member.name != userName)
                     notify(msg);
-               //todo 스크롤 내리기
+               textArea.scrollTop = textArea.scrollHeight;
             });
         });
     }
