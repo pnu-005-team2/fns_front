@@ -26,9 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.*;
@@ -111,12 +109,20 @@ public class TimeLineController {
                     InputStream in1 = new ByteArrayInputStream(imagefile1);
                     IOUtils.copy(in1, res.getOutputStream());
                 }catch (Exception e){
-                    e.printStackTrace();
+                    Writer writer= new StringWriter();
+                    e.printStackTrace(new PrintWriter(writer));
+                    String s = writer.toString();
+                    System.out.println(s);
+                    //e.printStackTrace();
                 }
             }
 
         }catch (Exception e){
-            e.printStackTrace();
+            Writer writer= new StringWriter();
+            e.printStackTrace(new PrintWriter(writer));
+            String s = writer.toString();
+            System.out.println(s);
+            //e.printStackTrace();
         }
 
 

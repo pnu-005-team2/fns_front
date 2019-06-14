@@ -9,7 +9,8 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,9 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Optional;
 
 /*
@@ -40,6 +39,7 @@ import java.util.Optional;
 //@Service
 public class S3Uploader {
 
+    private static final Logger logger =LoggerFactory.getLogger(S3Uploader.class);
     private final AmazonS3 amazonS3Client;
     // @Value: 공통으로 사용하는 값을 별도로 관리, 이런 값들을 쉽게 가져다쓰기 위해 사용
     @Value("${cloud.aws.s3.bucket}")
@@ -82,7 +82,11 @@ public class S3Uploader {
             try{
                 fos.write(file.getBytes()); // 파일 내용을 저장
             }catch(Exception e){
-                e.printStackTrace();
+
+                Writer writer= new StringWriter();
+                e.printStackTrace(new PrintWriter(writer));
+                String s = writer.toString();
+                System.out.println(s);
             }finally {
                 fos.close();
             }

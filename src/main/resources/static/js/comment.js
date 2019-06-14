@@ -42,7 +42,7 @@ function loadComment(e) {
         success: function (data) {
             console.log("data : " + data);
             if(data.length === 0){
-                alert("댓글이 없습니다.");
+                //alert("댓글이 없습니다.");
                 return;
             }
             data.forEach((item)=>{
@@ -131,8 +131,8 @@ function deleteComment(e) {
             console.log(response);
             if(response)
                 target.remove();
-            else
-                alert("삭제에 실패하였습니다");
+            //else
+                //alert("삭제에 실패하였습니다");
         }
     })
 }

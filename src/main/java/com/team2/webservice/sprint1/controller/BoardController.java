@@ -19,6 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.sql.SQLException;
 import java.util.Base64;
 import java.util.List;
@@ -64,7 +67,11 @@ public class BoardController {
         try {
             board.setImg(new javax.sql.rowset.serial.SerialBlob(image.getBytes()));
         } catch (SQLException e) {
-            e.printStackTrace();
+            Writer writer= new StringWriter();
+            e.printStackTrace(new PrintWriter(writer));
+            String s = writer.toString();
+            System.out.println(s);
+
         }
         writer = httpServletRequest.getParameter("writer");
         boardService.write(board, writer);

@@ -31,7 +31,7 @@ let WebSocket = (()=>{
     }
     function notify(message) {
         if (Notification.permission !== 'granted') {
-            alert('notification is disabled');
+            //alert('notification is disabled');
         }
         else {
             let notification = new Notification('New messages', {
