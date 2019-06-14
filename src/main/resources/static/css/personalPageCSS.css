@@ -319,18 +319,20 @@ section.section2 {
 
 .modal-body {
     height: 100%;
+    
 }
 
 .modal-body .board-img {
-    background-color: #2c6ed5;
+    background-color: white;
     display: inline-block;
     height: 90%;
     width: 50%;
 }
 
 .board-img img{
-    width: 100%;
+    width: 90%;
     height: 100%;
+    padding: 0.9px;
 }
 
 .modal-body .content {
@@ -343,8 +345,57 @@ section.section2 {
 .modal-body .board-profile{
     height: 10%;
     border-bottom: solid slategrey 0.1em;
+    padding: 0.8px;
 }
+
 
 .board-profile img{
     height: 90%;
+    border-radius: 50%;
+}
+
+.comment-box {
+	padding: 1.5px;
+}
+.comment-input-box {
+	padding: 1px;
+}
+
+
+.comment-input {
+  border-radius: 25px;
+  border: 1px solid #2c6ed5; 
+  font-size: .950rem;
+  padding: 6px;
+}
+
+.myComment{
+	padding: 3px;
+}
+
+/*-----------modal comment button----------------*/
+.comment-btn{
+  width: 30%;
+  padding: .73rem 1.5rem;
+  margin: .5rem 0 0;
+  outline: 0;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  background-color: #2c6ed5;
+  font-weight: 600;
+  font-size: .900rem;
+  letter-spacing: .25px;
+  transition: background .3s ease;
+  position: relative;
+}
+
+
+.follow-modal-dialog{
+    width: 45%;
+}
+
+.follow-modal-content{
+    background-color: #7b7b7b;
+    overflow: auto;
 }

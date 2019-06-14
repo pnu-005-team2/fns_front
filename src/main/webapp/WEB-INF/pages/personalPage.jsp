@@ -18,12 +18,29 @@
   String gender = user.getGender();
   String intro = user.getIntro();
   String img = user.getImg();
+  String email = user.getEmail();
 %>
 <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/css/personalPageCSS.css" type="text/css"/>
+<link rel="stylesheet" href="/resources/css/global.css" type="text/css"/>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
+<div class="header-wrapper">
+    <div class="header-content">
+        <Strong style="color: yellow">Fashion Network Service</Strong>
+        <div class="search-wrapper">
+            <input type="text" class="search-bar"
+                   onfocus="this.value=''" id="search-user-text"
+                   placeholder="검색"  >
+            <div id="search-result-box"></div>
+        </div>
+        <button class="header-btn" onclick="location.href='/user/edit'">정보수정</button>
+        <button class="header-btn" onclick="location.href='/user/mypage?email=<%=email%>'">마이피드</button>
+        <button class="header-btn" onclick="location.href='/chat'">채팅하기</button>
+        <button class="header-btn" onclick="location.href='/logout'">로그아웃</button>
+    </div>
+</div>
 <div class="container">
   <div class="innerwrap">
   <div class="card">
@@ -42,19 +59,34 @@
           </div>
           <div class="col2 last">
             <div class="grid clearfix">
-              <div class="col3 first">
+              <div class="col3 first follow-btn" data-value="following" data-uid="${pageUser.uid}"
+                   data-toggle="modal" data-target="#follow-modal" data-login="<%=uid%>">
                 <h1>${pageUser.following_cnt}</h1>
                 <span>Following</span>
               </div>
-              <div class="col3"><h1>${pageUser.follower_cnt}</h1>
-              <span>Followe</span></div>
-              <div class="col3 last"><h1>${pageUser.gender}</h1>
-              <span>Gender</span></div>
+              <div class="col3 follow-btn" data-value="follower" data-uid="${pageUser.uid}"
+                   data-toggle="modal" data-target="#follow-modal" data-login="<%=uid%>">
+                  <h1>${pageUser.follower_cnt}</h1>
+                  <span>Follower</span>
+              </div>
+              <div class="col3 last">
+                  <h1>${pageUser.gender}</h1>
+                  <span>Gender</span>
+              </div>
             </div>
           </div>
-           <button class="button button2" onclick="location.href='/user/edit'">
-               Edit profile
-           </button>
+            <c:if test="${isMine eq 'true'}">
+               <button class="button button2" onclick="location.href='/user/edit'">
+                   Edit profile
+               </button>
+            </c:if>
+            <c:if test="${isMine ne 'true'}">
+                <c:if test="${isFriend ne 'true'}">
+                    <button class="button button2 add-follow" onclick="addfriend(<%=uid%>,${pageUser.uid}, false);">
+                        Follow
+                    </button>
+                </c:if>
+            </c:if>
         </div>
        
         <div class="row clearfix">
@@ -82,7 +114,7 @@
                 </c:when>
             </c:choose>
             <div class="col3 ${place}">
-            <div class="card board-item" data-toggle="modal" data-target="#myModal"
+            <div class="card board-item" data-toggle="modal" data-target="#board-modal"
                  data-mode = "normal" data-pid = "${board.pid}">
               <div class="postcont"><img src="/logoShowForStudent/${board.pid}" alt="">
               </div>
@@ -99,13 +131,13 @@
 </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Board Modal-->
+<div class="modal fade" id="board-modal" tabindex="-1" role="dialog" aria-labelledby="board-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="board-modal-label">Comments</h4>
             </div>
             <div class="modal-body">
                 <span class="board-img"><img src="" alt=""> </span>
@@ -114,13 +146,19 @@
                         <img>
                         <strong></strong>
                     </div>
+                   
+                   
+                   <div class="myComment">
                     <span class="board-content"></span>
-                    <span class="board-hashtag"></span>
+                    
+                    </div>
+                    <span class="board-hashtag" style="color: #2c6ed5"></span>
+                    
                     <div class="comment-box" name="comment/${item.pid}">
                         <div class="comment-input-box">
                             <input type="text" class="comment-input" data-board-idx=""
                                    data-uid= "<%=uid%>" page-idx = "0"
-                                   placeholder="re">
+                                   placeholder="type comment">
                             <button class="comment-btn" data-writer="<%=name%>">Enter</button>
                         </div>
                         <div class="comment-list"
@@ -133,16 +171,43 @@
     </div>
 </div>
 
+
+<!-- Follow Modal-->
+<div class="modal fade" id="follow-modal" tabindex="-1" role="dialog" aria-labelledby="follow-modal-label" aria-hidden="true">
+    <div class="modal-dialog follow-modal-dialog">
+        <div class="modal-content follow-modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="follow-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="follow-modal-label"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="follow">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script src="/resources/js/comment.js"></script>
 <script src="/resources/js/board.js"></script>
+<script src="/resources/js/friend.js"></script>
 <script>
+
+
     window.onload = () => {
         console.log("onload");
         let boards = document.getElementsByClassName("board-item");
         let comment_btns = document.querySelectorAll(".comment-btn");
+        let follow_btns = document.querySelectorAll(".follow-btn");
+        let follow_close = document.querySelector("#follow-close");
 
         for(let item of boards) item.addEventListener('click', boardClickHandler);
         for(let item of comment_btns) item.onclick = comment_regist;
+        for(let item of follow_btns) item.onclick = followClickHandler;
+        follow_close.onclick = initFriends;
+
         tagInit();
     };
 
@@ -190,6 +255,55 @@
                     MoreShowBtnHandler(pid, page)
             }
         });
+    }
+
+    function followClickHandler(e) {
+        console.log("followClickHandler");
+        let uid = e.currentTarget.dataset['uid'];
+        let value = e.currentTarget.dataset['value'];
+        let login_uid = e.currentTarget.dataset['login'];
+        console.log(uid);
+        console.log(value);
+        initFriends();
+
+        $.ajax({
+            type : "POST",
+            url : "/friend/load",
+            datatype : "json",
+            data : {uid : uid, keyword : value},
+            success: response => {
+                console.log("Success  : " + response);
+                response.forEach(item=>{
+                    let parent = document.querySelector(".follow");
+                    let wrapper = document.createElement("div");
+                    let img = document.createElement("img");
+                    let name = document.createElement("strong");
+
+
+                    wrapper.classList.add("friend-item");
+                    img.src = item.img;
+                    name.textContent = item.name;
+
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(name);
+
+                    let btn = document.createElement("button");
+                    btn.classList.add("follow-btn");
+
+                    if(login_uid === uid && value === "following") {
+                        btn.textContent = "unfollow";
+                        btn.onclick = deletefriend;
+                    } else {
+                        btn.textContent = "follow";
+                        btn.onclick = addfriend;
+                    }
+                    wrapper.appendChild(btn);
+                    parent.appendChild(wrapper);
+
+                })
+            }
+
+        })
     }
 
 </script>

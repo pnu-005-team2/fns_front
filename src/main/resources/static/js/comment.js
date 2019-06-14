@@ -4,7 +4,6 @@ function comment_regist(e){
     let input_box = e.target.previousElementSibling;
     let pid = input_box.getAttribute("data-board-idx");
     let writer = input_box.getAttribute("data-uid");
-    let writer_name = e.target.getAttribute("data-writer");
     let content = input_box.value;
 
     let sendData = {
@@ -20,7 +19,7 @@ function comment_regist(e){
         data : sendData,
         success: function (response) {
             console.log(response);
-            createComment(response, true);
+            createComment(response, writer, true);
         }
     });
 
@@ -32,21 +31,22 @@ function comment_regist(e){
 function loadComment(e) {
     let pid = e.target.getAttribute("data-board-idx");
     let page = e.target.getAttribute("page-idx");
+    let uid = e.target.getAttribute("data-uid");
+    console.log("uid : " + uid);
     let size = 4;
-    console.log(pid);
     $.ajax({
         type : "POST",
         url : `/comment/load?size=${size}&page=${page}&sort=cid,desc`,
         data : {pid: pid},
+        datatype : "json",
         success: function (data) {
-            console.log(data);
-            console.log(pid);
+            console.log("data : " + data);
             if(data.length === 0){
                 alert("댓글이 없습니다.");
                 return;
             }
             data.forEach((item)=>{
-                createComment(item)
+                createComment(item,uid);
             });
             MoreShowBtnHandler(pid, page);
         }
@@ -55,12 +55,23 @@ function loadComment(e) {
 }
 
 //----------- 덧글 Row를 만듭니다.---------------
-function createComment(comment_info, addFront=false) {
+function createComment(comment_info, uid,addFront=false) {
+
     let comment_row = document.createElement("div");
     let target_comment_list = document.querySelector(`div[data-board-idx="${comment_info.pid}"]`);
     let comment_content = document.createElement("p");
     let comment_writer = document.createElement("a");
     let comment_delete= document.createElement("span");
+    let comment_date = document.createElement("span");
+
+    let time = new Date().getTime() -new Date(comment_info.created_date).getTime() ;
+
+    let second = Math.floor(time/1000);
+    let minute = Math.floor(second/60);
+    let hour = Math.floor(minute/60);
+    let day = Math.floor(hour/24);
+    let month = Math.floor(day/30);
+    let year = Math.floor(month/12);
 
     console.log(target_comment_list);
 
@@ -71,15 +82,31 @@ function createComment(comment_info, addFront=false) {
     comment_writer.href = `user/mypage?email=${comment_info.member.email}`;
     comment_writer.classList.add("writer");
 
-    comment_delete.classList.add("delete-btn");
-    comment_delete.textContent = "\u02DF";
-    comment_delete.style.fontSize = "1.8em";
-    comment_delete.onclick = deleteComment;
+    if(comment_info.member.uid == uid) {
+        comment_delete.classList.add("delete-btn");
+        comment_delete.textContent = "\u02DF";
+        comment_delete.style.fontSize = "1.8em";
+        comment_delete.onclick = deleteComment;
+    }
+    if( second <60)
+        comment_date.textContent = second + "초";
+    else if(minute <60)
+        comment_date.textContent = minute + "분";
+    else if(hour <24)
+        comment_date.textContent = hour + "시간";
+    else if(day <30)
+        comment_date.textCOntent = day + "일";
+    else if(month < 12)
+        comment_date.textContent = month + "달";
+    else
+        comment_date.textContent = year + "년";
+    comment_date.style.float="right";
 
     comment_content.textContent = comment_info.content;
 
     comment_row.appendChild(comment_writer);
     comment_row.appendChild(comment_delete);
+    comment_row.appendChild(comment_date);
     comment_row.appendChild(comment_content);
 
     if(addFront)
@@ -115,6 +142,26 @@ function initComment(pid) {
     let comment_list = document.querySelector(`div[data-board-idx="${pid}"]`);
     // while(comment_list.hasChildNodes()) comment_list.removeChild(comment_list.lastChild);
     while(comment_list.hasChildNodes()) comment_list.lastChild.remove();
+}
+
+//----------- 댓글에서 친구를 태그합니다.---------------
+function tagFriend(e) {
+    let key_code = e.keyCode;
+    let uid = e.target.getAttribute("data-uid");
+    if(key_code !== 50 && e.target.value.indexOf("@") === -1) return;
+    let keyword = e.target.value.split("@")[1] + e.key;
+    console.log("Keyword : " + keyword);
+
+    $.ajax({
+        type : "POST",
+        url : "/load/friend",
+        data: {uid: uid, keyword: keyword},
+        success: response => {
+            console.log(response);
+            //Todo 친구리스트 뿌려주기
+        }
+    })
+
 }
 
 

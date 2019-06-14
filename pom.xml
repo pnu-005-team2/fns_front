@@ -13,7 +13,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>fashion-network-service</name>
     <description>Demo project for Spring Boot</description>
-
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -108,14 +107,16 @@
             <artifactId>aws-java-sdk</artifactId>
             <version>1.11.538</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.activemq.examples.stomp</groupId>
-            <artifactId>stomp-websockets</artifactId>
-            <version>2.7.0</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

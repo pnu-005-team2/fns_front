@@ -1,16 +1,23 @@
 package com.team2.webservice.sprint1.controller;
 
+import com.team2.webservice.sprint1.dto.BoardDTO;
 import com.team2.webservice.sprint1.jpa.BoardRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
+import com.team2.webservice.sprint1.service.BoardService;
+import com.team2.webservice.sprint1.service.BoardServiceImpl;
 import com.team2.webservice.sprint1.service.FriendsServiceImpl;
 import com.team2.webservice.sprint1.jpa.LikeRecordRepository;
+import com.team2.webservice.sprint1.service.MusinsaService;
 import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.LikeRecord;
 import com.team2.webservice.sprint1.vo.Member;
+import com.team2.webservice.sprint1.vo.Musinsa;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,15 +25,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
-import java.util.List;
-import java.util.Optional;
-
-import static org.springframework.messaging.simp.stomp.StompHeaders.LOGIN;
+import java.time.LocalDate;
+import java.util.*;
 
 @Controller
 public class TimeLineController {
@@ -36,7 +41,13 @@ public class TimeLineController {
     private LikeRecordRepository likeRecordRepository;
 
     @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private MusinsaService musinsaService;
 
     private static final Logger logger =LoggerFactory.getLogger(TimeLineController.class);
 
@@ -44,6 +55,8 @@ public class TimeLineController {
     @Autowired
     FriendsServiceImpl friendsService;
 
+    @Autowired
+    BoardServiceImpl boardService;
 
     List<Board> boardRecordList;
     List<LikeRecord> likeRecordList;
@@ -67,11 +80,14 @@ public class TimeLineController {
 
         logger.info("Entry TimeLine");
         Member me = friendsService.setFriendListToModel(model, request);
+        LocalDate today = LocalDate.now();
+        List<Musinsa> musinsaList = musinsaService.getMusinsaList(today);
         logger.info(me.getName());
         List<Board> fBoardList = friendsService.showFBoard(me);
 
         modelMap.addAttribute("postRecordlList", fBoardList);
         modelMap.addAttribute("postRecordList_Byte", fBoardList);
+        modelMap.addAttribute("musinsaList", musinsaList);
 
         logger.info("Exit TimeLine");
 
@@ -107,47 +123,103 @@ public class TimeLineController {
 
     @ResponseBody
     @PostMapping
-    @RequestMapping("/text_Check")
-    public String Check_Search_Name(HttpServletRequest request)
+    @RequestMapping("/search/load")
+    public List<Member> checkSearchName(String keyword)
     {
+        logger.info("Entry checkSearchName" + keyword);
+        System.out.println("keykeyword : "+keyword);
+        List<Member> member_list = memberRepository.findByNameLike(keyword+"%");
 
-
-        System.out.printf("In Timeline");
-
-
-
-        String name_Search= request.getParameter("For_Search_User_Text");
-
-        if(name_Search!="") {
-            if (name_Search.substring(0, 1).equals("#")) {
-                String Drop_String = "#";
-                System.out.println("pppppppppppppppppppppppppppppppppp");
-                if (boardRecordList != null) {
-                    for (int i = 0; i < boardRecordList.size(); i++) {
-                        if (boardRecordList.get(i).getHashtag() != null) {
-                            String temp_HashTag = boardRecordList.get(i).getHashtag();
-                            String[] temp_HashTag_Array = temp_HashTag.split(",");
-                            System.out.println("888888888888888888888888888888");
-                            for (int j = 0; j < temp_HashTag_Array.length; j++) {
-                                System.out.println(temp_HashTag_Array[j]);
-                                if (temp_HashTag_Array[j].equals(name_Search.substring(1))) {
-                                    System.out.println("이게뭐야");
-                                    Drop_String += String.valueOf(boardRecordList.get(i).getPid());
-                                    Drop_String += " ";
-                                }
-                            }
-                            System.out.println("7777777777777777777777777777777");
-
-                        }
-
-                    }
-                }
+        if(!member_list.isEmpty()) {
+            logger.info("No Empty");
+            for (int i = 0; i < member_list.size(); i++) {
+                logger.info(member_list.get(i).getName());
             }
         }
+        else
+            logger.info("계정이 존재하지 않습니다.");
 
-                return "Drop_String";
+        logger.info("Exit checkSearchName");
+        return member_list;
+    }
+
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/search/hash")
+    public List<BoardDTO> checkhashSearch(String keyword, Pageable pageable)
+    {
+
+        logger.info("Entry checkSearchName" + keyword);
+    //    System.out.println("keykeyword : "+keyword);
+        List<Board> temp_board_list = boardRepository.findByHashtagLike("%"+keyword.substring(1)+"%");
+
+
+
+
+
+        List<BoardDTO> return_board_list = new ArrayList<>();
+
+
+
+        if(keyword.substring(0,1).equals("#")){
+
+
+            if (temp_board_list != null) {
+                for (int i = 0; i < temp_board_list.size(); i++) {
+                    if (temp_board_list.get(i).getHashtag() != null) {
+                        String temp_HashTag = temp_board_list.get(i).getHashtag();
+                        String[] temp_HashTag_Array = temp_HashTag.split(",");
+
+                        for (int j = 0; j < temp_HashTag_Array.length; j++) {
+                            System.out.println(temp_HashTag_Array[j]+ "comparecompare : " +keyword.substring(1));
+                            if (temp_HashTag_Array[j].equals(keyword.substring(1))) {
+                                BoardDTO boardDTO=  boardService.transDTO(temp_board_list.get(i),pageable);
+                                return_board_list.add(boardDTO);
+                                System.out.print("retur board list add :  "+ boardDTO.getPid());
+                                break;
+                            }
+                        }
+                        ;
+
+                    }
+
+                }
+
+            }
+
+
+
+            //System.out.println("qweqwewqeqweqwewqe"+return_board_list.size());
+            if(return_board_list.size()==0){
+                System.out.println("qweqwewqeqweqwewqe");
+                return null;
+            }
+            System.out.println("aaaaaaaaaaaaaaa");
+            return return_board_list;
+        }
+        return null;
+    }
+
+
+
+    @ResponseBody
+    @PostMapping
+    @RequestMapping("/getImage_url")
+    public String GetImageUrl_For_Hash(HttpServletRequest request)
+    {
+
+        String temp_data= request.getParameter("temp_data");
+        Optional<Board> temp__board= boardRepository.findByPid(Long.parseLong(temp_data.trim()));
+        if(temp__board.isPresent()){
+            return temp__board.get().getMember().toString();
+        }
+
+        return "null";
+
 
     }
+
 
 
     @ResponseBody
@@ -163,18 +235,17 @@ public class TimeLineController {
 
 
         Optional<Board> board_Optional = boardRepository.findByPid(Long.parseLong(post_Pid));
+
+        //Optional<Member> member_Optional =  memberRepository.findByUid()
+        // Optional<LikeRecord> likeRecordsdasdsd = likeRecordRepository.findBy
         Optional<LikeRecord> likeRecord_Optional= likeRecordRepository.findByBoard(board_Optional.get());
+        //Optional<Board> board_MemberWriter= boardRepository.findByMember()
         System.out.println(likeRecord_Optional);
         if(likeRecord_Optional.isPresent()){
             LikeRecord likeRecord = likeRecord_Optional.get();
-            if(like_Value.equals("false")){
-                like_Value="true";
-            }
-            else{
-                like_Value="false";
-            }
             Boolean temp_Boolean =Boolean.parseBoolean(like_Value);
             likeRecord.setLike_boolean(temp_Boolean);
+            likeRecord.getMember();
             likeRecordRepository.save(likeRecord);
             return "success";
         }
@@ -200,8 +271,12 @@ public class TimeLineController {
 
 
 
-    
-    
+
+
+
+
+
+
 
 
 

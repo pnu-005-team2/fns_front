@@ -26,7 +26,7 @@
     <div class="card-header">
     </div>
     <div class="card-body">
-        <form action="/board//post_" method="post" enctype="multipart/form-data">
+        <form action="/board/post_" method="post" enctype="multipart/form-data">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                     <div class="form-group">

@@ -1,10 +1,16 @@
 package com.team2.webservice.sprint1.dto;
 
 
+import com.team2.webservice.sprint1.jpa.FriendsRepository;
+import com.team2.webservice.sprint1.service.FriendsServiceImpl;
 import com.team2.webservice.sprint1.vo.Member;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Data
+@Getter
+@Setter
 public class MyPageDTO {
     private int uid;
     private String name;
@@ -21,7 +27,5 @@ public class MyPageDTO {
         this.gender= member.getGender();
         this.img = member.getImg();
         this.intro = member.getIntro();
-        follower_cnt = member.getFriended().split(",").length;
-        following_cnt = member.getFriends().split(",").length;
     }
 }

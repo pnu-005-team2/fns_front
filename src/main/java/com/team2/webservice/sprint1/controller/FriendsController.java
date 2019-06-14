@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,16 +27,16 @@ public class FriendsController {
 
     @ResponseBody
     @RequestMapping(value = "/friend/add" , method = RequestMethod.POST)
-    public Member friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
+    public boolean friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
         //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
         System.out.println("FriendAdd");
-        Member friend = friendsService.addFriends(uid1, uid2);
-        return friend;
+        boolean canadd = friendsService.addFriends(uid1, uid2); // todo 왜 boolean??
+        return canadd;
 
     }
 
     @ResponseBody
-    @RequestMapping(value = "/fried/delete" , method = RequestMethod.POST)
+    @RequestMapping(value = "/friend/delete" , method = RequestMethod.POST)
     public int friendDelete(int uid1, int uid2, Model model, HttpServletRequest request){
         //1: 삭제행위를 하는사람, 2: 삭제 당하는사람
         friendsService.deleteFriend(uid1, uid2);
@@ -45,15 +44,17 @@ public class FriendsController {
         return uid2;
     }
 
-    @RequestMapping(value = "/load/friend", method = RequestMethod.POST)
     @ResponseBody
-    public List<Member> loadFriends(int uid){
-        Optional<Member> me = memberRepository.findById(uid);
-        if(!me.isPresent()){
-            System.out.println("올바르지 않은 계정입니다.");
-            return null;
-        }
-        return friendsService.showFriends(me.get());
+    @RequestMapping(value = "/friend/load", method = RequestMethod.POST)
+    public List<Member> loadriends(int uid, String keyword){
+        System.out.println("Entry Load Friends");
+        //Todo keyword에 따라 일치하는 친구들 뿌려주기
+//        Optional<List<Member>> test = memberRepository.findByUidAndNameLike(uid, keyword);
+//        for (int i = 0; i < test.get().size(); i++) {
+//            System.out.println("Test");
+//            System.out.println(test.get().get(i).getName());
+//        }
+        return friendsService.loadFriendsByKeyword(uid,keyword);
 
     }
 }

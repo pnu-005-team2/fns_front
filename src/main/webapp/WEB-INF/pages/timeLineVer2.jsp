@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-    <title>FNS</title>
+    <title>FNSS</title>
 </head>
 <body>
 <link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
@@ -27,26 +27,44 @@
     <div class="header-wrapper">
         <div class="header-content">
             <Strong style="color: yellow">Fashion Network Service</Strong>
+            <div class="search-wrapper">
+                <input type="text" class="search-bar"
+                       onfocus="this.value=''" id="search-user-text"
+                       placeholder="검색"  >
+                <div id="search-result-box"></div>
+            </div>
             <button class="header-btn" onclick="location.href='/user/edit'">정보수정</button>
             <button class="header-btn" onclick="location.href='/user/mypage?email=<%=email%>'">마이피드</button>
+            <button class="header-btn" onclick="location.href='/chat'">채팅하기</button>
             <button class="header-btn" onclick="location.href='/logout'">로그아웃</button>
         </div>
     </div>
     <div class="left-wrapper">
         <div class="left-content">
-            <a href="chat">채팅하기</a><br/>
+            <div class="musinsa-list">
+                <c:forEach var="item" items="${musinsaList}" >
+                    <div class="musinsa-item" onclick="location.href = '${item.link}';">
+                        <img src="${item.img_url}">
+                        <div class="musinsa-title">${item.title}</div>
+                        <div class="musinsa-description">${item.description}</div>
+                    </div>
+                </c:forEach>
+            </div>
         </div>
     </div>
     <div class="time-line">
         <jsp:include page="Post.jsp" />
         <c:forEach var="item" items="${postRecordlList}" step="1">
-            <div class="board-item" name="board/${item.pid}">
+            <div class="board-item" name="board/${item.pid}" style="width :100%;">
                 <div class="writer" >
                     <img src="${item.member.img}">
                     <strong>${item.member.name}</strong>
                 </div>
-                <div class="board-img">
-                    <img src="/logoShowForStudent/${item.pid}">
+                <div class="board-img" style="position: relative;padding-top:100%;overflow: hidden;">
+                    <img src="/logoShowForStudent/${item.pid}" style="position: absolute; top:0; bottom: 0;left:0;right: 0;max-width: 100%;height: auto;">
+                    <div class="linkimg" style="z-index:1;position:absolute;left:${item.productLinks[0].position_x}px;top:${ item.productLinks[0].position_y}px;">
+                        <a href="${item.productLinks[0].linktext}" target="_blank"><img src="https://cdn4.iconfinder.com/data/icons/geomicons/32/672366-x-128.png" style="width:10px;height:10px;z-index:2;"></a>
+                    </div>
                 </div>
                 <div class="board-content">${item.content}</div>
                 <div class="board-hashtag">${item.hashtag}</div>
@@ -56,14 +74,15 @@
                        onclick="likeToggle(this), like_btn_clickevent(${item.pid})"></i>
                     </span>
                     <span class="function-item">
-                        <i class="comment-icon fa fa-comments-o fa-2x" onclick="loadComment(event)" data-board-idx="${item.pid}" ></i>
+                        <i class="comment-icon fa fa-comments-o fa-2x" onclick="loadComment(event)" data-board-idx="${item.pid}"
+                            data-uid = "<%=uid%>"></i>
                     </span>
                 </div>
                 <%--Todo data-board-idx를 name으로 바꾸고 /단위로 잘라서 정보를 담을 수 있게 해보자--%>
                 <div class="comment-box" name="comment/${item.pid}">
                     <div class="comment-input-box">
                         <input type="text" class="comment-input" data-board-idx="${item.pid}"
-                               data-uid= "<%=uid%>" page-idx = "0"
+                               data-uid= "<%=uid%>" page-idx = "0" onkeydown="tagFriend(event)"
                                placeholder="re">
                         <button class="comment-btn" data-writer="<%=name%>">Enter</button>
                     </div>
@@ -80,9 +99,9 @@
             <strong>Following </strong>
             <c:forEach var="item" items="${friendsRecordList}">
                 <div class="friend-item" data-friend-index="${item.uid}">
-                    <img class='profile' src="${item.img}" width="12%" height="15">
-                    <strong style="width:58%">${item.name}</strong>
-                    <button class="follow-btn" data-friend-btn-idx="${item.uid}">unfollow</button>
+                    <img onclick = "location.href='user/mypage?email=${item.email}'" class='profile' src="${item.img}" width="12%" height="15">
+                    <strong onclick = "location.href='user/mypage?email=${item.email}'" style="width:58%">${item.name}</strong>
+                    <button class="follow-btn" data-friend-btn-idx="${item.uid}" data-uid = <%=uid%> >unfollow</button>
                 </div>
             </c:forEach>
         </div>
@@ -91,8 +110,8 @@
             <strong>Follower </strong>
             <c:forEach var="item" items="${friendedRecordList}">
                 <div>
-                    <img class='profile' src="${item.img}" width="12%" height="15">
-                    <strong>${item.name}</strong>
+                    <img onclick = "location.href='user/mypage?email=${item.email}'" class='profile' src="${item.img}" width="12%" height="15">
+                    <strong onclick = "location.href='user/mypage?email=${item.email}'" >${item.name}</strong>
                 </div>
             </c:forEach>
         </div>
@@ -101,22 +120,20 @@
             <strong>Friend Recommend </strong>
             <c:forEach var="item" items="${friendRecommendList}">
                 <div class="recommend-friend-item" data-recommend-index ="${item.uid}">
-                    <img class='profile' src="${item.img}" width="12%" height="15">
-                    <strong style="width:58%">${item.name}</strong>
+                    <img class='profile' onclick = "location.href='user/mypage?email=${item.email}'" src="${item.img}" width="12%" height="15">
+                    <strong onclick = "location.href='user/mypage?email=${item.email}'" style="width:58%">${item.name}</strong>
                     <button class="follow-btn" onclick="addfriend(<%=uid%>,${item.uid});" height="15">follow</button>
                 </div>
             </c:forEach>
         </div>
     </div>
 </div>
-<script src="/resources/js/timeline.js"></script>
+<script src="/resources/js/friend.js"></script>
 <script src="/resources/js/comment.js"></script>
 <script>
 
-    let text_number=0;
     let text_number_For_Hashtag=0;
-    let text_For_Search_User = document.getElementById("search_User_text");
-    // let search_UserText=text_For_Search_User.value;
+    let text_For_Search_User = document.getElementById("search-user-text");
     let temp_value= document.getElementsByClassName("fa");
 
     $(document).ready(function (e) {
@@ -125,6 +142,8 @@
         let comment_btns = document.querySelectorAll(".comment-btn");
         let comment_del_btns = document.querySelectorAll(".comment-item .delete-btn");
         let hashtags = document.getElementsByClassName("board-hashtag");
+        let search_bar = document.getElementById("search-user-text");
+        console.log(search_bar);
         console.log(hashtags);
         // -------- Event를 바인딩합니다. ----------
         for(let item of unfollow_btns) item.onclick = deletefriend;
@@ -134,120 +153,129 @@
             console.log(item.textContent);
             item.textContent = item.textContent.replace(/,/g, "#");
         }
+        search_bar.onkeydown = text_Check;
 
 
 
         // setInterval(text_Check,1000);
     });
 
-    var input1 = document.getElementById('search_User_text');
-    input1.onkeydown = function(event) {
-        text_number=0;
-        text_number_For_Hashtag=0;
-
-        var temp=   document.getElementById("search_Result_div");
 
 
-        if(temp.getElementsByTagName("p").length!==0){
+    function text_Check(e){
+        console.log("Text Check" + e.key);
+        let text_value = e.target.value+ e.key;
+        let sendData__ = { "keyword" : text_value};
 
 
+        initSearchBox();
+        if(text_value === '') return;
 
-            while(temp.hasChildNodes()){
+        $.ajax({
+            type : "POST",
+            url : "/search/load",
+            data : sendData__,
+            success: function (response) {
 
-                temp.removeChild(temp.lastChild);
-            }
-
-        }
-
-
-    };
-
-
-    var text_Check_flag=false;
-
-    function text_Check(){
-        var text_For_Search_User = document.getElementById("search_User_text");
-
-        search_UserText= text_For_Search_User.value;
+                console.log(response);
+                if(response){
+                    let search_result_box= document.getElementById("search-result-box");
+                    //#.시도
 
 
+                    response.forEach(item => {
+                        let search_item = document.createElement("div");
+                        let search_profile = document.createElement("img");
+                        let search_name= document.createElement("span");
 
-        var sendData = { "For_Search_User_Text" : search_UserText
-        };
+                        search_item.classList.add("search-item");
+                        search_item.onclick = ()=> {
+                            location.href = "/user/mypage?email=" + item.email;
+                        };
 
+                        search_profile.classList.add("search-profile");
+                        search_name.classList.add("search-name");
+                        search_profile.src = item.img;
+                        search_name.textContent = item.name;
 
-        if(text_number==0){
-            $.ajax({
-                type : "POST",
-                url : "/text_Check",
-                data : sendData,
-                success: function (data) {
+                        search_item.appendChild(search_profile);
+                        search_item.appendChild(search_name);
+                        search_result_box.appendChild(search_item);
+                    });
 
-                    if(data.substr(0,1)=="#"){
-                        //fa-2x${item.pid}
-                        if(data.substr(1)!=""){
-
-
-
-                            var jbsplit =data.substr(1).split(',');
-                            if(text_number_For_Hashtag==0){
-                                text_number_For_Hashtag=1;
-                                for( var i in jbsplit){
-                                    var temp_Data_data = { "temp_data" : jbsplit[i]
-                                    };
-                                    //  alert(temp_Data_data);
-                                    $.ajax({
-                                        type : "POST",
-                                        url : "/getImage_url",
-                                        data : temp_Data_data,
-                                        success: function (data) {
-                                            // alert(data);
-                                            var search_Result_text= document.getElementById("search_Result_div");
-                                            //  var comment_text_area_value = search_UserText;
-                                            //#.시도
-                                            var comment_text_area_post_p = document.createElement("p");
-
-                                            var comment_textNode=document.createTextNode(data);
-                                            comment_text_area_post_p.appendChild(comment_textNode);
-
-
-                                            search_Result_text.appendChild(comment_text_area_post_p);
-
-                                        }
-                                    });
-                                }
-                            }
-
-
-                        }
-                    }
-                    else{
-                        if(data!="null"){
-
-                            text_number=1;
-                            var search_Result_text= document.getElementById("search_Result_div");
-                            var comment_text_area_value = search_UserText;
-                            //#.시도
-                            var comment_text_area_post_p = document.createElement("p");
-                            comment_text_area_post_p.innerHTML+="<div><div class=\"in-line\">"+
-                                "<img class=\"btnclass-img\" width=\"5%\"height=\"5%\""+
-                                "src="+ data+ ">" +"&nbsp;"+ comment_text_area_value + "</div>" +
-                                "<br></div>";
-                            search_Result_text.appendChild(comment_text_area_post_p);
-
-                        }
-                    }
-
-
-
-
-
+                    console.log(search_result_box);
 
                 }
-            });
+            }
+        });
 
+        console.log(sendData__ + "sendData__ : ");
+
+
+
+        if(text_value.substr(0,1)==="#"){
+
+
+            let size =5;
+            let page =0;
+
+            initSearchBox();
+            $.ajax({
+                type : "POST",
+                url : "/search/hash?size="+size+"&page="+page,
+                data : sendData__,
+                success: function (response) {
+
+                    console.log("response :: "+response);
+                    if(response){
+
+
+
+                        let search_result_box= document.getElementById("search-result-box");
+                        //#.시도
+
+
+                        response.forEach(item => {
+
+                            let search_item = document.createElement("div");
+                            let search_profile = document.createElement("img");
+                            let search_name= document.createElement("span");
+                            search_item.classList.add("search-item");
+                            search_item.onclick = ()=> {
+
+                                location.href = "/user/mypage?email=" + item.email+ "&pid="+item.pid;
+                            };
+                            search_profile.classList.add("search-profile");
+                            search_name.classList.add("search-name");
+                            console.log("response : "+ item.pid);
+                            search_profile.src = "/logoShowForStudent/"+item.pid;
+                            search_name.textContent = item.member.name;
+
+                            search_item.appendChild(search_profile);
+                            search_item.appendChild(search_name);
+                            search_result_box.appendChild(search_item);
+                        });
+
+                        console.log(search_result_box);
+
+                    }
+                }
+            });
         }
+
+
+
+
     }
+
+    function initSearchBox() {
+        text_number_For_Hashtag=0;
+        let temp=   document.getElementById("search-result-box");
+        while(temp.hasChildNodes()){
+            temp.removeChild(temp.lastChild);
+        }
+
+    };
 
 
     // --------- 좋아요 클릭시 아이콘 Toggle ---------
@@ -302,41 +330,6 @@
 
     }
 
-    function addfriend(mypid,fripid){
-        let sendData = {
-            "uid1" : mypid,
-            "uid2" : fripid
-        };
-        $.ajax({
-            type : "POST",
-            url : "/friend/add",
-            data : sendData,
-            success: function (response) {
-                console.log(response);
-                removeRow("data-recommend-index", response.uid);
-                createFriendItem(response);
-            }
-        });
-    }
-
-    function deletefriend(e){
-        console.log(e.target);
-        let target_uid = e.target.getAttribute("data-friend-btn-idx");
-        let source_uid = <%=uid%>
-        console.log("delete Click" + target_uid + ", " + source_uid);
-        let sendData = {
-            "uid1" : source_uid,
-            "uid2" : target_uid
-        };
-        $.ajax({
-            type : "POST",
-            url : "/fried/delete",
-            data : sendData,
-            success: function (response) {
-                removeRow("data-friend-index", response);
-            }
-        });
-    }
 
     // --------- 좋아요 클릭시 Event 처리 ---------
     //Todo 세부구현 필요

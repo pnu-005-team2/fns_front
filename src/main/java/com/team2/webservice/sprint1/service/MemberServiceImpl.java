@@ -5,6 +5,7 @@ import com.team2.webservice.sprint1.dto.LoginDTO;
 import com.team2.webservice.sprint1.dto.MyPageDTO;
 import com.team2.webservice.sprint1.dto.ProfileDTO;
 import com.team2.webservice.sprint1.jpa.BoardRepository;
+import com.team2.webservice.sprint1.jpa.FriendsRepository;
 import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.vo.Board;
 import com.team2.webservice.sprint1.vo.Member;
@@ -29,6 +30,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     BoardRepository boardRepository;
+
+    @Autowired
+    FriendsRepository friendsRepository;
 
     @Autowired
     S3Uploader s3Uploader;
@@ -100,6 +104,10 @@ public class MemberServiceImpl implements MemberService {
 
     public MyPageDTO transDTO(Member member){
         MyPageDTO myPageDTO = new MyPageDTO(member);
+        int following_cnt = friendsRepository.findByMyuid(member.getUid()).size();
+        int follower_cnt = friendsRepository.findByYouruid(member.getUid()).size();
+        myPageDTO.setFollower_cnt(follower_cnt);
+        myPageDTO.setFollowing_cnt(following_cnt);
         return myPageDTO;
     }
 

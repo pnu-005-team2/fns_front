@@ -2,8 +2,153 @@
     background-color: red;
     color: white;
 }
+.header-wrapper{
+    width: 100%;
+    height: 7%;
+}
+
+.header-content {
+    width: 100%;
+    height: 7%;
+    background-color: red;
+    padding: 0.4em;
+    z-index: 1;
+    position: fixed;
+}
+
+.header-content button{
+    color: white;
+}
+
+.header-btn{
+    background:red;
+    color:#fff;
+    border:none;
+    position:relative;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+    width: 10%;
+}
+
+
+.header-btn:hover{
+    background:red;
+    color:black;
+}
+
+.header-btn:before,.header-btn:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: white;
+    transition:400ms ease all;
+}
+.header-btn:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+.header-btn:hover:before,.header-btn:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
+
+.search-wrapper{
+    display: inline-block;
+    width: 20%;
+    margin-left: 1em;
+    vertical-align: top;
+    background-color: white;
+}
+
+.search-bar{
+    width: 100%;
+}
+
+.search-profile{
+    width: 20%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.search-name{
+    margin-left: 1em;
+    color: black;
+}
+
+#search-result{
+
+}
 
 .board-item {
     border: 0.2em solid black;
     margin-bottom: 0.3em;
+}
+
+.follow {
+    height: 100%;
+}
+
+.friend-item {
+    height: 10%;
+    margin-bottom: 1em;
+}
+
+.follow .friend-item img{
+    height: 100%;
+    border-radius : 50%;
+    object-fit: cover;
+    object-position: top;
+    width: 4.7em;
+}
+
+.friend-item strong {
+    width: 58%;
+    margin-left: 1em;
+}
+
+.friend-item button {
+    float: right;
+    top: 20%;
+}
+
+
+.follow-btn {
+    background: none;
+    border: 0.2em solid #fff;
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-size: 0.7em;
+    font-weight: bold;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.follow-btn::before,
+.follow-btn::after {
+    background: #fff;
+    content: '';
+    position: absolute;
+    z-index: -1;
+}
+
+.follow-btn:hover {
+    color: #2ecc71;
+}
+
+.follow-btn::after {
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 0;
+}
+
+.follow-btn:hover:after {
+    width: 100%;
 }

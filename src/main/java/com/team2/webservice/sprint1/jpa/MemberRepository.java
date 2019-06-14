@@ -14,7 +14,11 @@ public interface MemberRepository extends JpaRepository<Member,Integer> {
     Optional<Member> findByEmail(String email);
     Optional<Member> findByName(String name);
     Optional<Member> findByEmailAndPassword(String email, String password);
+    Optional<List<Member>> findByUidAndNameLike(int id, String name);
+
+    List<Member> findByNameLike(String name);
 
     @Query("select m.id from Member m where m.name in (:names)")
     List<Object> getUidByName(@Param("names") Set<String> names);
+
 }
