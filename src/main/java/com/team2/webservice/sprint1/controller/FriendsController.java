@@ -5,6 +5,8 @@ import com.team2.webservice.sprint1.jpa.MemberRepository;
 import com.team2.webservice.sprint1.service.FriendsServiceImpl;
 import com.team2.webservice.sprint1.vo.Friends;
 import com.team2.webservice.sprint1.vo.Member;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ import java.util.List;
 
 @Controller
 public class FriendsController {
+
+    private static final Logger logger = LoggerFactory.getLogger(FriendsController.class);
+
 
     @Autowired
     private MemberRepository memberRepository;
@@ -47,8 +52,8 @@ public class FriendsController {
     @ResponseBody
     @RequestMapping(value = "/friend/load", method = RequestMethod.POST)
     public List<Member> loadriends(int uid, String keyword){
-        System.out.println("Entry Load Friends");
-        //Todo keyword에 따라 일치하는 친구들 뿌려주기
+        logger.info("Entry Load Friends");
+        //TODO keyword에 따라 일치하는 친구들 뿌려주기
 //        Optional<List<Member>> test = memberRepository.findByUidAndNameLike(uid, keyword);
 //        for (int i = 0; i < test.get().size(); i++) {
 //            System.out.println("Test");

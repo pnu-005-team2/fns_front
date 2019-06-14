@@ -62,7 +62,7 @@ public class TimeLineController {
     @RequestMapping(value = "/timeline/origin", method = RequestMethod.POST)
     public String write(Model model)
     {
-        System.out.println("Origin");
+        logger.info("Origin");
         boardRecordList = boardRepository.findAll();
         model.addAttribute("postRecordlList", boardRecordList);
         model.addAttribute("postRecordList_Byte", boardRecordList);
@@ -157,20 +157,9 @@ public class TimeLineController {
     {
 
         logger.info("Entry checkSearchName" + keyword);
-    //    System.out.println("keykeyword : "+keyword);
         List<Board> temp_board_list = boardRepository.findByHashtagLike("%"+keyword.substring(1)+"%");
-
-
-
-
-
         List<BoardDTO> return_board_list = new ArrayList<>();
-
-
-
         if(keyword.substring(0,1).equals("#")){
-
-
             if (temp_board_list != null) {
                 for (int i = 0; i < temp_board_list.size(); i++) {
                     if (temp_board_list.get(i).getHashtag() != null) {
@@ -178,15 +167,15 @@ public class TimeLineController {
                         String[] temp_HashTag_Array = temp_HashTag.split(",");
 
                         for (int j = 0; j < temp_HashTag_Array.length; j++) {
-                            System.out.println(temp_HashTag_Array[j]+ "comparecompare : " +keyword.substring(1));
+                            logger.info(temp_HashTag_Array[j]+ "comparecompare : " +keyword.substring(1));
                             if (temp_HashTag_Array[j].equals(keyword.substring(1))) {
                                 BoardDTO boardDTO=  boardService.transDTO(temp_board_list.get(i),pageable);
                                 return_board_list.add(boardDTO);
-                                System.out.print("retur board list add :  "+ boardDTO.getPid());
+                                logger.info("retur board list add :  "+ boardDTO.getPid());
                                 break;
                             }
                         }
-                        ;
+
 
                     }
 
@@ -195,13 +184,11 @@ public class TimeLineController {
             }
 
 
-
-            //System.out.println("qweqwewqeqweqwewqe"+return_board_list.size());
             if(return_board_list.size()==0){
-                System.out.println("qweqwewqeqweqwewqe");
+                logger.info("size : 0");
                 return null;
             }
-            System.out.println("aaaaaaaaaaaaaaa");
+            logger.info("list return");
             return return_board_list;
         }
         return null;
@@ -242,8 +229,6 @@ public class TimeLineController {
 
         Optional<Board> board_Optional = boardRepository.findByPid(Long.parseLong(post_Pid));
 
-        //Optional<Member> member_Optional =  memberRepository.findByUid()
-        // Optional<LikeRecord> likeRecordsdasdsd = likeRecordRepository.findBy
 
         if(board_Optional.isPresent()){
             Optional<LikeRecord> likeRecord_Optional= likeRecordRepository.findByBoard(board_Optional.get());
@@ -257,8 +242,6 @@ public class TimeLineController {
             }
         }
 
-
-        //Optional<Board> board_MemberWriter= boardRepository.findByMember()
         return "null";
 
 

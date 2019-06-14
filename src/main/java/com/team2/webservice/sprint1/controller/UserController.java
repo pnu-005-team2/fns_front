@@ -40,7 +40,7 @@ public class UserController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String view(){
-        System.out.println("View");
+        logger.info("View");
         return "editprofile";
     }
 

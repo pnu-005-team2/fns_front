@@ -52,7 +52,7 @@ public class BoardController {
     //--------------게시물쓰기 요청시 해당하는 유효성을 검증하고 view 리턴---------------------
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String view(){
-        //Todo 유저유효성 검증 필요
+        //TODO 유저유효성 검증 필요
         return "Post";
     }
 
@@ -63,14 +63,16 @@ public class BoardController {
         httpServletResponse.setContentType("/");
 
 
-        System.out.println("Board View In");
+        logger.info("Board View In");
+
         try {
             board.setImg(new javax.sql.rowset.serial.SerialBlob(image.getBytes()));
         } catch (SQLException e) {
-            Writer writer= new StringWriter();
-            e.printStackTrace(new PrintWriter(writer));
-            String s = writer.toString();
-            System.out.println(s);
+            Writer temp_writer= new StringWriter();
+            e.printStackTrace(new PrintWriter(temp_writer));
+            String s = temp_writer.toString();
+            logger.info(s);
+
 
         }
         writer = httpServletRequest.getParameter("writer");
@@ -86,7 +88,8 @@ public class BoardController {
     @RequestMapping(value = "/timeline", method = RequestMethod.POST)
     public String tagClothing(ModelAndView mav, Board board, ProductLink productLink, @RequestParam String X, @RequestParam String Y, @RequestParam String linktext, HttpServletRequest httpServletRequest) throws IOException {
 
-        int x, y;
+        int x;
+        int y;
         String linkText;
         x = parseInt(httpServletRequest.getParameter("X"));
         y = parseInt(httpServletRequest.getParameter("Y"));

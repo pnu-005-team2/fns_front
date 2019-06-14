@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.NoSuchFileException;
 import java.util.Optional;
 
 /*
@@ -50,26 +52,27 @@ public class S3Uploader {
 
     //------------ S3서버에 파일을 올리고 url을 리턴합니다. --------------------
     private String putS3(File uploadFile, String fileName){
-        System.out.println(amazonS3Client.getRegion().toString());
+        logger.info(amazonS3Client.getRegion().toString());
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile)
                 .withCannedAcl(CannedAccessControlList.PublicRead)); // public 읽기 권한으로 put, 외부에서 읽을 수 있음
         return amazonS3Client.getUrl(bucket,fileName).toString();
     }
 
     //------------ 로컬(서버)에 생성된 File 삭제 --------------------
-    private void removeNewFile(File targetFile){
-        if(targetFile.delete()){
+    private void removeNewFile(File targetFile) throws NoSuchFileException, DirectoryNotEmptyException,IOException{
+        targetFile.delete();
+        /*if(targetFile.delete()){
             log.info("파일이 삭제되었습니다.");
         } else{
             log.info("파일이 삭제되지 못했습니다.");
-        }
+        }*/
     }
 
     // S3에는 MultipartFile 타입은 전송이 안됨, 따라서 변환 필요
     //------------ MultipartFile을 File 객체로 변환합니다.--------------------
     private Optional<File> convert(MultipartFile file) throws IOException {
         File convertFile = new File(file.getOriginalFilename());
-        System.out.println(convertFile.toString());
+        logger.info(convertFile.toString());
         if(convertFile.createNewFile()){ // createNewFile(): 지정된 경로로 빈 파일 생성, 같은 이름이 존재하면 실패
             FileOutputStream fos = new FileOutputStream(convertFile);
             try{
@@ -79,7 +82,7 @@ public class S3Uploader {
                 Writer writer= new StringWriter();
                 e.printStackTrace(new PrintWriter(writer));
                 String s = writer.toString();
-                System.out.println(s);
+                logger.info(s);
             }finally {
                 fos.close();
             }

@@ -25,7 +25,7 @@ import java.util.Map;
 import static com.team2.webservice.common.Constant.LOGIN;
 
 
-/*Todo
+/*TODO
     1. 채팅방 만들기 및 나가기 구현필요
     2. 메시지 보낸 시간 구현
     3. 읽은 사람 수 구현
@@ -116,7 +116,7 @@ public class ChatController {
     @MessageMapping("info")
     @SendToUser("/queue/info")
     public String info(String message, SimpMessageHeaderAccessor messageHeaderAccessor){
-        System.out.println("Info In");
+        logger.info("info in");
         return message;
     }
 
