@@ -53,6 +53,7 @@ input:focus, textarea:focus, keygen:focus, select:focus {
   width: 32%;
   float: left;
   margin-right: 11px;
+    margin-bottom: 1em;
 }
 .grid .col3.first {
   margin-left: 0;
@@ -61,6 +62,10 @@ input:focus, textarea:focus, keygen:focus, select:focus {
 .grid .col3.last {
   margin-right: 0;
   float: right;
+}
+
+.postcont img{
+    height: 15em;
 }
 
 /* profile page */
@@ -312,13 +317,18 @@ section.section2 {
 }
 
 .modal-content {
-    top: 10em;
+    top: 5em;
     height: 30em;
 }
 
 .modal-body {
     height: 100%;
     
+}
+
+.modal-body .friend-item img{
+    height: 100%;
+    height: 4.7em;
 }
 
 .modal-body .board-img {

@@ -103,32 +103,32 @@
     </section>
     </div>
     <section class="section2 clearfix">
-      <div class="grid">
-        <c:forEach var="board" items="${boardList}" varStatus="status">
-            <c:choose>
-                <c:when test="${status.index%3 eq 0}">
-                    <c:set value="first" var="place"/>
-                </c:when>
-                <c:when test="${status.index%3 eq 1}">
-                    <c:set value="center" var="place"/>
-                </c:when>
-                <c:when test="${status.index%3 eq 2}">
-                    <c:set value="last" var="place"/>
-                </c:when>
-            </c:choose>
-            <div class="col3 ${place}">
-            <div class="card board-item" data-toggle="modal" data-target="#board-modal"
-                 data-mode = "normal" data-pid = "${board.pid}">
-              <div class="postcont"><img src="/logoShowForStudent/${board.pid}" alt="">
-              </div>
-              <div class="profileinfo">
-                <p>${board.content}</p>
-                <p class="board-hashtag" style="color: #2c6ed5">${board.hashtag}</p>
-              </div>
-            </div>
-          </div>
-        </c:forEach>
-      </div>
+        <div class="grid">
+            <c:forEach var="board" items="${boardList}" varStatus="status">
+                <c:choose>
+                    <c:when test="${status.index%3 eq 0}">
+                        <c:set value="first" var="place"/>
+                    </c:when>
+                    <c:when test="${status.index%3 eq 1}">
+                        <c:set value="center" var="place"/>
+                    </c:when>
+                    <c:when test="${status.index%3 eq 2}">
+                        <c:set value="last" var="place"/>
+                    </c:when>
+                </c:choose>
+                <div class="col3 ${place}">
+                    <div class="card board-item" data-toggle="modal" data-target="#board-modal"
+                         data-mode = "normal" data-pid = "${board.pid}">
+                        <div class="postcont"><img src="/logoShowForStudent/${board.pid}" alt="">
+                        </div>
+                        <div class="profileinfo">
+                            <p>${board.content}</p>
+                            <p class="board-hashtag" style="color: #2c6ed5">${board.hashtag}</p>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
     </section>
   </div>
 </div>
