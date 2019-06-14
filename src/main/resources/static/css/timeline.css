@@ -37,7 +37,6 @@
 }
 
 .friendshow{
-    overflow: auto;
     width: 23%;
     height: 100%;
     margin-top: 1em;
@@ -45,17 +44,18 @@
     vertical-align: top;
     position: fixed;
     margin-left: 1em;
+    overflow: auto;
 }
 
 .friendshow .following{
     margin-bottom: 1em;
     height: 30%;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .friendshow .follower{
     margin-bottom: 1em;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .time-line{

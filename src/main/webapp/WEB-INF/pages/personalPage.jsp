@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 
 </head>
-<body>
+<body style="background-color: #FEDEDB">
 <%
   Member user = (Member)session.getAttribute("login");
   String name = user.getName();

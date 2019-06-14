@@ -7,7 +7,7 @@
 <head>
     <title>Edit My Profile</title>
 </head>
-<body>
+<body style="background-color: #FEDEDB">
     <link rel="stylesheet" type="text/css" href="/resources/css/global.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/editprofile.css">
     <script src="//code.jquery.com/jquery.min.js"></script>

@@ -23,7 +23,7 @@
 }
 
 .header-btn{
-    background:#BFBFBF;
+    background:#9DC3E6;
     color:#fff;
     border:none;
     position:relative;
@@ -31,6 +31,7 @@
     transition:800ms ease all;
     outline:none;
     width: 10%;
+    border-radius: 5%;
 }
 
 
