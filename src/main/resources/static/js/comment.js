@@ -33,6 +33,8 @@ function loadComment(e) {
     let page = e.target.getAttribute("page-idx");
     let uid = e.target.getAttribute("data-uid");
     console.log("uid : " + uid);
+    console.log("uid : " + pid);
+    console.log("page : " + page);
     let size = 4;
     $.ajax({
         type : "POST",
@@ -42,7 +44,7 @@ function loadComment(e) {
         success: function (data) {
             console.log("data : " + data);
             if(data.length === 0){
-                //alert("댓글이 없습니다.");
+                alert("댓글이 없습니다.");
                 return;
             }
             data.forEach((item)=>{

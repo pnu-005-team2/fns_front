@@ -62,7 +62,7 @@
                     </span>
                     <span class="function-item">
                         <i class="comment-icon fa fa-comments-o fa-2x pnt" onclick="loadComment(event)" data-board-idx="${item.pid}"
-                            data-uid = "<%=uid%>"></i>
+                            data-uid = "<%=uid%>" page-idx="0"></i>
                     </span>
                 </div>
                 <%--Todo data-board-idx를 name으로 바꾸고 /단위로 잘라서 정보를 담을 수 있게 해보자--%>
@@ -71,7 +71,8 @@
                         <input type="text" class="comment-input" data-board-idx="${item.pid}"
                                data-uid= "<%=uid%>" page-idx = "0" onkeydown="tagFriend(event)"
                                placeholder="re">
-                        <button class="comment-btn" data-writer="<%=name%>">Enter</button>
+                        <%--<button class="comment-btn" data-writer="<%=name%>">Enter</button>--%>
+                        <i class="fa fa-pencil comment-btn" aria-hidden="true" data-writer="<%=name%>"></i>
                     </div>
                     <div class="comment-list"
                          data-board-idx="${item.pid}">
