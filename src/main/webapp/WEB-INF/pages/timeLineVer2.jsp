@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-    <title>FNSS</title>
+    <title>FNS</title>
 </head>
 <body>
 <link rel="stylesheet" href="/resources/css/timeline.css" type="text/css"/>
@@ -23,22 +23,9 @@
     String email = user.getEmail();
     int uid = user.getUid();
 %>
+
+<jsp:include page="header.jsp"/>
 <div class="page-container">
-    <div class="header-wrapper">
-        <div class="header-content">
-            <Strong style="color: yellow">Fashion Network Service</Strong>
-            <div class="search-wrapper">
-                <input type="text" class="search-bar"
-                       onfocus="this.value=''" id="search-user-text"
-                       placeholder="검색"  >
-                <div id="search-result-box"></div>
-            </div>
-            <button class="header-btn" onclick="location.href='/user/edit'">정보수정</button>
-            <button class="header-btn" onclick="location.href='/user/mypage?email=<%=email%>'">마이피드</button>
-            <button class="header-btn" onclick="location.href='/chat'">채팅하기</button>
-            <button class="header-btn" onclick="location.href='/logout'">로그아웃</button>
-        </div>
-    </div>
     <div class="left-wrapper">
         <div class="left-content">
             <div class="musinsa-list">
@@ -133,7 +120,6 @@
 <script>
 
     let text_number_For_Hashtag=0;
-    let text_For_Search_User = document.getElementById("search-user-text");
     let temp_value= document.getElementsByClassName("fa");
 
     $(document).ready(function (e) {
@@ -142,8 +128,6 @@
         let comment_btns = document.querySelectorAll(".comment-btn");
         let comment_del_btns = document.querySelectorAll(".comment-item .delete-btn");
         let hashtags = document.getElementsByClassName("board-hashtag");
-        let search_bar = document.getElementById("search-user-text");
-        console.log(search_bar);
         console.log(hashtags);
         // -------- Event를 바인딩합니다. ----------
         for(let item of unfollow_btns) item.onclick = deletefriend;
@@ -153,130 +137,7 @@
             console.log(item.textContent);
             item.textContent = item.textContent.replace(/,/g, "#");
         }
-        search_bar.onkeydown = text_Check;
-
-
-
-        // setInterval(text_Check,1000);
     });
-
-
-
-    function text_Check(e){
-        console.log("Text Check" + e.key);
-        let text_value = e.target.value+ e.key;
-        let sendData__ = { "keyword" : text_value};
-
-
-        initSearchBox();
-        if(text_value === '') return;
-
-        $.ajax({
-            type : "POST",
-            url : "/search/load",
-            data : sendData__,
-            success: function (response) {
-
-                console.log(response);
-                if(response){
-                    let search_result_box= document.getElementById("search-result-box");
-                    //#.시도
-
-
-                    response.forEach(item => {
-                        let search_item = document.createElement("div");
-                        let search_profile = document.createElement("img");
-                        let search_name= document.createElement("span");
-
-                        search_item.classList.add("search-item");
-                        search_item.onclick = ()=> {
-                            location.href = "/user/mypage?email=" + item.email;
-                        };
-
-                        search_profile.classList.add("search-profile");
-                        search_name.classList.add("search-name");
-                        search_profile.src = item.img;
-                        search_name.textContent = item.name;
-
-                        search_item.appendChild(search_profile);
-                        search_item.appendChild(search_name);
-                        search_result_box.appendChild(search_item);
-                    });
-
-                    console.log(search_result_box);
-
-                }
-            }
-        });
-
-        console.log(sendData__ + "sendData__ : ");
-
-
-
-        if(text_value.substr(0,1)==="#"){
-
-
-            let size =5;
-            let page =0;
-
-            initSearchBox();
-            $.ajax({
-                type : "POST",
-                url : "/search/hash?size="+size+"&page="+page,
-                data : sendData__,
-                success: function (response) {
-
-                    console.log("response :: "+response);
-                    if(response){
-
-
-
-                        let search_result_box= document.getElementById("search-result-box");
-                        //#.시도
-
-
-                        response.forEach(item => {
-
-                            let search_item = document.createElement("div");
-                            let search_profile = document.createElement("img");
-                            let search_name= document.createElement("span");
-                            search_item.classList.add("search-item");
-                            search_item.onclick = ()=> {
-
-                                location.href = "/user/mypage?email=" + item.email+ "&pid="+item.pid;
-                            };
-                            search_profile.classList.add("search-profile");
-                            search_name.classList.add("search-name");
-                            console.log("response : "+ item.pid);
-                            search_profile.src = "/logoShowForStudent/"+item.pid;
-                            search_name.textContent = item.member.name;
-
-                            search_item.appendChild(search_profile);
-                            search_item.appendChild(search_name);
-                            search_result_box.appendChild(search_item);
-                        });
-
-                        console.log(search_result_box);
-
-                    }
-                }
-            });
-        }
-
-
-
-
-    }
-
-    function initSearchBox() {
-        text_number_For_Hashtag=0;
-        let temp=   document.getElementById("search-result-box");
-        while(temp.hasChildNodes()){
-            temp.removeChild(temp.lastChild);
-        }
-
-    };
-
 
     // --------- 좋아요 클릭시 아이콘 Toggle ---------
     function likeToggle(target,temp_pid) {
@@ -313,21 +174,13 @@
             }
         });
 
-
-        //document.getElementsByClassName("fa-thumbs-o-up")[0].setAttribute("value")="true";
-        //target.classList.toggle("fa-thumbs-up",false);
-        //    target.classList.toggle("fa-thumbs-up",true);
-
         //  target.classList.toggle("fa-thumbs-o-up",false);
         /*1. 현재, 좋아요 테이블에서 받아오는 작업을 해야함
          -> 기존에 있던 부분에서 Table에서 미리 boolean 값을 받아와서 이를 확인하여
           현재의 toggle 버튼을 넣야함
          -> 첫번째로, Function을 이용해서 controller에서 처리를 다한 뒤에
          ->  이 값을 받아서 각 값에 맞게 이를 출력하면 된다.
-
         */
-
-
     }
 
 
@@ -335,9 +188,6 @@
     //Todo 세부구현 필요
     function like_btn_clickevent(temppid) {
         var like_button = document.getElementById("like_btn"+temppid);
-
-        // alert(like_button.getElementsByClassName());
-
 
         console.log("ClickEvent");
         if(like_button.style.display=="none"){

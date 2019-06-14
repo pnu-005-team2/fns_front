@@ -20,7 +20,9 @@
     String intro = user.getIntro();
     String img = user.getImg();
 %>
+    <jsp:include page="header.jsp"/>
 <div class="page-container">
+
 <div class="secondform">
     <br />
     <h2> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Edit profile</h2>

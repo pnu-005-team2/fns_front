@@ -25,22 +25,7 @@
 <link rel="stylesheet" href="/resources/css/personalPageCSS.css" type="text/css"/>
 <link rel="stylesheet" href="/resources/css/global.css" type="text/css"/>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-<div class="header-wrapper">
-    <div class="header-content">
-        <Strong style="color: yellow">Fashion Network Service</Strong>
-        <div class="search-wrapper">
-            <input type="text" class="search-bar"
-                   onfocus="this.value=''" id="search-user-text"
-                   placeholder="검색"  >
-            <div id="search-result-box"></div>
-        </div>
-        <button class="header-btn" onclick="location.href='/user/edit'">정보수정</button>
-        <button class="header-btn" onclick="location.href='/user/mypage?email=<%=email%>'">마이피드</button>
-        <button class="header-btn" onclick="location.href='/chat'">채팅하기</button>
-        <button class="header-btn" onclick="location.href='/logout'">로그아웃</button>
-    </div>
-</div>
+<jsp:include page="header.jsp"/>
 <div class="container">
   <div class="innerwrap">
   <div class="card">
@@ -299,10 +284,8 @@
                     }
                     wrapper.appendChild(btn);
                     parent.appendChild(wrapper);
-
                 })
             }
-
         })
     }
 
