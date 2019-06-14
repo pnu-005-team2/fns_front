@@ -17,7 +17,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
-    <%-- todo script ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ --%>
 </head>
 <body>
 <jsp:include page="body.jsp"/>
@@ -27,6 +26,7 @@
     String name = user.getName();
     String img =user.getImg();
 %>
+<jsp:include page="header.jsp"/>
 <div class="container-fluid h-100">
     <div class="row justify-content-center h-100">
         <div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
@@ -177,7 +177,7 @@
             });
         });
     });
-    // --------- ì±„íŒ…ë°©ì„ ë§Œë“­ë‹ˆë‹¤. ---------
+    // --------- Ã¤ÆÃ¹æÀ» ¸¸µì´Ï´Ù. ---------
     function createChatRoom() {
         let user = [];
         user.push(userName);

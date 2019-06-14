@@ -3,13 +3,13 @@ body {
   margin: 0;
   background: #F7F7F7;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   font-family: 'Open Sans', sans-serif;
 }
 
 .secondform {
+  position : absolute;
+  left : 30%;
+  top : 20%;
   width: 650px;
   background: white;
   border-radius: 20px;
