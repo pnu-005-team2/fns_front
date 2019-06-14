@@ -914,11 +914,13 @@
 
             for (var i = start; i <= end; i++) {
                 var i_in_24 = i;
+                var time;
                 if (!this.timePicker24Hour)
                     if(selected!=null){
                         i_in_24 = selected.hour() >= 12 ? (i == 12 ? 12 : i + 12) : (i == 12 ? 0 : i);
+                        time = selected.clone().hour(i_in_24);
                     }
-                var time = selected.clone().hour(i_in_24);
+
                 var disabled = false;
                 if (minDate && time.minute(59).isBefore(minDate))
                     disabled = true;

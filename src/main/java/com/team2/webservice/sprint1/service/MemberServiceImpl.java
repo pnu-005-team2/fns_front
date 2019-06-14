@@ -82,10 +82,9 @@ public class MemberServiceImpl implements MemberService {
         } else{
             logger.error("존재하지 않는 이메일입니다.");
         }
-        if(member.getImg()!=null){
+        if(member!=null){
             logger.info(member.getImg());
         }
-
         return Optional.of(member);
     }
 

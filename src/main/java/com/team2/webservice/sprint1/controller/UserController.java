@@ -66,9 +66,10 @@ public class UserController {
         model.addAttribute("boardList", boards);
         if(member.isPresent()){
             model.addAttribute("pageUser", memberService.transDTO(member.get()));
+            model.addAttribute("isFriend", friendsService.isFollowing(login.getUid(), member.get().getName()));
         }
         model.addAttribute("isMine", login.getEmail().equals(email));
-        model.addAttribute("isFriend", friendsService.isFollowing(login.getUid(), member.get().getName()));
+
         return "personalPage";
     }
 
