@@ -282,7 +282,7 @@
                     let wrapper = document.createElement("div");
                     let img = document.createElement("img");
                     let name = document.createElement("strong");
-
+                    img.classList.add("profileInPP");
 
                     wrapper.classList.add("friend-item");
                     img.src = item.img;
