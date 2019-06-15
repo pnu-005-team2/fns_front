@@ -8,7 +8,7 @@
 
 </head>
 
-<body style="background-color: #FEDEDB">
+<body style="background-color: #FF6F61">
 <%--<jsp:include page="header.jsp"/>--%>
 <jsp:include page="body.jsp"/>
 
@@ -19,8 +19,12 @@
 
 <div class="wrapper">
     <div class="container">
-        <h1>Welcome
-            <span style = "color:yellow">FNS</span></h1>
+        <div class="logo">
+            <img src="https://github.com/pnu-005-team2/fns_front/blob/master/src/main/resources/static/images/KakaoTalk_20190615_011550078.png?raw=true"/>
+        </div>
+        <h1 style="color: white">Welcome
+            <span style = "color:yellow"> FNS</span>
+        </h1>
         <form class="form" method="POST" action="/login">
             <input id="email" type="email" name="memberEmail" placeholder="Email"/>
             <input id="password" type="password" name="memberPw" placeholder="Password"/>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,14 +26,21 @@ public class JoinController {
     public String registerGet(){
         return "join";
     }
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerPost(Member member, HttpServletRequest request)
     {
 
         logger.info(member.toString());
-        logger.info("Board");
         member.setImg("https://s3.ap-northeast-2.amazonaws.com/fns-image/user_img.svg");
         memberService.register(member);
         return "redirect:/login";
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/duplicate", method = RequestMethod.POST)
+    public boolean validateEmail(String email) throws Exception {
+        return memberService.validEmail(email);
+    }
+
 }

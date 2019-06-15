@@ -12,6 +12,8 @@ public interface MemberService {
     // 회원가입 처리
     boolean register(Member member) throws Exception;
 
+    boolean validEmail(String email) throws Exception;
+
     // 로그인 처리
     Optional<Member> login(LoginDTO loginDTO) throws Exception;
 

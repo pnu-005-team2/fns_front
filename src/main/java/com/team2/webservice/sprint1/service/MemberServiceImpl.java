@@ -49,6 +49,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public boolean validEmail(String email) throws Exception {
+        return memberRepository.existsByEmail(email);
+    }
+
+    @Override
     public Optional<Member> login(LoginDTO loginDTO){
         System.out.println(loginDTO.getMemberEmail());
         System.out.println(loginDTO.getMemberPw());
@@ -90,7 +95,7 @@ public class MemberServiceImpl implements MemberService {
     public List<Board> loadMyBoards(String email){
         logger.info("Entry Load My Boards");
 
-        Optional<List<Board>> boards = boardRepository.findByMemberId(email);
+        Optional<List<Board>> boards = boardRepository.findByMemberEmail(email);
 
         if(!boards.isPresent()){
             logger.error("게시글이 존재하지 않습니다.");
@@ -108,7 +113,7 @@ public class MemberServiceImpl implements MemberService {
         MyPageDTO myPageDTO = new MyPageDTO(member);
         int following_cnt = friendsRepository.findByMyuid(member.getUid()).size();
         int follower_cnt = friendsRepository.findByYouruid(member.getUid()).size();
-        Optional<List<Board>> boards = boardRepository.findByMemberId(member.getEmail());
+        Optional<List<Board>> boards = boardRepository.findByMemberEmail(member.getEmail());
         int board_cnt = 0;
         if(boards.isPresent()) board_cnt = boards.get().size();
         myPageDTO.setFollower_cnt(follower_cnt);

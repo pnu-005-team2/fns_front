@@ -12,7 +12,7 @@ function addfriend(mypid,fripid, createRow=true){
             console.log("Friends Add : "+ response);
             removeRow("data-recommend-index", response.uid);
             if(createRow)
-                createFriendItem(response);
+                createFriendItem(response, mypid);
 
             console.log("Complete");
         }
@@ -24,7 +24,7 @@ function deletefriend(e){
     console.log(e.target);
     let target_uid = e.target.dataset["friendBtnIdx"];
     let source_uid = e.target.dataset['uid'];
-    console.log("delete Click" + target_uid + ", " + source_uid);
+    console.log("delete Click " + target_uid + ", " + source_uid);
     let sendData = {
         "uid1" : source_uid,
         "uid2" : target_uid
@@ -48,7 +48,7 @@ function initFriends() {
 }
 
 //----------- Folloing Row를 만듭니다. ---------------
-function createFriendItem(freind_infor) {
+function createFriendItem(freind_infor, mypid) {
     let follow_box = document.querySelector(".following");
     let row = document.createElement("div");
     let img = document.createElement("img");
@@ -63,6 +63,7 @@ function createFriendItem(freind_infor) {
     delete_btn.textContent = "Unfollow";
     delete_btn.classList.add("follow-btn");
     delete_btn.setAttribute("data-friend-btn-idx", freind_infor.uid);
+    delete_btn.setAttribute("data-uid", mypid);
     delete_btn.onclick = deletefriend;
 
     row.appendChild(img);

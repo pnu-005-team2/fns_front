@@ -1,7 +1,8 @@
 *{box-sizing:border-box}
 body {
   margin: 0;
-  background: #F7F7F7;
+  background: #FF6F61;
+
   display: flex;
   font-family: 'Open Sans', sans-serif;
 }
@@ -16,6 +17,7 @@ body {
 }
 .secondform *{transition: .1s linear}
 .profile {
+  margin-top: 4em;
   width: 240px;
   float: left;
   text-align: center;
@@ -48,12 +50,22 @@ h1 {
   letter-spacing: .25px;
 }
 
+.secondform h2{
+  color: #2F5597;
+  text-align: center;
+}
+
+.secondform input[type="text"]::placeholder{
+  color: #2F5590;
+}
 
 .secondform input[type="text"], input[type="password"],textarea {
   width: 100%;
   padding: 10px 15px;
   border-width: 0;
-  background: #e6e6e6;
+  background: white;
+  border: 0.1em solid #FF6F61;
+  color: #2F5597;
   outline: none;
   margin: 0;
 }
@@ -62,16 +74,16 @@ secondform. input[type="text"]:focus, input[type="password"]:focus, [type="text"
 }
 
 input[type="submit"] {
-  background: #2196f3;
-  color: #FFF;
+  /*background: #2196f3;*/
+  /*color: #FFF;*/
   }
 /*input[type="submit"]:hover {*/
     /*background: lighten(#2196f3, 5%);*/
   /*}*/
 
 input[type="reset"] {
-  background: #FF5733;
-  color: #FFF;
+  /*background: #FF5733;*/
+  /*color: #FFF;*/
   }
 
 /*input[type="reset"]:hover {*/
@@ -87,10 +99,14 @@ input[type="reset"] {
 /*-----------Profile bottom button----------------*/
 .profile-button{
   width: 30%;
+  height: 3.5em;
+  vertical-align: top;
   padding: .75rem 1.5rem;
   margin: .5rem 0 0;
   outline: 0;
-  border: 0;
+  border: 0.1em solid #FF6F61;
+  background-color: white;
+  color: #2F5597;
   border-radius: 4px;
   font-weight: 600;
   font-size: .800rem;
@@ -102,8 +118,6 @@ input[type="reset"] {
 /*-----------Profile img file tag----------------*/
 .file-box {
   display: inline-block;
-  color: white;
-  background: gold;
   text-align: center;
 }
 

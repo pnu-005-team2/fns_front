@@ -22,30 +22,23 @@ public class FriendsController {
 
     private static final Logger logger = LoggerFactory.getLogger(FriendsController.class);
 
-
-    @Autowired
-    private MemberRepository memberRepository;
-
     @Autowired
     private FriendsServiceImpl friendsService;
 
 
     @ResponseBody
     @RequestMapping(value = "/friend/add" , method = RequestMethod.POST)
-    public Member friendAdd(int uid1, int uid2, Model model, HttpServletRequest request){
+    public Member friendAdd(int uid1, int uid2){
         //1: 추가행위를 하는사람(following 에 추가) 2:추가행위를 당하는사람(follower에 추가)
-        System.out.println("FriendAdd");
         Member canadd = friendsService.addFriends(uid1, uid2);
-
         return canadd;
     }
 
     @ResponseBody
     @RequestMapping(value = "/friend/delete" , method = RequestMethod.POST)
-    public int friendDelete(int uid1, int uid2, Model model, HttpServletRequest request){
+    public int friendDelete(int uid1, int uid2){
         //1: 삭제행위를 하는사람, 2: 삭제 당하는사람
         friendsService.deleteFriend(uid1, uid2);
-        friendsService.setFriendListToModel(model, request);
         return uid2;
     }
 
@@ -54,11 +47,6 @@ public class FriendsController {
     public List<Member> loadriends(int uid, String keyword){
         logger.info("Entry Load Friends");
         //TODO keyword에 따라 일치하는 친구들 뿌려주기
-//        Optional<List<Member>> test = memberRepository.findByUidAndNameLike(uid, keyword);
-//        for (int i = 0; i < test.get().size(); i++) {
-//            System.out.println("Test");
-//            System.out.println(test.get().get(i).getName());
-//        }
         return friendsService.loadFriendsByKeyword(uid,keyword);
 
     }

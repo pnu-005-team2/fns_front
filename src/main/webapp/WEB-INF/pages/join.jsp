@@ -22,7 +22,6 @@
 
     <!-- Vendor CSS-->
     <link href="/resources/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="/resources/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
     <link rel="stylesheet" href="/resources/css/main.css" type="text/css"/>
@@ -30,13 +29,12 @@
 </head>
 
 <body>
-<div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
+<div class="page-wrapper font-poppins">
     <div class="wrapper wrapper--w780">
         <div class="card card-3">
-            <div class="card-heading"></div>
             <div class="card-body">
                 <h2 class="title">Registration Info</h2>
-                <form method="POST" action="/user/register" onsubmit="return checkPw()">
+                <form method="POST" action="/join/register" onsubmit="return checkPw()">
                     <div class="input-group">
                         <input class="input--style-3" type="text" placeholder="Name" name="name">
                     </div>
@@ -52,7 +50,8 @@
                         </div>
                     </div>
                     <div class="input-group">
-                        <input class="input--style-3" type="email" placeholder="Email" name="email">
+                        <input class="input--style-3" type="email" placeholder="Email" name="email" oninput="validEmail(event);">
+                        <div class="notify-duplicate">중복 된 아이디입니다.</div>
                     </div>
                     <div class="input-group">
                         <input class="input--style-3" type="password" placeholder="Password" id = "pw" name="password">
@@ -80,13 +79,44 @@
 
 
 <script>
+    
+    function validEmail(e) {
+        let email = e.target.value;
+        console.log("valid : " + email);
+
+        $.ajax({
+            type : "POST",
+            url : "/join/duplicate",
+            datatype : "json",
+            data : {email : email},
+            success: function (response) {
+                console.log(response);
+                let noti = document.querySelector(".notify-duplicate");
+                if(response === true){
+                    console.log("true");
+                    noti.style.display = "block";
+                } else {
+                    console.log("false");
+                    noti.style.display = "none";
+                }
+            }
+        });
+    }
+    
     function checkPw() {
-        var pw = $('#pw').val()
-        var pwc = $('#pw-c').val()
-        if(pw != pwc){
+        let pw = $('#pw').val();
+        let pwc = $('#pw-c').val();
+        let noti = document.querySelector(".notify-duplicate");
+        if(pw !== pwc){
             alert("비밀번호가 틀렸습니다. 다시 입력해 주세요")
             return false;
         }
+        if(noti.style.display !== "none"){
+            alert("이미 사용중인 email입니다.");
+            return false;
+        }
+        return true;
+
 
     }
 </script>

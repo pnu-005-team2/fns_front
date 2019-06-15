@@ -98,7 +98,7 @@
         <div class = "follower">
             <strong>Follower </strong>
             <c:forEach var="item" items="${friendedRecordList}">
-                <div>
+                <div class="friend-item">
                     <img onclick = "location.href='user/mypage?email=${item.email}'" class='profile pnt' src="${item.img}" width="12%" height="15">
                     <strong class="pnt" onclick = "location.href='user/mypage?email=${item.email}'" >${item.name}</strong>
                 </div>
@@ -108,7 +108,7 @@
         <div class="friendRecommend" id="friendRecommend">
             <strong>Friend Recommend </strong>
             <c:forEach var="item" items="${friendRecommendList}">
-                <div class="recommend-friend-item" data-recommend-index ="${item.uid}">
+                <div class="recommend-friend-item friend-item" data-recommend-index ="${item.uid}">
                     <img class='profile pnt' onclick = "location.href='user/mypage?email=${item.email}'" src="${item.img}" width="12%" height="15">
                     <strong class="pnt" onclick = "location.href='user/mypage?email=${item.email}'" style="width:58%">${item.name}</strong>
                     <button class="follow-btn pnt" onclick="addfriend(<%=uid%>,${item.uid});" height="15">follow</button>

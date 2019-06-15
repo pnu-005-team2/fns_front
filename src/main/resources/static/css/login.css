@@ -48,7 +48,7 @@ body :-ms-input-placeholder {
     font-weight: 300;
 }
 .wrapper {
-    background: #FEDEDB;
+    background: #FF6F61;
     position: absolute;
     left: 0;
     width: 100%;
@@ -102,17 +102,18 @@ form input:hover {
 form input:focus {
     background-color: white;
     width: 300px;
-    color: #53e3a6;
+    color: #2F5597;
+    font-weight: bold;
 }
 form button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     outline: 0;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.2);
     border: 0;
     padding: 10px 15px;
-    color: #53e3a6;
+    color: white;
     border-radius: 3px;
     width: 250px;
     cursor: pointer;
@@ -122,6 +123,16 @@ form button {
 form button:hover {
     background-color: #f5f7f9;
 }
+
+.logo{
+    text-align: center;
+}
+
+.logo img{
+    width: 12em;
+    height: 7em;
+}
+
 .bg-bubbles {
     position: absolute;
     top: 0;
@@ -232,4 +243,9 @@ form button:hover {
         -webkit-transform: translateY(-700px) rotate(600deg);
         transform: translateY(-700px) rotate(600deg);
     }
+}
+
+
+input::placeholder {
+    color: white;
 }

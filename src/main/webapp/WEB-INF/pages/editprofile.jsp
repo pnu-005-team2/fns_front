@@ -7,7 +7,7 @@
 <head>
     <title>Edit My Profile</title>
 </head>
-<body style="background-color: #FEDEDB">
+<body style="background-color: #FF6F61">
     <link rel="stylesheet" type="text/css" href="/resources/css/global.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/editprofile.css">
     <script src="//code.jquery.com/jquery.min.js"></script>
@@ -24,9 +24,8 @@
 <div class="page-container">
 
 <div class="secondform">
-    <br />
-    <h2> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Edit profile</h2>
     <br/>
+    <div><h2>Edit profile</h2></div>
     <div class="profile">
         <%--<img src="https://pm1.narvii.com/6797/138261efcbe6a60b64a4e701d3e5b04b4a543ae4v2_128.jpg">--%>
         <div id="imagePreview">
@@ -64,7 +63,7 @@
             <input  name = "image" type="file" accept = "image/*" id = "profile-img" onchange="changeImg(this)">
         </div>
         &nbsp;
-        <input class="profile-button pnt" type="reset"  value="Cancel">
+        <input class="profile-button pnt" type="reset"  onclick="window.history.go(-1); return false;" value="Cancel">
     </form>
 </div>
     <script>
@@ -126,7 +125,8 @@
             reader.readAsDataURL(fileList[0]);
 
             reader.onload = function () {
-                let img = document.getElementsByTagName("img")[0];
+                let img = document.querySelector("#imagePreview img");
+                console.log(img);
                 img.src = reader.result
             }
         }

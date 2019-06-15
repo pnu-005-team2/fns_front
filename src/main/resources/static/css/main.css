@@ -541,3 +541,13 @@ input {
     padding-bottom: 45px;
   }
 }
+
+
+.notify-duplicate {
+  color: red;
+  display: none;
+}
+
+body {
+  background-color: #FEDEDB;
+}
