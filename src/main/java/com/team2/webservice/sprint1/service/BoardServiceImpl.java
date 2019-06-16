@@ -44,7 +44,7 @@ public class BoardServiceImpl implements BoardService {
         String hashTag = null;
         while (hashMatch.find()) {
             if (hashTag == null) {
-                hashTag = fillter(hashMatch.group());
+                hashTag = "," + fillter(hashMatch.group());
             } else {
                 hashTag += "," + fillter(hashMatch.group());
             }

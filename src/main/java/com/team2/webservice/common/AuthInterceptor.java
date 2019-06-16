@@ -30,14 +30,14 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         if ( httpSession.getAttribute(LOGIN) == null ){
             // 로그인이 안되어 있는 상태임으r로 로그인 폼으로 다시 돌려보냄(redirect)
             //Todo 테스트라 잠시 주석
-//            logger.info("로그인이 필요한 페이지입니다.");
-//            response.sendRedirect("/login");
-//            return false; // 더이상 컨트롤러 요청으로 가지 않도록 false로 반환함
+            logger.info("로그인이 필요한 페이지입니다.");
+            response.sendRedirect("/login");
+            return false; // 더이상 컨트롤러 요청으로 가지 않도록 false로 반환함
 
             //Todo 테스트용 디폴트 계정 삽입
-            Member member = memberRepository.findByEmail("test@naver.com").get();
-            httpSession.setAttribute(LOGIN, member); // 세션에 로그인정보 저장
-            return true; // 더이상 컨트롤러 요청으로 가지 않도록 false로 반환함
+//            Member member = memberRepository.findByEmail("test@naver.com").get();
+//            httpSession.setAttribute(LOGIN, member); // 세션에 로그인정보 저장
+//            return true; // 더이상 컨트롤러 요청으로 가지 않도록 false로 반환함
 
         } else{
             logger.info("세션 연장.");

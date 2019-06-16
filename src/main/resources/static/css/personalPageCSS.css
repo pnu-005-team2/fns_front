@@ -405,10 +405,10 @@ section.section2 {
 
 
 .follow-modal-dialog{
-    width: 45%;
+    /*width: 45%;*/
 }
 
 .follow-modal-content{
-    background-color: #7b7b7b;
+    background-color: #FEDEDB;
     overflow: auto;
 }

@@ -1,0 +1,28 @@
+.body {
+    background-color: #FEDEDB;
+}
+
+.content-box {
+    text-align: center;
+    margin-top: 15vh;
+    margin-left: 30vw;
+}
+
+.content{
+    width: 40vw;
+    height: 70vh;
+    border: 0.1em solid #FF6F61;
+    padding: 1em;
+}
+
+.content img{
+    width: 100%;
+    height: 60%;
+}
+
+
+
+
+
+
+

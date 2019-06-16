@@ -94,6 +94,10 @@ public class FriendsServiceImpl implements FriendsService{
         List<Board> myBoards = boardRepository.findByMemberUid(me.getUid());
 
         List<Object> myFriends = friendsRepository.getYouruidByMyuid(me.getUid());
+        if(myFriends.size() == 0){
+            logger.info("게시물이 없습니다.");
+            return null;
+        }
         List<Board> friendBoards = boardRepository.findByMemberUidIn(myFriends);
 
         myBoards.addAll(friendBoards);

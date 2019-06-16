@@ -1,16 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
          pageEncoding="EUC-KR"%>
+
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Calm breeze login screen</title>
     <link rel="stylesheet" href="/resources/css/login.css" type="text/css"/>
-
+    <jsp:include page="body.jsp"></jsp:include>
 </head>
 
 <body style="background-color: #FF6F61">
-<%--<jsp:include page="header.jsp"/>--%>
-<jsp:include page="body.jsp"/>
 
 
 <c:if test="${isOk == 'false'}">
@@ -20,7 +21,8 @@
 <div class="wrapper">
     <div class="container">
         <div class="logo">
-            <img src="https://github.com/pnu-005-team2/fns_front/blob/master/src/main/resources/static/images/KakaoTalk_20190615_011550078.png?raw=true"/>
+            <%--<img src="https://github.com/pnu-005-team2/fns_front/blob/master/src/main/resources/static/images/KakaoTalk_20190615_011550078.png?raw=true"/>--%>
+            <img src="/resources/images/KakaoTalk_20190615_011550078.png?raw=true"/>
         </div>
         <h1 style="color: white">Welcome
             <span style = "color:yellow"> FNS</span>
@@ -40,7 +42,6 @@
         <li></li>
     </ul>
 </div>
-<jsp:include page="body.jsp"/>
 <script>
     $(function(){
         console.log("Start");
@@ -52,5 +53,7 @@
         location.href = '/join/register';
     })
 
-
 </script>
+</body>
+</html>
+
