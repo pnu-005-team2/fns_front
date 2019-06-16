@@ -79,6 +79,13 @@ function removeRow(target_name, idx) {
     console.log(idx);
     let target_row = document.querySelector(`div[${target_name}="${idx}"]`);
     console.log(target_row);
+    if(target_row == null){
+        let btn = document.querySelector(".add-follow");
+        btn.style.display = "none";
+        return
+    }
+
+
     target_row.remove();
 }
 
